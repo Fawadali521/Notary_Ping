@@ -1,0 +1,81 @@
+name: notary_ping
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  page_transition: ^2.0.9
+  flutter_staggered_animations: ^1.1.1
+  pinput: ^3.0.1
+  avatar_glow: ^2.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+  assets:
+    - assets/logo/
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: fonts/montserrat/Montserrat-VariableFont.ttf
+    - family: Montserrat-Regular
+      fonts:
+        - asset: fonts/montserrat/Montserrat-Regular.ttf
+    - family: Montserrat-Medium
+      fonts:
+        - asset: fonts/montserrat/Montserrat-Medium.ttf
+    - family: Montserrat-Light
+      fonts:
+        - asset: fonts/montserrat/Montserrat-Light.ttf
+    - family: Montserrat-SemiBold
+      fonts:
+        - asset: fonts/montserrat/Montserrat-SemiBold.ttf
+    - family: Montserrat-Bold
+      fonts:
+        - asset: fonts/montserrat/Montserrat-Bold.ttf
+    - family: Inter
+      fonts:
+        - asset: fonts/Inter/Inter-VariableFont.ttf
+    - family: Inter-Regular
+      fonts:
+        - asset: fonts/Inter/Inter-Regular.ttf
+    - family: Inter-Light
+      fonts:
+        - asset: fonts/Inter/Inter-Light.ttf
+    - family: Inter-Medium
+      fonts:
+        - asset: fonts/Inter/Inter-Medium.ttf
+    - family: Inter-SemiBold
+      fonts:
+        - asset: fonts/Inter/Inter-SemiBold.ttf
+    - family: Inter-Bold
+      fonts:
+        - asset: fonts/Inter/Inter-Bold.ttf
+    - family: Inter-ExtraBold
+      fonts:
+        - asset: fonts/Inter/Inter-ExtraBold.ttf
+    - family: Oxygen
+      fonts:
+        - asset: fonts/oxygen/Oxygen-Regular.ttf
+    - family: Oxygen-Light
+      fonts:
+        - asset: fonts/oxygen/Oxygen-Light.ttf
+    - family: Oxygen-Bold
+      fonts:
+        - asset: fonts/oxygen/Oxygen-Bold.ttf
