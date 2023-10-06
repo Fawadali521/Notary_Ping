@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       title: 'Notary Ping',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Comforta',
+        fontFamily: 'Montserrat',
         scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
         useMaterial3: true,
