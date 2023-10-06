@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
-
+//Asimkhan
 class TextStyles {
   static const bodyBlack = TextStyle(
     fontWeight: FontWeight.w400,
-    fontSize: 5,
+    fontSize: 16,
     color: Colors.black,
+    fontFamily: 'Montserrat-Light'
+  );
+  static const hintText = TextStyle(
+    fontWeight: FontWeight.w200,
+    fontSize: 12,
+    color: Colors.black,
+    fontFamily: 'Montserrat-Light'
+  );
+  static const boardingHeading = TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 20,
+    color: Colors.black,
+    fontFamily: 'Montserrat-Bold'
   );
 }
 

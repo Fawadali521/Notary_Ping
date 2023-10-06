@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notary_ping/LandingPage.dart';
+import 'package:notary_ping/SplashScreen.dart';
 
-import 'LandingPage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,13 +26,13 @@ class MyApp extends StatelessWidget {
       title: 'Notary Ping',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        fontFamily: 'Comforta',
+        fontFamily: 'Montserrat',
         scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LandingPage(),
+      home:   LandingPage(),
     );
   }
 }
