@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:notary_ping/src/modules/login/login_screen.dart';
+import 'package:notary_ping/src/modules/auth/Signin.dart';
 import 'package:notary_ping/src/utility/common_button.dart';
 
+import '../../../Infos.dart';
 import '../../../styles.dart';
 import '../../model/content_model.dart';
 
@@ -18,18 +21,34 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   int currentIndex = 0;
   PageController? controller;
 
+  Timer? timer;
+
   @override
   void initState() {
     controller = PageController(initialPage: 0);
+    startTimer();
     super.initState();
   }
 
   @override
   void dispose() {
     controller?.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
+  void startTimer() {
+    timer = Timer.periodic(const Duration(milliseconds: 2500), (timer) {
+      if (currentIndex < Infos.contents.length - 1) {
+        controller?.nextPage(
+          duration: const Duration(milliseconds:500),
+          curve: Curves.easeInOut,
+        );
+      } else {
+        controller?.jumpToPage(0); // Loop back to the first page
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -40,7 +59,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
           Expanded(
             child: PageView.builder(
               controller: controller,
-              itemCount: contents.length,
+              itemCount: Infos.contents.length,
               onPageChanged: (int index) {
                 setState(() {
                   currentIndex = index;
@@ -48,32 +67,38 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
               },
               itemBuilder: (_, i) {
                 return Padding(
-                  padding: const EdgeInsets.all(40),
+                  padding: const EdgeInsets.only(bottom: 50),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        height: height * 0.08,
+                       Padding(
+                         padding: const EdgeInsets.only(
+                             left: 30, right: 30, bottom: 30                         ),
+                         child: Image.asset(
+                          Infos.contents[i]['image']!, // Access the 'image' key from the map at index i
+                          height: 300,
                       ),
-                      SvgPicture.asset(
-                        contents[i].image!,
-                        height: 300,
+                       ),
+                       Padding(
+                         padding: const EdgeInsets.only(
+                             left: 20.0, right: 20, bottom: 10
+                         ),
+                         child: Text(Infos.contents[i]['title']!,
+                            style: TextStyles.heading1),
+                       ),
+
+                       Padding(
+                         padding: const EdgeInsets.only(
+                             left: 20.0, right: 20, bottom: 15
+                         ),
+                         child: Text(
+                          Infos.contents[i]['description']!,
+                          textAlign: TextAlign.center,
+                          style: TextStyles.bodyBlack
+                              .copyWith(color: Colors.black.withOpacity(0.4)),
                       ),
-                      SizedBox(
-                        height: height * 0.1,
-                      ),
-                      Text(contents[i].title!,
-                          style: TextStyles.boardingHeading),
-                      SizedBox(
-                        height: height * 0.06,
-                      ),
-                      Text(
-                        contents[i].discription!,
-                        textAlign: TextAlign.center,
-                        style: TextStyles.bodyBlack
-                            .copyWith(color: Colors.black.withOpacity(0.4)),
-                      )
+                       )
                     ],
                   ),
                 );
@@ -83,23 +108,23 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              contents.length,
+              Infos.contents.length,
               (index) => buildDot(index, context),
             ),
           ),
           Container(
             height: 60,
-            margin: EdgeInsets.all(40),
+            margin: const EdgeInsets.all(40),
             width: double.infinity,
             child: ElevatedButtonWidget(
               buttonText:
-                  currentIndex == contents.length - 1 ? "Continue" : "Next",
+                  currentIndex == Infos.contents.length - 1 ? "Continue" : "Next",
               onTap: () {
-                if (currentIndex == contents.length - 1) {
+                if (currentIndex == Infos.contents.length - 1) {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
+                      builder: (_) => SignIn(),
                     ),
                   );
                 }
@@ -109,29 +134,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                 );
               },
             ),
-            // child: FlatButton(
-            //   child: Text(
-            //       currentIndex == contents.length - 1 ? "Continue" : "Next"),
-            //   onPressed: () {
-            // if (currentIndex == contents.length - 1) {
-            //   Navigator.pushReplacement(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (_) => LoginScreen(),
-            //     ),
-            //   );
-            // }
-            //  controller?.nextPage(
-            //   duration: Duration(milliseconds: 100),
-            //   curve: Curves.bounceIn,
-            // );
-            // },
-            //   color: Theme.of(context).primaryColor,
-            //   textColor: Colors.white,
-            //   shape: RoundedRectangleBorder(
-            //     borderRadius: BorderRadius.circular(20),
-            //   ),
-            // ),
+
           )
         ],
       ),

@@ -11,19 +11,19 @@ class OnBoardingContent {
 List<OnBoardingContent> contents = [
   OnBoardingContent(
       title: 'Connect Face to Face \n with a registered notary',
-      image: 'assets/images/on_boarding1.svg',
+      image: 'assets/onboarding-vectors/1.png',
       discription: "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 
   ),
   OnBoardingContent(
       title: 'Connect Face to Face \n with a registered notary',
-      image: 'assets/images/on_boarding2.svg',
+      image: 'assets/onboarding-vectors/2.png',
       discription: "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 
   ),
   OnBoardingContent(
       title: 'Connect Face to Face \n with a registered notary',
-      image: 'assets/images/on_boarding1.svg',
+      image: 'assets/onboarding-vectors/3.png',
       discription: "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the "
 
   ),

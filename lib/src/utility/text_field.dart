@@ -18,24 +18,25 @@ final Icon? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyles.bodyBlack,
       decoration:   InputDecoration(
         hintText: hintText ?? 'Enter email',
         prefixIcon:prefixIcon  ,
-        suffixIconColor: Colors.orange,
+        suffixIconColor: Palette.primaryColor,
         suffixIcon: suffixIcon,
         hintStyle: TextStyles.hintText.copyWith(
             fontWeight: FontWeight.normal
         ),
         contentPadding:
-        const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
+        const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
         filled: true,
-        fillColor:  Palette.blue3,
+        fillColor: Colors.white,
         enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide:BorderSide(width: 1.0,color: Palette.blue1.withOpacity(0.1))),
+            borderSide:BorderSide(width: 1.0,color:Colors.black.withOpacity(0.5))),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide:   BorderSide(width: 1.0,color: Colors.grey.withOpacity(0.1),
+          borderSide:   const BorderSide(width: 1.0,color: Palette.primaryColor,
 
 
           ),

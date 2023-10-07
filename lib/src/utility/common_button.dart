@@ -96,7 +96,7 @@ class ElevatedButtonWidget extends StatelessWidget {
               ),
               Text(
                 buttonText,
-                style: TextStyles.boardingHeading.copyWith(
+                style: TextStyles.heading1.copyWith(
                     fontWeight: FontWeight.bold,
 
                     color: buttonTextColor ??  Colors.white),

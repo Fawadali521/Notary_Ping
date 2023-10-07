@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../styles.dart';
 import '../../utility/common_button.dart';
 import '../../utility/text_field.dart';
-import '../login/login_screen.dart';
+import 'Signin.dart';
 
 
 //Asimkhan1122
@@ -36,7 +36,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: height * 0.04,),
-              Text('Register',style: TextStyles.boardingHeading,),
+              Text('Register',style: TextStyles.heading1,),
               Text('Create Your Account Now',style: TextStyles.bodyBlack,),
 
 
@@ -77,9 +77,9 @@ class SignUpScreen extends StatelessWidget {
                    Checkbox(
                        activeColor: Colors.orange,
                        value: true, onChanged: (v){}),
-                  Text('Remember me',style: TextStyles.boardingHeading.copyWith(fontSize: 16),),
+                  Text('Remember me',style: TextStyles.heading1.copyWith(fontSize: 16),),
                   Spacer(),
-                  Text('Forgot Password',style: TextStyles.boardingHeading.copyWith(fontSize: 16),),
+                  Text('Forgot Password',style: TextStyles.heading1.copyWith(fontSize: 16),),
 
                 ],
               ),
@@ -95,11 +95,11 @@ class SignUpScreen extends StatelessWidget {
                       children: <TextSpan>[
                         TextSpan(
                           text: 'I agree with  ',
-                          style: TextStyles.boardingHeading.copyWith(fontSize: 16),
+                          style: TextStyles.heading1.copyWith(fontSize: 16),
                         ),
                         TextSpan(
                           text: 'Term and Condition',
-                          style: TextStyles.boardingHeading.copyWith(
+                          style: TextStyles.heading1.copyWith(
                               color: Colors.orange,
                               fontSize: 16),
                           // Add a gesture recognizer or onPressed callback for handling the tap
@@ -125,7 +125,7 @@ class SignUpScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 10.0), // Adjust the padding as needed
                     child: Text(
                         "OR Login With",
-                        style: TextStyles.boardingHeading.copyWith(
+                        style: TextStyles.heading1.copyWith(
                             fontSize: 16
                         )
                     ),
@@ -143,13 +143,13 @@ class SignUpScreen extends StatelessWidget {
               ),
               SizedBox(height: height * 0.02,),
 
-              SocialMediaW(),
+              //SocialMediaW(),
               SizedBox(height: height * 0.02,),
-              SocialMediaW(
-                icon: 'assets/images/google.png',
-                title: 'Continue with Google',
-
-              ),
+              // SocialMediaW(
+              //   icon: 'assets/images/google.png',
+              //   title: 'Continue with Google',
+              //
+              // ),
               SizedBox(height: height * 0.02,),
               Center(
                 child: RichText(
@@ -158,11 +158,11 @@ class SignUpScreen extends StatelessWidget {
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Have an account  ',
-                        style: TextStyles.boardingHeading.copyWith(fontSize: 16),
+                        style: TextStyles.heading1.copyWith(fontSize: 16),
                       ),
                       TextSpan(
                         text: 'Sign In',
-                        style: TextStyles.boardingHeading.copyWith(
+                        style: TextStyles.heading1.copyWith(
                             color: Colors.orange,
                             fontSize: 16),
                         // Add a gesture recognizer or onPressed callback for handling the tap

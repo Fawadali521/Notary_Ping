@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notary_ping/src/modules/onboarding/on_boarding_screen.dart';
+import 'package:notary_ping/src/modules/auth/on_boarding_screen.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'SplashScreen.dart';

@@ -25,7 +25,7 @@ class UpdateProfileScreen extends StatelessWidget {
               SizedBox(height: height * 0.08,),
               Center(
                 child: Text('Add your account information',
-                  style: TextStyles.boardingHeading.copyWith(fontSize: 14),),
+                  style: TextStyles.heading1.copyWith(fontSize: 14),),
               ),
               Stack(
                 children: [
@@ -77,7 +77,7 @@ class UpdateProfileScreen extends StatelessWidget {
 
 
               SizedBox(height: height * 0.04,),
-              Text('Contact Information',style: TextStyles.boardingHeading,),
+              Text('Contact Information',style: TextStyles.heading1,),
 
 
               SizedBox(height: height * 0.04,),
@@ -121,7 +121,7 @@ class UpdateProfileScreen extends StatelessWidget {
               const TextFieldWidget(),
 
               //
-              Text('personal  Information',style: TextStyles.boardingHeading,),
+              Text('personal  Information',style: TextStyles.heading1,),
               SizedBox(height: height * 0.04,),
               Text('First Name  ',style: TextStyles.bodyBlack,),
               SizedBox(height: height * 0.02,),
