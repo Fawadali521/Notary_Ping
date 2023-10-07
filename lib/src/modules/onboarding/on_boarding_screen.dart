@@ -5,28 +5,28 @@ import 'package:notary_ping/src/utility/common_button.dart';
 
 import '../../../styles.dart';
 import '../../model/content_model.dart';
+
 // Asimkhan1122
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
   @override
-   OnBoardingScreenState createState() =>  OnBoardingScreenState();
+  OnBoardingScreenState createState() => OnBoardingScreenState();
 }
 
-class  OnBoardingScreenState extends State<OnBoardingScreen> {
+class OnBoardingScreenState extends State<OnBoardingScreen> {
   int currentIndex = 0;
-  PageController?  controller;
-
+  PageController? controller;
 
   @override
   void initState() {
-     controller = PageController(initialPage: 0);
+    controller = PageController(initialPage: 0);
     super.initState();
   }
 
   @override
   void dispose() {
-     controller?.dispose();
+    controller?.dispose();
     super.dispose();
   }
 
@@ -53,24 +53,26 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: height * 0.08,),
+                      SizedBox(
+                        height: height * 0.08,
+                      ),
                       SvgPicture.asset(
                         contents[i].image!,
                         height: 300,
                       ),
-                      SizedBox(height: height * 0.1,),
-
-                      Text(
-                        contents[i].title!,
-                        style: TextStyles.boardingHeading
+                      SizedBox(
+                        height: height * 0.1,
                       ),
-                      SizedBox(height: height * 0.06,),
+                      Text(contents[i].title!,
+                          style: TextStyles.boardingHeading),
+                      SizedBox(
+                        height: height * 0.06,
+                      ),
                       Text(
                         contents[i].discription!,
                         textAlign: TextAlign.center,
-                        style: TextStyles.bodyBlack.copyWith(
-                          color: Colors.black.withOpacity(0.4)
-                        ),
+                        style: TextStyles.bodyBlack
+                            .copyWith(color: Colors.black.withOpacity(0.4)),
                       )
                     ],
                   ),
@@ -78,13 +80,11 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
               },
             ),
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                contents.length,
-                    (index) => buildDot(index, context),
-              ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              contents.length,
+              (index) => buildDot(index, context),
             ),
           ),
           Container(
@@ -92,8 +92,9 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
             margin: EdgeInsets.all(40),
             width: double.infinity,
             child: ElevatedButtonWidget(
-              buttonText: currentIndex == contents.length - 1 ? "Continue" : "Next",
-              onTap: (){
+              buttonText:
+                  currentIndex == contents.length - 1 ? "Continue" : "Next",
+              onTap: () {
                 if (currentIndex == contents.length - 1) {
                   Navigator.pushReplacement(
                     context,
@@ -103,7 +104,7 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
                   );
                 }
                 controller?.nextPage(
-                  duration: Duration(milliseconds: 100),
+                  duration: const Duration(milliseconds: 100),
                   curve: Curves.bounceIn,
                 );
               },
@@ -112,19 +113,19 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
             //   child: Text(
             //       currentIndex == contents.length - 1 ? "Continue" : "Next"),
             //   onPressed: () {
-                // if (currentIndex == contents.length - 1) {
-                //   Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (_) => LoginScreen(),
-                //     ),
-                //   );
-                // }
-                //  controller?.nextPage(
-                //   duration: Duration(milliseconds: 100),
-                //   curve: Curves.bounceIn,
-                // );
-              // },
+            // if (currentIndex == contents.length - 1) {
+            //   Navigator.pushReplacement(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (_) => LoginScreen(),
+            //     ),
+            //   );
+            // }
+            //  controller?.nextPage(
+            //   duration: Duration(milliseconds: 100),
+            //   curve: Curves.bounceIn,
+            // );
+            // },
             //   color: Theme.of(context).primaryColor,
             //   textColor: Colors.white,
             //   shape: RoundedRectangleBorder(
@@ -144,7 +145,9 @@ class  OnBoardingScreenState extends State<OnBoardingScreen> {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).primaryColor,
+        //todo
+        // color: Theme.of(context).primaryColor,
+        color: Palette.primaryColor,
       ),
     );
   }
