@@ -4,19 +4,17 @@
  import 'package:flutter/material.dart';
 import 'package:notary_ping/src/modules/auth/forgot_password_screen.dart';
 import 'package:notary_ping/src/modules/auth/OtpVerification.dart';
-import 'package:notary_ping/src/modules/auth/signup_screen.dart';
+import 'package:notary_ping/src/modules/auth/SignUp.dart';
  import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
 import '../../utility/SubmitButton.dart';
-import '../../utility/TextFieldPassword.dart';
-import '../../utility/text_field.dart';
+ import '../../utility/text_field.dart';
 
 // Asimkhan1122
 
         import 'package:flutter/gestures.dart';
- import 'package:flutter/material.dart';
- import 'package:flutter/services.dart';
+  import 'package:flutter/services.dart';
  import 'package:page_transition/page_transition.dart';
 
 
@@ -47,7 +45,7 @@ import '../../utility/text_field.dart';
                children: [
                  Padding(
                    padding: const EdgeInsets.only(
-                       top: 80.0, bottom: 30, left: 20, right: 20),
+                       top: 90.0, bottom: 30, left: 20, right: 20),
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
@@ -69,7 +67,7 @@ import '../../utility/text_field.dart';
                  ),
                  Padding(
                    padding:
-                   const EdgeInsets.only(left: 20.0, right: 20, bottom: 15),
+                   const EdgeInsets.only(top :30,left: 20.0, right: 20, bottom: 15),
                    child: TextFieldWidget(
                      hintText: 'Email',
                    )
@@ -97,7 +95,7 @@ import '../../utility/text_field.dart';
                                    child: const ForgotPassword()));
                          },
                          child: Text("Forgot password?",
-                             style: TextStyles.bodyBlack),
+                             style: TextStyles.bodyText),
                        ),
                        InkWell(
                            onTap: () {
@@ -105,10 +103,10 @@ import '../../utility/text_field.dart';
                                  context,
                                  PageTransition(
                                      type: PageTransitionType.fade,
-                                     child: const SignUpScreen()));
+                                     child:   SignUp()));
                            },
                            child: Text("SIGN UP",
-                               style: TextStyles.bodyBlack)),
+                               style: TextStyles.bodyText)),
                      ],
                    ),
                  ),
@@ -142,7 +140,7 @@ import '../../utility/text_field.dart';
                        ),
                        Text(
                          "OR",
-                         style: TextStyles.bodyBlack,
+                         style: TextStyles.bodyText,
                        ),
                        Container(
                          width: (width - 40) / 2 - 30,
@@ -155,6 +153,8 @@ import '../../utility/text_field.dart';
                      ],
                    ),
                  ),
+
+
                  Padding(
                    padding:
                    const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
@@ -182,11 +182,14 @@ import '../../utility/text_field.dart';
                      text: TextSpan(children: <TextSpan>[
                        const TextSpan(
                          text: 'By Signing In, you accept our ',
-                         style: TextStyles.bodyBlack,
+                         style: TextStyles.bodyText,
                        ),
                        TextSpan(
                            text: 'Terms Of Service',
-                           style: TextStyles.bodyBlack,
+                           style: TextStyles.bodyText.copyWith(
+                             color: Palette.primaryColor,
+                             fontWeight: FontWeight.bold
+                           ),
                            recognizer: TapGestureRecognizer()
                              ..onTap = () {
                                // Navigator.push(
@@ -197,11 +200,14 @@ import '../../utility/text_field.dart';
                              }),
                        const TextSpan(
                          text: ' and ',
-                         style: TextStyles.bodyBlack,
+                         style: TextStyles.bodyText,
                        ),
                        TextSpan(
                            text: 'Privacy Policy.',
-                           style: TextStyles.bodyBlack,
+                           style: TextStyles.bodyText.copyWith(
+                               color: Palette.primaryColor,
+                               fontWeight: FontWeight.bold
+                           ),
                            recognizer: TapGestureRecognizer()
                              ..onTap = () {
                                // Navigator.push(
@@ -253,7 +259,7 @@ import '../../utility/text_field.dart';
                children: [
                  Text(
                    socialTitle(status),
-                   style: TextStyles.bodyBlack,
+                   style: TextStyles.buttonText,
                    textAlign: TextAlign.center,
                  ),
                ],

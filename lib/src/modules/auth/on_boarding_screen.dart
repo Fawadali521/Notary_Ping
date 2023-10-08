@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:notary_ping/src/modules/auth/Signin.dart';
+ import 'package:notary_ping/src/modules/auth/Signin.dart';
 import 'package:notary_ping/src/utility/common_button.dart';
 
 import '../../../Infos.dart';
@@ -95,7 +94,7 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
                          child: Text(
                           Infos.contents[i]['description']!,
                           textAlign: TextAlign.center,
-                          style: TextStyles.bodyBlack
+                          style: TextStyles.bodyText
                               .copyWith(color: Colors.black.withOpacity(0.4)),
                       ),
                        )

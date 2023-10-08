@@ -18,7 +18,7 @@ final Icon? suffixIcon;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: TextStyles.bodyBlack,
+      style: TextStyles.bodyText,
       decoration:   InputDecoration(
         hintText: hintText ?? 'Enter email',
         prefixIcon:prefixIcon  ,

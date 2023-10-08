@@ -52,11 +52,11 @@ class OtpVerification extends StatelessWidget {
                     'you will be soon logged in',
                 textAlign: TextAlign.start,
 
-                style: TextStyles.bodyBlack,),
+                style: TextStyles.bodyText,),
 
                const Padding(
                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                 child: Center(child: Text('Enter the code in the box below ',style: TextStyles.bodyBlack,)),
+                 child: Center(child: Text('Enter the code in the box below ',style: TextStyles.bodyText,)),
                ),
            Padding(
              padding: const EdgeInsets.only(
@@ -65,7 +65,7 @@ class OtpVerification extends StatelessWidget {
              ),
              child: Center(
               child: Pinput(
-                length: 4,
+                length: 6,
 
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: defaultPinTheme.copyWith(

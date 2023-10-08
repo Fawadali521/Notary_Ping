@@ -40,7 +40,7 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
       child: TextField(
         controller: _controller,
         onChanged: widget.onChanged,
-        style: TextStyles.bodyBlack,
+        style: TextStyles.bodyText,
         cursorColor: Colors.white,
         decoration: InputDecoration(
           isDense: true,
@@ -53,7 +53,7 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
             Icons.person,
             color: Palette.primaryColor,
           ),
-          hintStyle: TextStyles.bodyBlack,
+          hintStyle: TextStyles.bodyText,
           border:   OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(

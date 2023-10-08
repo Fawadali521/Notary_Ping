@@ -44,14 +44,14 @@ class ResetPassword extends StatelessWidget {
                   'Your password must be different from the previously used password',
                   textAlign: TextAlign.start,
 
-                  style: TextStyles.bodyBlack,),
+                  style: TextStyles.bodyText,),
               ),
 
                Padding(
                  padding: const EdgeInsets.only(
                    top: 15
                  ),
-                 child: Text('New Password',style: TextStyles.bodyBlack,),
+                 child: Text('New Password',style: TextStyles.bodyText,),
                ),
 
               Padding(
@@ -67,7 +67,7 @@ class ResetPassword extends StatelessWidget {
                  padding: const EdgeInsets.only(
                    top: 20
                  ),
-                 child: Text('Confirm Password',style: TextStyles.bodyBlack,),
+                 child: Text('Confirm Password',style: TextStyles.bodyText,),
                ),
 
               Padding(

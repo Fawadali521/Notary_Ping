@@ -50,7 +50,7 @@ class ForgotPassword extends StatelessWidget {
                     'happen enter your email address assocaited with this account ',
                   textAlign: TextAlign.start,
 
-                  style: TextStyles.bodyBlack,),
+                  style: TextStyles.bodyText,),
               ),
 
                Padding(
@@ -59,7 +59,7 @@ class ForgotPassword extends StatelessWidget {
                    bottom: 20,
                    left: 10
                  ),
-                 child: Text('Email/phone',style: TextStyles.bodyBlack,),
+                 child: Text('Email/phone',style: TextStyles.bodyText,),
                ),
 
               Padding(
