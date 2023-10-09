@@ -1,23 +1,19 @@
-
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
- import 'package:notary_ping/src/controller/auth_controller.dart';
+import 'package:notary_ping/src/controller/auth_controller.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
 import '../../utility/SubmitButton.dart';
- import '../../utility/text_field.dart';
+import '../../utility/text_field.dart';
 import 'OtpVerification.dart';
 import 'Signin.dart';
 
-
 //Asimkhan1122
 class SignUp extends StatelessWidget {
-    SignUp({Key? key}) : super(key: key);
-
+  SignUp({Key? key}) : super(key: key);
 
   final AuthController controller = Get.put(AuthController());
 
@@ -55,7 +51,7 @@ class SignUp extends StatelessWidget {
                 ),
                 const Padding(
                   padding:
-                  EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
+                      EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
                   child: Text(
                     "Register",
                     style: TextStyles.heading1,
@@ -63,41 +59,38 @@ class SignUp extends StatelessWidget {
                 ),
 
                 const Padding(
-                  padding:
-                  EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   child: Text(
                     "Create your account now",
                     style: TextStyles.bodyText,
                   ),
                 ),
 
-
                 // tab bar
                 Padding(
                   padding: const EdgeInsets.only(
-                    top: 10,
-                    bottom: 20,
-                    left: 50,
-                    right: 50
-                  ),
+                      top: 10, bottom: 20, left: 50, right: 50),
                   child: Container(
                     height: 50,
-                     decoration: BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
-                       boxShadow: [
-                         BoxShadow(
-                           color: Colors.grey.withOpacity(0.5),
-                           spreadRadius: 1, // Use responsive_sizer for spreadRadius
-                           blurRadius: 1, // Use responsive_sizer for blurRadius
-                           offset: const Offset(0, 1),
-                         ),
-                       ],
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius:
+                              1, // Use responsive_sizer for spreadRadius
+                          blurRadius: 1, // Use responsive_sizer for blurRadius
+                          offset: const Offset(0, 1),
+                        ),
+                      ],
                     ),
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12, ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                      ),
                       child: TabBar(
-                         labelStyle: TextStyle(
+                        labelStyle: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
@@ -114,235 +107,201 @@ class SignUp extends StatelessWidget {
                         labelColor: Colors.white,
                         unselectedLabelColor: Colors.black,
                         indicator: BoxDecoration(
-                           borderRadius: BorderRadius.circular(10),
-                           // Use responsive_sizer for borderRadius
-                          color: Palette.primaryColor,
-                            shape: BoxShape.rectangle
-                        ),
-                        tabs:   [
+                            borderRadius: BorderRadius.circular(10),
+                            // Use responsive_sizer for borderRadius
+                            color: Palette.primaryColor,
+                            shape: BoxShape.rectangle),
+                        tabs: [
                           Tab(
-
-                              text: 'Notary ',
-
-
+                            text: 'Notary ',
                           ),
                           Tab(text: 'User'),
-
-
                         ],
                       ),
                     ),
                   ),
                 ),
-                
-                
+
                 SizedBox(
                   height: height * 0.7,
                   child: TabBarView(
                     controller: controller.tabController,
-
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
-                   children: [
-
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                       child: Text(
-                         "Full Name",
-                         style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                         padding:
-                         const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                         child: TextFieldWidget(
-                           hintText: 'Email',
-                         )
-                     ),
-
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Full Name",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Email',
+                              )),
 
 // commission expiration date
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                         "Commission expiration date",
-                         style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                         padding:
-                         const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                         child: TextFieldWidget(
-                           hintText: 'Expiry date',
-                           suffixIcon: Icon(Icons.calendar_month),
-                         )
-                     ),
-
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Commission expiration date",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Expiry date',
+                                suffixIcon: Icon(Icons.calendar_month),
+                              )),
 
 //city
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                         "City",
-                         style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                         padding:
-                         const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                         child: TextFieldWidget(
-                           hintText: 'City',
-                           suffixIcon: Icon(Icons.arrow_drop_down_sharp,size: 30,),
-                         )
-                     ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "City",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'City',
+                                suffixIcon: Icon(
+                                  Icons.arrow_drop_down_sharp,
+                                  size: 30,
+                                ),
+                              )),
 
 // state
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                         "State",
-                         style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                         padding:
-                         const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                         child: TextFieldWidget(
-                           hintText: 'State',
-                           suffixIcon: Icon(Icons.arrow_drop_down_sharp,size: 30,),
-                         )
-                     ),
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                       "Email",
-                       style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                       padding:
-                       const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                       child: TextFieldWidget(
-                         hintText: 'Email',
-                         suffixIcon: Icon(Icons.email_outlined),
-                       )
-                     ),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "State",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'State',
+                                suffixIcon: Icon(
+                                  Icons.arrow_drop_down_sharp,
+                                  size: 30,
+                                ),
+                              )),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Email",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Email',
+                                suffixIcon: Icon(Icons.email_outlined),
+                              )),
 
-
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                       "Password",
-                       style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                       padding:
-                       const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                       child: TextFieldWidget(
-                         hintText: 'Password',
-                         suffixIcon: Icon(Icons.visibility_off),
-                       )
-                     ),
-
-                   ],
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Password",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Password',
+                                suffixIcon: Icon(Icons.visibility_off),
+                              )),
+                        ],
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
-                   children: [
-
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                       child: Text(
-                         "Full Name",
-                         style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                         padding:
-                         const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                         child: TextFieldWidget(
-                           hintText: 'Email',
-                         )
-                     ),
-
-
-
-
-
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                       "Email",
-                       style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                       padding:
-                       const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                       child: TextFieldWidget(
-                         hintText: 'Email',
-                         suffixIcon: Icon(Icons.email_outlined),
-                       )
-                     ),
-
-
-                     const Padding(
-                       padding:
-                       EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-                       child: Text(
-                       "Password",
-                       style: TextStyles.normalHeading,
-                       ),
-                     ),
-                     Padding(
-                       padding:
-                       const EdgeInsets.only(top :5,left: 20.0, right: 20, bottom: 10),
-                       child: TextFieldWidget(
-                         hintText: 'Password',
-                         suffixIcon: Icon(Icons.visibility_off),
-                       )
-                     ),
-
-                   ],
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Full Name",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Email',
+                              )),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Email",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Email',
+                                suffixIcon: Icon(Icons.email_outlined),
+                              )),
+                          const Padding(
+                            padding: EdgeInsets.only(
+                                top: 10, left: 20, right: 20, bottom: 10),
+                            child: Text(
+                              "Password",
+                              style: TextStyles.normalHeading,
+                            ),
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 5, left: 20.0, right: 20, bottom: 10),
+                              child: TextFieldWidget(
+                                hintText: 'Password',
+                                suffixIcon: Icon(Icons.visibility_off),
+                              )),
+                        ],
                       ),
-
                     ],
                   ),
                 ),
-                
-
-
 
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 0,
-                    right: 10,
-                    left: 10
-                  ),
+                  padding: const EdgeInsets.only(top: 0, right: 10, left: 10),
                   child: Row(
                     children: [
                       Obx(
-                            () => Checkbox(
-                              activeColor: Palette.primaryColor,
+                        () => Checkbox(
+                          activeColor: Palette.primaryColor,
                           value: controller.isChecked.value,
                           onChanged: (newValue) {
                             // Call the toggleCheckbox function to update the checkbox state
                             controller.toggleCheckbox();
                           },
                         ),
-                      ),                      Padding(
+                      ),
+                      Padding(
                         padding: const EdgeInsets.only(right: 10),
                         child: RichText(
                           textAlign: TextAlign.center,
@@ -355,8 +314,7 @@ class SignUp extends StatelessWidget {
                                 text: 'Terms and condition',
                                 style: TextStyles.bodyText.copyWith(
                                     color: Palette.primaryColor,
-                                    fontWeight: FontWeight.bold
-                                ),
+                                    fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     // Navigator.push(
@@ -365,7 +323,6 @@ class SignUp extends StatelessWidget {
                                     //         type: PageTransitionType.fade,
                                     //         child: const TermsConditions()));
                                   }),
-
                           ]),
                         ),
                       ),
@@ -373,10 +330,9 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
 
-
-
-                 Padding(
-                  padding: const EdgeInsets.only(top: 20,left: 20.0, right: 20),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 20, left: 20.0, right: 20),
                   child: SubmitButton(
                     color: Palette.secondaryColor,
                     onTap: () {
@@ -384,7 +340,7 @@ class SignUp extends StatelessWidget {
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
-                              child:   OtpVerification()));
+                              child: OtpVerification()));
                     },
                     title: "Register",
                   ),
@@ -419,10 +375,9 @@ class SignUp extends StatelessWidget {
                   ),
                 ),
 
-
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
                   child: SocialButton(
                     onTap: () {},
                     status: "AP",
@@ -430,7 +385,7 @@ class SignUp extends StatelessWidget {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
+                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
                   child: SocialButton(
                     onTap: () {},
                     status: "GO",
@@ -453,8 +408,7 @@ class SignUp extends StatelessWidget {
                           text: 'Sign in',
                           style: TextStyles.bodyText.copyWith(
                               color: Palette.primaryColor,
-                              fontWeight: FontWeight.bold
-                          ),
+                              fontWeight: FontWeight.bold),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               Navigator.push(
@@ -463,7 +417,7 @@ class SignUp extends StatelessWidget {
                                       type: PageTransitionType.fade,
                                       child: const SignIn()));
                             }),
-                     ]),
+                    ]),
                   ),
                 ),
               ],
