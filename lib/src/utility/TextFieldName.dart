@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:notary_ping/styles.dart';
 
-class TextFieldEmail extends StatefulWidget {
+class TextFieldName extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final String? hint;
 
-  const TextFieldEmail({
+  const TextFieldName({
     Key? key,
     this.onChanged,
     this.hint,
   }) : super(key: key);
 
   @override
-  State<TextFieldEmail> createState() => _TextFieldEmailState();
+  State<TextFieldName> createState() => _TextFieldNameState();
 }
 
-class _TextFieldEmailState extends State<TextFieldEmail> {
+class _TextFieldNameState extends State<TextFieldName> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -29,9 +29,9 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
         cursorColor: Palette.primaryColor,
         decoration: InputDecoration(
           isDense: true,
-          hintText: widget.hint ?? 'Enter your Email Id',
+          hintText: widget.hint ?? 'Enter your Name',
           prefixIcon: const Icon(
-            Icons.mail,
+            Icons.person,
             color: Palette.primaryColor,
             size: 22,
           ),

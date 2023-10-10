@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:notary_ping/src/controller/auth_controller.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
+import 'package:notary_ping/src/utility/TextFieldName.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
@@ -42,50 +43,49 @@ class SignUpState extends State<SignUp> {
       body: ListView(
         shrinkWrap: true,
         physics: const ClampingScrollPhysics(),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         children: [
-          const SafeArea(child: SizedBox()),
+          const SafeArea(
+            child: SizedBox(),
+          ),
           Padding(
-            padding: const EdgeInsets.only(
-              top: 20.0,
-              bottom: 30,
-              left: 20,
-              right: 20,
-            ),
+            padding: const EdgeInsets.only(bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
                   "assets/logo/full-logo.png",
                   fit: BoxFit.contain,
-                  width: width * 0.6,
+                  width: width - 40,
+                  height: height * 0.08,
                 ),
               ],
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
-            child: Text(
-              "Register",
-              style: TextStyles.heading1,
+            padding: EdgeInsets.only(
+              bottom: 25,
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             child: Text(
-              "Create your account now",
-              style: TextStyles.bodyText,
+              "Let's\nSign You Up!",
+              style: TextStyles.authTitleHeadingBlack,
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 15, right: 20, left: 20),
+            padding: const EdgeInsets.only(
+              bottom: 30,
+            ),
             child: Container(
-              height: 50,
+              height: 43,
               decoration: BoxDecoration(
                 borderRadius: BorderStyles.buttonRadius,
+                border: Border.all(
+                  color: Palette.primaryColor,
+                  width: 1,
+                ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
+                    color: Colors.black.withOpacity(0.01),
                     spreadRadius: 1,
                     blurRadius: 1,
                     offset: const Offset(0, 1),
@@ -118,15 +118,10 @@ class SignUpState extends State<SignUp> {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            "User",
-                            style: TextStyles.buttonText.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: currentPage == 0
-                                  ? Colors.white // Selected tab text color
-                                  : Colors.black, // Inactive tab text color
-                            ),
-                          ),
+                          child: Text("User",
+                              style: currentPage == 0
+                                  ? TextStyles.buttonText
+                                  : TextStyles.buttonTextBlack),
                         ),
                       ),
                     ),
@@ -172,20 +167,28 @@ class SignUpState extends State<SignUp> {
               ),
             ),
           ),
-          ExpandablePageView(
-            controller: pageController,
-            children: [
-              userContent(),
-              notaryContent(context),
-            ],
+          MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            removeBottom: true,
+            child: ExpandablePageView(
+              controller: pageController,
+              children: [
+                userContent(),
+                notaryContent(context),
+              ],
+            ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+            padding: const EdgeInsets.only(bottom: 20, top: 0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Already have an account?",
-                    style: TextStyles.normalHeading.copyWith(fontSize: 14)),
+                const Opacity(
+                  opacity: 0.5,
+                  child: Text("Already have an account?",
+                      style: TextStyles.normalHeading),
+                ),
                 InkWell(
                     onTap: () {
                       Navigator.push(
@@ -194,16 +197,14 @@ class SignUpState extends State<SignUp> {
                               type: PageTransitionType.fade,
                               child: const SignIn()));
                     },
-                    child: Text("SIGN In",
-                        style:
-                            TextStyles.normalHeading.copyWith(fontSize: 14))),
+                    child:
+                        const Text("SIGN IN", style: TextStyles.normalHeading)),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 20, left: 20.0, right: 20),
+            padding: const EdgeInsets.only(bottom: 10),
             child: SubmitButton(
-              color: Palette.secondaryColor,
               onTap: () {
                 Navigator.push(
                     context,
@@ -211,12 +212,11 @@ class SignUpState extends State<SignUp> {
                         type: PageTransitionType.fade,
                         child: OtpVerification()));
               },
-              title: "Register",
+              title: "Continue",
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                left: 20.0, right: 20, bottom: 15, top: 15),
+            padding: const EdgeInsets.only(bottom: 15, top: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -224,19 +224,22 @@ class SignUpState extends State<SignUp> {
                   width: (width - 40) / 2 - 30,
                   height: 2,
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.05),
                     borderRadius: BorderStyles.norm,
                   ),
                 ),
-                const Text(
-                  "OR",
-                  style: TextStyles.bodyText,
+                const Opacity(
+                  opacity: 0.5,
+                  child: Text(
+                    "OR",
+                    style: TextStyles.normalHeading,
+                  ),
                 ),
                 Container(
                   width: (width - 40) / 2 - 30,
                   height: 2,
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withOpacity(0.05),
                     borderRadius: BorderStyles.norm,
                   ),
                 ),
@@ -244,14 +247,14 @@ class SignUpState extends State<SignUp> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
+            padding: const EdgeInsets.only(bottom: 15),
             child: SocialButton(
               onTap: () {},
               status: "AP",
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
+            padding: const EdgeInsets.only(bottom: 30),
             child: SocialButton(
               onTap: () {},
               status: "GO",
@@ -260,48 +263,26 @@ class SignUpState extends State<SignUp> {
           Padding(
             padding: const EdgeInsets.only(
               bottom: 30,
-              left: 15,
-              right: 20,
             ),
             child: RichText(
               textAlign: TextAlign.center,
               text: TextSpan(children: <TextSpan>[
                 TextSpan(
                   text: 'By Signing Up, you accept our ',
-                  style: TextStyles.bodyText.copyWith(fontSize: 14),
+                  style: TextStyles().privacyBLack,
                 ),
                 TextSpan(
                     text: ' Terms Of Service',
-                    style: TextStyles.bodyText.copyWith(
-                        color: Palette.primaryColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         type: PageTransitionType.fade,
-                        //         child: const TermsConditions()));
-                      }),
+                    style: TextStyles().privacySecondaryColor,
+                    recognizer: TapGestureRecognizer()..onTap = () {}),
                 TextSpan(
                   text: ' and ',
-                  style: TextStyles.bodyText.copyWith(fontSize: 14),
+                  style: TextStyles().privacyBLack,
                 ),
                 TextSpan(
                     text: 'Privacy Policy.',
-                    style: TextStyles.bodyText.copyWith(
-                        fontSize: 14,
-                        color: Palette.primaryColor,
-                        fontWeight: FontWeight.bold),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        // Navigator.push(
-                        //     context,
-                        //     PageTransition(
-                        //         type: PageTransitionType.fade,
-                        //         child: const PrivacyPolicy()));
-                      }),
+                    style: TextStyles().privacySecondaryColor,
+                    recognizer: TapGestureRecognizer()..onTap = () {}),
               ]),
             ),
           ),
@@ -315,44 +296,19 @@ Widget userContent() {
   return ListView(
     shrinkWrap: true,
     physics: const ClampingScrollPhysics(),
-    children: [
-      const Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Name",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
-          child: TextFieldEmail(
+    children: const [
+      Padding(
+          padding: EdgeInsets.only(bottom: 15),
+          child: TextFieldName(
             hint: 'Enter your Name',
           )),
-      const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Email",
-          style: TextStyles.normalHeading,
-        ),
-      ),
       Padding(
-        padding:
-            const EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
+        padding: EdgeInsets.only(bottom: 15),
         child: TextFieldEmail(
-          hint: 'Enter you email ',
+          hint: 'Enter you Email Id',
         ),
       ),
-      const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Password",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      Padding(
-          padding:
-              const EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
-          child: PasswordField()),
+      Padding(padding: EdgeInsets.only(bottom: 15), child: PasswordField()),
     ],
   );
 }
@@ -363,59 +319,21 @@ Widget notaryContent(BuildContext context) {
     physics: const ClampingScrollPhysics(),
     children: [
       const Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Name",
-          style: TextStyles.normalHeading,
-        ),
-      ),
+          padding: EdgeInsets.only(top: 5, bottom: 10), child: TextFieldName()),
       const Padding(
-          padding: EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
-          child: TextFieldEmail(
-            hint: 'Enter your name ',
-          )),
-
-      //email
+          padding: EdgeInsets.only(top: 5, bottom: 10),
+          child: TextFieldEmail()),
       const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Email",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
-          child: TextFieldEmail(
-            hint: 'Enter you email ',
-          )),
-      // city
-      const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "City",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
+          padding: EdgeInsets.only(top: 5, bottom: 10),
           child: TextFieldWidget(
-            hintText: 'City',
+            hintText: 'Select your City',
             suffixIcon: Icon(
               Icons.arrow_drop_down_sharp,
               size: 30,
             ),
           )),
-// state
-
       const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "State",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      const Padding(
-          padding: EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
+          padding: EdgeInsets.only(top: 5, bottom: 10),
           child: TextFieldWidget(
             hintText: 'State',
             suffixIcon: Icon(
@@ -423,20 +341,10 @@ Widget notaryContent(BuildContext context) {
               size: 30,
             ),
           )),
-
-// commission expiration date
-      const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Commission expiration date",
-          style: TextStyles.normalHeading,
-        ),
-      ),
       Padding(
-        padding:
-            const EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
+        padding: const EdgeInsets.only(top: 5, bottom: 10),
         child: TextFieldWidget(
-          hintText: 'Expiry date',
+          hintText: 'Select Commission Expiry date',
           prefixIcon: const Icon(
             Icons.calendar_month,
             color: Palette.primaryColor,
@@ -462,18 +370,8 @@ Widget notaryContent(BuildContext context) {
           },
         ),
       ),
-
       const Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 10),
-        child: Text(
-          "Password",
-          style: TextStyles.normalHeading,
-        ),
-      ),
-      Padding(
-          padding:
-              const EdgeInsets.only(top: 5, left: 20.0, right: 20, bottom: 10),
-          child: PasswordField()),
+          padding: EdgeInsets.only(top: 5, bottom: 10), child: PasswordField()),
     ],
   );
 }

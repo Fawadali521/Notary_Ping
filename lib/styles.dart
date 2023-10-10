@@ -27,6 +27,11 @@ class TextStyles {
       fontSize: 14,
       color: Colors.white,
       fontFamily: 'Montserrat-Bold');
+  static const buttonTextBlack = TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 14,
+      color: Colors.black,
+      fontFamily: 'Montserrat-Bold');
   static const authTitleHeadingBlack = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 22,
