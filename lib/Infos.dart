@@ -1,24 +1,22 @@
-
 class Infos {
-
   static List<Map<String, String>> contents = [
     {
-      'title': 'Connect Face to Face \n with a registered notary',
+      'title': 'Consultation Session',
       'image': 'assets/onboarding-vectors/1.png',
       'description':
-      "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+          "Engage in detailed discussions with our notaries, ensuring every step of the process is clear and tailored to your specific needs.",
     },
     {
-      'title': 'Connect Face to Face \n with a registered notary',
+      'title': 'Document Verification',
       'image': 'assets/onboarding-vectors/2.png',
       'description':
-      "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+          "Our notaries meticulously review every document, guaranteeing the utmost accuracy and ensuring your paperwork stands up to scrutiny.",
     },
     {
-      'title': 'Connect Face to Face \n with a registered notary',
+      'title': 'Official Stamp of Approval',
       'image': 'assets/onboarding-vectors/3.png',
       'description':
-      "simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+          "Experience the confidence that comes from our official stamp, symbolizing trust, credibility, and a commitment to the highest standards of notarial services.",
     },
   ];
 }
