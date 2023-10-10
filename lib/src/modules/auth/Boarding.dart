@@ -37,12 +37,15 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   void startTimer() {
     timer = Timer.periodic(const Duration(milliseconds: 2500), (timer) {
       if (currentIndex < Infos.contents.length - 1) {
-        controller?.nextPage(
-          duration: const Duration(milliseconds: 1000),
-          curve: Curves.easeInOut,
+        controller?.animateToPage(
+          currentIndex + 1,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeIn,
         );
       } else {
-        controller?.jumpToPage(0);
+        controller?.jumpToPage(
+          0,
+        );
       }
     });
   }
