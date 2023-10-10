@@ -297,16 +297,10 @@ Widget userContent() {
     shrinkWrap: true,
     physics: const ClampingScrollPhysics(),
     children: const [
-      Padding(
-          padding: EdgeInsets.only(bottom: 15),
-          child: TextFieldName(
-            hint: 'Enter your Name',
-          )),
+      Padding(padding: EdgeInsets.only(bottom: 15), child: TextFieldName()),
       Padding(
         padding: EdgeInsets.only(bottom: 15),
-        child: TextFieldEmail(
-          hint: 'Enter you Email Id',
-        ),
+        child: TextFieldEmail(),
       ),
       Padding(padding: EdgeInsets.only(bottom: 15), child: PasswordField()),
     ],

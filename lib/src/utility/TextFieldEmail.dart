@@ -29,7 +29,7 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
         cursorColor: Palette.primaryColor,
         decoration: InputDecoration(
           isDense: true,
-          hintText: widget.hint ?? 'Enter your Email Id',
+          hintText: widget.hint ?? 'Enter your Email',
           prefixIcon: const Icon(
             Icons.mail,
             color: Palette.primaryColor,

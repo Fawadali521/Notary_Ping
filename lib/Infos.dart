@@ -1,4 +1,5 @@
 class Infos {
+  final List<String> dropdownItems = ['+241', '+91', '+1'];
   static List<Map<String, String>> contents = [
     {
       'title': 'Consultation Session',

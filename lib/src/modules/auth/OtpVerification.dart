@@ -74,9 +74,6 @@ class OtpVerification extends StatelessWidget {
                       ),
                     ),
                     submittedPinTheme: PinTheme(),
-                    validator: (s) {
-                      return s == '2222' ? null : 'Pin is incorrect';
-                    },
                     pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                     showCursor: true,
                     onCompleted: (pin) => print(pin),
@@ -91,7 +88,7 @@ class OtpVerification extends StatelessWidget {
               SizedBox(
                 height: height * 0.06,
               ),
-             ],
+            ],
           ),
         ),
       ),
