@@ -1,20 +1,15 @@
-
 import 'package:flutter/material.dart';
 
 import '../../styles.dart';
 
 class TextFieldEmail extends StatefulWidget {
   final ValueChanged<String>? onChanged;
-  final String? initialText;
-  final Widget? suffixIcon;
-  final Widget? prefixIcon;
+  final String? hint;
 
   const TextFieldEmail({
     Key? key,
     this.onChanged,
-    this.initialText,
-    this.suffixIcon,
-    this.prefixIcon
+    this.hint,
   }) : super(key: key);
 
   @override
@@ -22,38 +17,28 @@ class TextFieldEmail extends StatefulWidget {
 }
 
 class _TextFieldEmailState extends State<TextFieldEmail> {
-  TextEditingController? _controller;
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initialText != null) {
-      _controller = TextEditingController(text: widget.initialText);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
 
     return SizedBox(
       width: width - 40,
-      height: 50,
+      height: 45,
       child: TextField(
-        controller: _controller,
         onChanged: widget.onChanged,
-        style: TextStyles.bodyText,
-        cursorColor: Colors.white,
+        style: TextStyles.textField,
+        cursorColor: Palette.primaryColor,
         decoration: InputDecoration(
           isDense: true,
-          hintText: widget.initialText ?? 'Enter your email',
-          suffixIcon: widget.suffixIcon,
-          prefixIcon: widget.prefixIcon,
-          hintStyle: TextStyles.hintText.copyWith(fontWeight: FontWeight.normal),
-          contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12),
+          hintText: widget.hint ?? 'Enter your Email Id',
+          prefixIcon: const Icon(
+            Icons.mail,
+            color: Palette.primaryColor,
+            size: 22,
+          ),
+          hintStyle: TextStyles().textFieldHint,
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12),
           filled: true,
           fillColor: Palette.textFieldFill,
           border: const OutlineInputBorder(
@@ -66,16 +51,9 @@ class _TextFieldEmailState extends State<TextFieldEmail> {
           focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide:
-              BorderSide(width: 1.0, color: Colors.grey.withOpacity(0.1))),
-
+                  BorderSide(width: 1.0, color: Colors.grey.withOpacity(0.1))),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 }

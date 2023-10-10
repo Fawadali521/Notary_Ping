@@ -27,7 +27,7 @@ class SubmitButton extends StatelessWidget {
       child: Center(
         child: Text(
           title,
-          style: TextStyles.buttonText.copyWith(fontWeight: FontWeight.w600),
+          style: TextStyles.buttonText,
           textAlign: TextAlign.center,
         ),
       ),

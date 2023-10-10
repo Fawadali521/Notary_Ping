@@ -24,9 +24,34 @@ class TextStyles {
       fontFamily: 'Montserrat-Regular');
   static const buttonText = TextStyle(
       fontWeight: FontWeight.w600,
-      fontSize: 16,
+      fontSize: 14,
       color: Colors.white,
       fontFamily: 'Montserrat-Bold');
+  static const authTitleHeadingBlack = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 22,
+      color: Colors.black,
+      fontFamily: 'Montserrat-Medium');
+  static const textField = TextStyle(
+      fontWeight: FontWeight.w100,
+      fontSize: 13,
+      color: Colors.black,
+      fontFamily: 'Montserrat-Medium');
+  TextStyle textFieldHint = TextStyle(
+      fontWeight: FontWeight.w100,
+      fontSize: 13,
+      color: Colors.black.withOpacity(0.5),
+      fontFamily: 'Montserrat-Medium');
+  TextStyle privacyBLack = TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      color: Colors.black.withOpacity(0.8),
+      fontFamily: 'Montserrat-Medium');
+  TextStyle privacySecondaryColor = TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      color: Palette.secondaryColor.withOpacity(0.9),
+      fontFamily: 'Montserrat-Medium');
 }
 
 class BorderStyles {
@@ -36,8 +61,8 @@ class BorderStyles {
 }
 
 class Palette {
-  static const Color primaryColor = blue1;
-  static const Color secondaryColor = blue3;
+  static const Color primaryColor = blue3;
+  static const Color secondaryColor = blue2;
   static const Color textFieldFill = Color(0xFFf5f7f9);
 
   static const Color blue1 = Color(0xFF0DB1EF);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:notary_ping/LandingPage.dart';
 import 'package:notary_ping/src/modules/auth/SignIn.dart';
 
 void main() {
@@ -30,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const LandingPage(),
+      home: const SignIn(),
     );
   }
 }

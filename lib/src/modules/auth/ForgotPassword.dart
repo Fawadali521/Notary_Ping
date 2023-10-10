@@ -3,7 +3,6 @@ import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 
 import '../../../styles.dart';
-import '../../utility/TextField.dart';
 
 //Asimkhan1122
 class ForgotPassword extends StatelessWidget {
@@ -55,20 +54,11 @@ class ForgotPassword extends StatelessWidget {
                   style: TextStyles.bodyText,
                 ),
               ),
-                Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: TextFieldEmail(
-                  initialText: 'Enter you email ',
-                  prefixIcon: Padding(
-                    padding:   EdgeInsets.all(12.0),
-                    child: Image.asset('assets/images/mail.png',
-                      height: 10,
-                      width: 10,
-                      color: Palette.primaryColor,
-                    ),
-                  ),
-                )
-              ),
+              Padding(
+                  padding: EdgeInsets.only(top: 20, bottom: 20),
+                  child: TextFieldEmail(
+                    hint: 'Enter you email ',
+                  )),
               SubmitButton(onTap: () {}, title: 'SEND'),
               SizedBox(
                 height: height * 0.02,
