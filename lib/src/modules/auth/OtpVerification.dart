@@ -91,17 +91,7 @@ class OtpVerification extends StatelessWidget {
               SizedBox(
                 height: height * 0.06,
               ),
-              Center(
-                child: Image.asset(
-                  'assets/logo/full-logo.png',
-                  height: height * 0.06,
-                  width: width * 0.6,
-                ),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-            ],
+             ],
           ),
         ),
       ),

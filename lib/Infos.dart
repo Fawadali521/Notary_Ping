@@ -1,4 +1,3 @@
-import 'package:notary_ping/src/model/content_model.dart';
 
 class Infos {
 

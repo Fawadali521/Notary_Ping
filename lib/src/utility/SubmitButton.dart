@@ -11,7 +11,7 @@ class SubmitButton extends StatelessWidget {
       {super.key,
         required this.onTap,
         required this.title,
-        this.color = Palette.primaryColor});
+        this.color = Palette.secondaryColor});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,17 @@ class SubmitButton extends StatelessWidget {
         onTap();
       },
       elevation: 1,
-      height: 50,
+      height: 45,
       color: color,
-      shape:   RoundedRectangleBorder(
-        borderRadius:BorderRadius.circular(10),
+      shape:   const RoundedRectangleBorder(
+        borderRadius: BorderStyles.buttonRadius,
       ),
       child: Center(
         child: Text(
           title,
-         style: TextStyles.buttonText,
+         style: TextStyles.buttonText.copyWith(
+           fontWeight: FontWeight.w600
+         ),
           textAlign: TextAlign.center,
         ),
       ),

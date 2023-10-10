@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../styles.dart';
-import '../../utility/text_field.dart';
+import '../../utility/TextField.dart';
 
 //Asimkhan1122 '
 class ResetPassword extends StatelessWidget {

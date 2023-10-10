@@ -1,1 +1,4 @@
-class ToastMsg {}
+class ToastMsg {
+
+
+}

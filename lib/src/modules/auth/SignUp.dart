@@ -1,430 +1,666 @@
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
+ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:notary_ping/src/controller/auth_controller.dart';
+import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
 import '../../utility/SubmitButton.dart';
-import '../../utility/text_field.dart';
+import '../../utility/TextField.dart';
+import '../../utility/TextFieldPassword.dart';
 import 'OtpVerification.dart';
-import 'Signin.dart';
+import 'SignIn.dart';
 
-//Asimkhan1122
-class SignUp extends StatelessWidget {
-  SignUp({Key? key}) : super(key: key);
+import 'package:flutter/gestures.dart';
 
+
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
+
+  @override
+   SignUpState createState() =>  SignUpState();
+}
+
+class  SignUpState extends State<SignUp> {
   final AuthController controller = Get.put(AuthController());
+  PageController pageController = PageController(initialPage: 0);
+  int currentPage = 0; // Current page index
+
+  DateTime? selectedDate; // Add selectedDate variable
+
 
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
-      statusBarBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
     ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      body: Stack(
+      body: ListView(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+
         children: [
-          MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: ListView(
-              shrinkWrap: true,
-              physics: const ClampingScrollPhysics(),
+          const SafeArea(child: SizedBox()),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 20.0,
+              bottom: 30,
+              left: 20,
+              right: 20,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 90.0, bottom: 30, left: 20, right: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/logo/full-logo.png",
-                        fit: BoxFit.contain,
-                        width: width * 0.6,
-                      ),
-                    ],
-                  ),
+                Image.asset(
+                  "assets/logo/full-logo.png",
+                  fit: BoxFit.contain,
+                  width: width * 0.6,
                 ),
-                const Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
-                  child: Text(
-                    "Register",
-                    style: TextStyles.heading1,
-                  ),
-                ),
-
-                const Padding(
-                  padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                  child: Text(
-                    "Create your account now",
-                    style: TextStyles.bodyText,
-                  ),
-                ),
-
-                // tab bar
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, bottom: 20, left: 50, right: 50),
-                  child: Container(
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius:
-                              1, // Use responsive_sizer for spreadRadius
-                          blurRadius: 1, // Use responsive_sizer for blurRadius
-                          offset: const Offset(0, 1),
-                        ),
-                      ],
+              ],
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
+            child: Text(
+              "Register",
+              style: TextStyles.heading1,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            child: Text(
+              "Create your account now",
+              style: TextStyles.bodyText,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 10,
+              bottom: 15,
+              right: 20,
+              left: 20
+            ),
+            child: Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderStyles.buttonRadius,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 1,
+                      offset: const Offset(0, 1),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 12,
-                      ),
-                      child: TabBar(
-                        labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                        unselectedLabelStyle: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 16,
-                        ),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 0,
-                          vertical: 6,
-                        ), // Use responsive_sizer for padding
-                        controller: controller.tabController,
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.black,
-                        indicator: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            // Use responsive_sizer for borderRadius
-                            color: Palette.primaryColor,
-                            shape: BoxShape.rectangle),
-                        tabs: [
-                          Tab(
-                            text: 'Notary ',
+                  ],
+
+                ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          currentPage = 0; // Set the current page to 0 (Notary)
+                        });
+                        pageController.animateToPage(
+                          0,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+
+                          color: currentPage == 0
+                              ? Palette.primaryColor // Selected tab color
+                              : Colors.white, // Inactive tab color
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(16),
+                            bottomLeft: Radius.circular(16),
+
                           ),
-                          Tab(text: 'User'),
-                        ],
+                        ),
+                        child: Center(
+                          child: Text(
+                            "User",
+                            style: TextStyles.buttonText.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: currentPage == 0
+                                 ? Colors.white // Selected tab text color
+                                     : Colors.black, // Inactive tab text color
+
+                            ),
+
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          currentPage = 1; // Set the current page to 0 (Notary)
+                        });
+                        pageController.animateToPage(
+                          1,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: currentPage == 1
+                              ? Palette.primaryColor // Selected tab color
+                              : Colors.white, // Inactive tab color
+                          borderRadius: const BorderRadius.only(
+                            topRight: Radius.circular(16),
+                            bottomRight: Radius.circular(16),
 
-                SizedBox(
-                  height: height * 0.7,
-                  child: TabBarView(
-                    controller: controller.tabController,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Full Name",
-                              style: TextStyles.normalHeading,
-                            ),
                           ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Email',
-                              )),
 
-// commission expiration date
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Commission expiration date",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Expiry date',
-                                suffixIcon: Icon(Icons.calendar_month),
-                              )),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Notary",
+                            style: TextStyles.buttonText.copyWith(
+                              fontWeight: FontWeight.w200,
+                              color: currentPage == 1
+                                  ? Colors.white // Selected tab text color
+                                  : Colors.black, // Inactive tab text color
 
-//city
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "City",
-                              style: TextStyles.normalHeading,
                             ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'City',
-                                suffixIcon: Icon(
-                                  Icons.arrow_drop_down_sharp,
-                                  size: 30,
-                                ),
-                              )),
 
-// state
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "State",
-                              style: TextStyles.normalHeading,
-                            ),
                           ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'State',
-                                suffixIcon: Icon(
-                                  Icons.arrow_drop_down_sharp,
-                                  size: 30,
-                                ),
-                              )),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Email",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Email',
-                                suffixIcon: Icon(Icons.email_outlined),
-                              )),
-
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Password",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Password',
-                                suffixIcon: Icon(Icons.visibility_off),
-                              )),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Full Name",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Email',
-                              )),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Email",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Email',
-                                suffixIcon: Icon(Icons.email_outlined),
-                              )),
-                          const Padding(
-                            padding: EdgeInsets.only(
-                                top: 10, left: 20, right: 20, bottom: 10),
-                            child: Text(
-                              "Password",
-                              style: TextStyles.normalHeading,
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 5, left: 20.0, right: 20, bottom: 10),
-                              child: TextFieldWidget(
-                                hintText: 'Password',
-                                suffixIcon: Icon(Icons.visibility_off),
-                              )),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 10, left: 10),
-                  child: Row(
-                    children: [
-                      Obx(
-                        () => Checkbox(
-                          activeColor: Palette.primaryColor,
-                          value: controller.isChecked.value,
-                          onChanged: (newValue) {
-                            // Call the toggleCheckbox function to update the checkbox state
-                            controller.toggleCheckbox();
-                          },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(children: <TextSpan>[
-                            const TextSpan(
-                              text: 'I agree with ',
-                              style: TextStyles.bodyText,
-                            ),
-                            TextSpan(
-                                text: 'Terms and condition',
-                                style: TextStyles.bodyText.copyWith(
-                                    color: Palette.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     PageTransition(
-                                    //         type: PageTransitionType.fade,
-                                    //         child: const TermsConditions()));
-                                  }),
-                          ]),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
+              ),
+            ),
+          ),
+          ExpandablePageView(
+            controller: pageController,
+            children: [
+              userContent(),
+              notaryContent(context),
 
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 20, left: 20.0, right: 20),
-                  child: SubmitButton(
-                    color: Palette.secondaryColor,
+
+
+
+             ],
+          ),
+
+          Padding(
+            padding:
+            const EdgeInsets.only(left: 20.0, right: 20, bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Already have an account?", style: TextStyles.normalHeading.copyWith(
+                    fontSize: 14
+                )),
+                InkWell(
                     onTap: () {
                       Navigator.push(
                           context,
                           PageTransition(
                               type: PageTransitionType.fade,
-                              child: OtpVerification()));
+                              child: const SignIn())
+                      );
                     },
-                    title: "Register",
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20.0, right: 20, bottom: 15, top: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: (width - 40) / 2 - 30,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.1),
-                          borderRadius: BorderStyles.norm,
-                        ),
-                      ),
-                      Text(
-                        "OR",
-                        style: TextStyles.bodyText,
-                      ),
-                      Container(
-                        width: (width - 40) / 2 - 30,
-                        height: 2,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.1),
-                          borderRadius: BorderStyles.norm,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                    child: Text("SIGN In", style: TextStyles.normalHeading.copyWith(
+                        fontSize: 14
+                    ))),
+              ],
+            ),
+          ),
+                     Padding(
+            padding:
+                const EdgeInsets.only(top: 20, left: 20.0, right: 20),
+            child: SubmitButton(
+              color: Palette.secondaryColor,
+              onTap: () {
+                Navigator.push(
+                    context,
+                    PageTransition(
+                        type: PageTransitionType.fade,
+                        child: OtpVerification()));
+              },
+              title: "Register",
+            ),
+          ),
 
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
-                  child: SocialButton(
-                    onTap: () {},
-                    status: "AP",
+                    Padding(
+            padding: const EdgeInsets.only(
+                left: 20.0, right: 20, bottom: 15, top: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: (width - 40) / 2 - 30,
+                  height: 2,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.1),
+                    borderRadius: BorderStyles.norm,
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
-                  child: SocialButton(
-                    onTap: () {},
-                    status: "GO",
-                  ),
+                const Text(
+                  "OR",
+                  style: TextStyles.bodyText,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    bottom: 30,
-                    left: 15,
-                    right: 20,
-                  ),
-                  child: RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(children: <TextSpan>[
-                      const TextSpan(
-                        text: 'Have an account. ',
-                        style: TextStyles.bodyText,
-                      ),
-                      TextSpan(
-                          text: 'Sign in',
-                          style: TextStyles.bodyText.copyWith(
-                              color: Palette.primaryColor,
-                              fontWeight: FontWeight.bold),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.fade,
-                                      child: const SignIn()));
-                            }),
-                    ]),
+                Container(
+                  width: (width - 40) / 2 - 30,
+                  height: 2,
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.1),
+                    borderRadius: BorderStyles.norm,
                   ),
                 ),
               ],
             ),
           ),
+
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20.0, right: 20, bottom: 10),
+            child: SocialButton(
+              onTap: () {},
+              status: "AP",
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(left: 20.0, right: 20, bottom: 30),
+            child: SocialButton(
+              onTap: () {},
+              status: "GO",
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(
+              bottom: 30,
+              left: 15,
+              right: 20,
+            ),
+            child: RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(children: <TextSpan>[
+                TextSpan(
+                  text: 'By Signing Up, you accept our ',
+                  style: TextStyles.bodyText.copyWith(
+                      fontSize: 14
+                  ),
+                ),
+                TextSpan(
+                    text: ' Terms Of Service',
+                    style: TextStyles.bodyText.copyWith(
+                        color: Palette.primaryColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         type: PageTransitionType.fade,
+                        //         child: const TermsConditions()));
+                      }),
+                TextSpan(
+                  text: ' and ',
+                  style: TextStyles.bodyText.copyWith(
+                      fontSize: 14
+                  ),
+                ),
+                TextSpan(
+                    text: 'Privacy Policy.',
+                    style: TextStyles.bodyText.copyWith(
+                        fontSize: 14,
+                        color: Palette.primaryColor,
+                        fontWeight: FontWeight.bold),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // Navigator.push(
+                        //     context,
+                        //     PageTransition(
+                        //         type: PageTransitionType.fade,
+                        //         child: const PrivacyPolicy()));
+                      }),
+              ]),
+            ),
+          ),
+
+
+
         ],
       ),
     );
   }
+
+
+
 }
+
+
+
+Widget userContent() {
+  return ListView(
+    shrinkWrap: true,
+    physics: const ClampingScrollPhysics(),
+
+    children:   [
+          const Padding(
+        padding: EdgeInsets.only(
+            left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Name",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      const Padding(
+          padding: EdgeInsets.only(
+              top: 5, left: 20.0, right: 20, bottom: 10),
+          child: TextFieldEmail(
+            initialText: 'Enter your Name',
+            prefixIcon: Icon(Icons.person_outline,color: Palette.primaryColor,),
+          )
+      ),
+      const Padding(
+        padding: EdgeInsets.only(
+            top: 10, left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Email",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(
+              top: 5, left: 20.0, right: 20, bottom: 10),
+          child: TextFieldEmail(
+            initialText: 'Enter you email ',
+            prefixIcon: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Image.asset('assets/images/mail.png',
+                height: 10,
+                width: 10,
+                color: Palette.primaryColor,
+              ),
+            ),
+          ),),
+      const Padding(
+        padding: EdgeInsets.only(
+            top: 10, left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Password",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(
+              top: 5, left: 20.0, right: 20, bottom: 10),
+          child: PasswordField(
+            hint: 'Password',
+            prefixIcon: Padding(
+              padding:  const  EdgeInsets.all(12.0),
+              child: Image.asset('assets/images/lock.png',
+                height: 10,
+                width: 10,
+                color: Palette.primaryColor,
+              ),
+            ),
+
+
+
+          )),
+    ],
+  );
+}
+
+Widget notaryContent(BuildContext context) {
+  return ListView(
+    shrinkWrap: true,
+    physics: const ClampingScrollPhysics(),
+
+    children:    [
+      const Padding(
+        padding: EdgeInsets.only(
+            left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Name",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      const Padding(
+          padding:   EdgeInsets.only(
+              top: 5, left: 20.0, right: 20, bottom: 10),
+          child: TextFieldEmail(
+            initialText: 'Enter your name ',
+            prefixIcon: Icon(Icons.person_outline,color: Palette.primaryColor,),
+          )),
+
+
+       //email
+       const Padding(
+         padding: EdgeInsets.only(
+             top: 10, left: 20, right: 20, bottom: 10),
+         child: Text(
+           "Email",
+           style: TextStyles.normalHeading,
+         ),
+       ),
+         Padding(
+           padding: const EdgeInsets.only(
+               top: 5, left: 20.0, right: 20, bottom: 10),
+           child: TextFieldEmail(
+             initialText: 'Enter you email ',
+             prefixIcon: Padding(
+               padding:     const EdgeInsets.all(12.0),
+               child: Image.asset('assets/images/mail.png',
+                 height: 10,
+                 width: 10,
+                 color: Palette.primaryColor,
+               ),
+             ),
+           )),
+     // city
+       const Padding(
+         padding: EdgeInsets.only(
+             top: 10, left: 20, right: 20, bottom: 10),
+         child: Text(
+           "City",
+           style: TextStyles.normalHeading,
+         ),
+       ),
+       const Padding(
+           padding: EdgeInsets.only(
+               top: 5, left: 20.0, right: 20, bottom: 10),
+           child: TextFieldWidget(
+             hintText: 'City',
+             suffixIcon: Icon(
+               Icons.arrow_drop_down_sharp,
+               size: 30,
+             ),
+           )),
+// state
+
+       const Padding(
+         padding: EdgeInsets.only(
+             top: 10, left: 20, right: 20, bottom: 10),
+         child: Text(
+           "State",
+           style: TextStyles.normalHeading,
+         ),
+       ),
+       const Padding(
+           padding: EdgeInsets.only(
+               top: 5, left: 20.0, right: 20, bottom: 10),
+           child: TextFieldWidget(
+             hintText: 'State',
+             suffixIcon: Icon(
+               Icons.arrow_drop_down_sharp,
+               size: 30,
+             ),
+           )),
+
+
+
+// commission expiration date
+      const Padding(
+        padding: EdgeInsets.only(
+            top: 10, left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Commission expiration date",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(
+            top: 5, left: 20.0, right: 20, bottom: 10),
+        child: TextFieldWidget(
+          hintText: 'Expiry date',
+          prefixIcon: const Icon(Icons.calendar_month, color: Palette.primaryColor,),
+          onTap: () async {
+            final DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime(DateTime.now().year + 10),
+              builder: (BuildContext context, Widget? child) {
+                return Theme(
+                  data: ThemeData.light(),
+                  child: child!,
+                );
+              },
+            );
+
+            if (pickedDate != null) {
+              // Handle the selected date
+              print("Selected Date: $pickedDate");
+            }
+          },
+        ),
+      ),
+
+
+
+
+      const Padding(
+        padding: EdgeInsets.only(
+            top: 10, left: 20, right: 20, bottom: 10),
+        child: Text(
+          "Password",
+          style: TextStyles.normalHeading,
+        ),
+      ),
+      Padding(
+          padding: const EdgeInsets.only(
+              top: 5, left: 20.0, right: 20, bottom: 10),
+          child: PasswordField(
+            hint: 'Password',
+            prefixIcon: Padding(
+              padding:  const  EdgeInsets.all(12.0),
+              child: Image.asset('assets/images/lock.png',
+                height: 10,
+                width: 10,
+                color: Palette.primaryColor,
+              ),
+            ),
+
+
+
+          )),
+    ],
+  );
+}
+
+class SocialButton extends StatelessWidget {
+  final String status;
+  final VoidCallback onTap;
+  const SocialButton({super.key, this.status = "GO", required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 45,
+      child: MaterialButton(
+        elevation: 0,
+        onPressed: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
+        color: socialColor(status),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderStyles.buttonRadius,
+        ),
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  socialTitle(status),
+                  style: TextStyles.buttonText.copyWith(
+                      fontSize: 14
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            Image.asset(
+              socialIcon(status),
+              fit: BoxFit.contain,
+              height: 24,
+              color: Colors.white,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  String socialTitle(String status) {
+    if (status == "GO") {
+      return "Continue With Google";
+    }
+    if (status == "FB") {
+      return "Continue With Facebook";
+    } else {
+      return "Continue With Apple";
+    }
+  }
+
+  Color socialColor(String status) {
+    if (status == "GO") {
+      return Colors.red;
+    }
+    if (status == "FB") {
+      return Colors.blue;
+    } else {
+      return Colors.black;
+    }
+  }
+
+  String socialIcon(String status) {
+    if (status == "GO") {
+      return "assets/images/google.png";
+    }
+    if (status == "AP") {
+      return "assets/images/apple.png";
+    } else {
+      return "assets/social/apple.png";
+    }
+  }
+}
+

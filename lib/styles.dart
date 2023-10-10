@@ -21,7 +21,7 @@ class TextStyles {
       fontWeight: FontWeight.bold,
       fontSize: 20,
       color: Colors.black,
-      fontFamily: 'Montserrat-Bold');
+      fontFamily: 'Montserrat-SemiBold');
   static const buttonText = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 16,
@@ -32,6 +32,8 @@ class TextStyles {
 class BorderStyles {
   static const norm = BorderRadius.all(Radius.circular(7));
   static const textFieldBorderRadius = BorderRadius.all(Radius.circular(10));
+  static const buttonRadius = BorderRadius.all(Radius.circular(16));
+
 }
 
 class Palette {

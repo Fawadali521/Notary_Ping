@@ -6,13 +6,23 @@ import '../../styles.dart';
 
 class TextFieldWidget extends StatelessWidget {
   const TextFieldWidget(
-      {super.key, this.hintText, this.prefixIcon, this.suffixIcon});
+      {super.key, this.hintText, this.prefixIcon, this.suffixIcon,this.onTap,
+        this.selectedDate
+
+
+      });
   final String? hintText;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
+  final VoidCallback? onTap; // Callback for date picker
+  final DateTime? selectedDate; // Add selectedDate parameter
+
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      readOnly: onTap != null, // Make the field readonly if onTap callback is provided
+      onTap: onTap,
       style: TextStyles.bodyText,
       decoration: InputDecoration(
         hintText: hintText ?? 'Enter email',

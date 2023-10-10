@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
+import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 
 import '../../../styles.dart';
-import '../../utility/text_field.dart';
+import '../../utility/TextField.dart';
 
 //Asimkhan1122
 class ForgotPassword extends StatelessWidget {
@@ -50,16 +51,23 @@ class ForgotPassword extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20, left: 10),
                 child: Text(
-                  'Email/phone',
+                  'Email',
                   style: TextStyles.bodyText,
                 ),
               ),
-              const Padding(
+                Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: TextFieldWidget(
-                  hintText: 'Enter password',
-                  suffixIcon: Icon(Icons.remove_red_eye),
-                ),
+                child: TextFieldEmail(
+                  initialText: 'Enter you email ',
+                  prefixIcon: Padding(
+                    padding:   EdgeInsets.all(12.0),
+                    child: Image.asset('assets/images/mail.png',
+                      height: 10,
+                      width: 10,
+                      color: Palette.primaryColor,
+                    ),
+                  ),
+                )
               ),
               SubmitButton(onTap: () {}, title: 'SEND'),
               SizedBox(

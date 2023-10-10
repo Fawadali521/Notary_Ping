@@ -1,78 +1,65 @@
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 
 import '../../styles.dart';
 
-class TextFieldEmail extends StatefulWidget {
+class PasswordField extends StatefulWidget {
+  final String hint;
   final ValueChanged<String>? onChanged;
-  final String? initialText;
-
-  const TextFieldEmail({
-    Key? key,
+  final Widget? prefixIcon;
+  const PasswordField({
+    super.key,
+    required this.hint,
     this.onChanged,
-    this.initialText,
-  }) : super(key: key);
+    this.prefixIcon
+  });
 
   @override
-  State<TextFieldEmail> createState() => _TextFieldEmailState();
+  State<PasswordField> createState() => _PasswordFieldState();
 }
 
-class _TextFieldEmailState extends State<TextFieldEmail> {
-  TextEditingController? _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.initialText != null) {
-      _controller = TextEditingController(text: widget.initialText);
-    }
-  }
-
+class _PasswordFieldState extends State<PasswordField> {
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
-    return SizedBox(
-      width: width - 40,
-      height: 50,
-      child: TextField(
-        controller: _controller,
-        onChanged: widget.onChanged,
-        style: TextStyles.bodyText,
-        cursorColor: Colors.white,
-        decoration: InputDecoration(
-          isDense: true,
-          hintText: widget.initialText ?? 'Enter your email',
-          suffixIcon: const Icon(
-            Icons.mail,
-            color: Palette.secondaryColor,
+    return TextField(
+      onChanged: widget.onChanged,
+      autofocus: false,
+      obscureText: _obscureText ? true : false,
+      style: TextStyles.bodyText,
+      cursorColor: Palette.primaryColor,
+      decoration: InputDecoration(
+        isDense: true,
+        hintText: widget.hint,
+        prefixIcon: widget.prefixIcon,
+        hintStyle: TextStyles.hintText.copyWith(fontWeight: FontWeight.normal),
+        border: const OutlineInputBorder(
+          borderRadius: BorderStyles.textFieldBorderRadius,
+          borderSide: BorderSide(
+            width: 0,
+            style: BorderStyle.none,
           ),
-          prefixIcon: const Icon(
-            Icons.person,
-            color: Palette.primaryColor,
-          ),
-          hintStyle: TextStyles.bodyText,
-          border:   OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(
-              width: 1,
-              style: BorderStyle.none,
-            ),
-          ),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.15),
-          contentPadding:
-          const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12),
         ),
+        focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide:
+            BorderSide(width: 1.0, color: Colors.grey.withOpacity(0.1))),
+        filled: true,
+        fillColor: Palette.textFieldFill,
+        suffixIcon: GestureDetector(
+            onTap: () {
+              setState(() {
+                _obscureText ? _obscureText = false : _obscureText = true;
+              });
+            },
+            child: Icon(
+              _obscureText
+                  ? Icons.visibility_off
+                  : Icons.visibility,
+              color: _obscureText ? Palette.secondaryColor : Palette.primaryColor,
+              size: 20,
+            )),
+        contentPadding: const EdgeInsets.symmetric(vertical: 14.0, horizontal: 12),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    super.dispose();
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../styles.dart';
 import '../../utility/common_button.dart';
-import '../../utility/text_field.dart';
+import '../../utility/TextField.dart';
 
 //Asimkhan1122
 class UpdateProfileScreen extends StatelessWidget {
