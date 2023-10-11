@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:notary_ping/Infos.dart';
 import 'package:notary_ping/styles.dart';
+
 class StateDropDown extends StatefulWidget {
   const StateDropDown({Key? key}) : super(key: key);
 
@@ -23,39 +24,33 @@ class _CityDropDownState extends State<StateDropDown> {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0), // Add padding
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    focusColor: Colors.grey,
-                    icon:  Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Palette.primaryColor,
-                    ), // Add dropdown icon
-
-                    value: dropdownValue,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValue = newValue;
-                      });
-                    },
-                    items: Infos()
-                        .stateDropdownItems
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyles().textFieldHint,
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    }).toList(),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              focusColor: Colors.grey,
+              icon: const Icon(
+                Icons.keyboard_arrow_down,
+                color: Palette.primaryColor,
+              ), // Add dropdown icon
+              isExpanded: true,
+              value: dropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue;
+                });
+              },
+              items: Infos()
+                  .stateDropdownItems
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: TextStyles().textFieldHint,
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ),
-            ],
+                );
+              }).toList(),
+            ),
           ),
         ),
       ),

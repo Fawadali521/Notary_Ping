@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:notary_ping/Infos.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:notary_ping/styles.dart';
@@ -54,6 +55,10 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarBrightness: Brightness.light,
+    ));
     return Scaffold(
       body: Stack(
         children: [
@@ -177,7 +182,6 @@ class OnBoardingScreenState extends State<OnBoardingScreen> {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        //todo
         color: currentIndex == index ? Colors.white : Palette.primaryColor,
         border: Border.all(color: Palette.primaryColor, width: 3),
       ),

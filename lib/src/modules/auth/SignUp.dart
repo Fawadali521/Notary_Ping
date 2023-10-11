@@ -321,12 +321,10 @@ Widget notaryContent(BuildContext context) {
           child: TextFieldEmail()),
       const Padding(
           padding: EdgeInsets.only(top: 5, bottom: 10),
-          child: CityDropDown()
-      ),
-      const Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 10),
-          child: StateDropDown()
-      ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [CityDropDown(), StateDropDown()],
+          )),
       Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 10),
         child: TextFieldWidget(
