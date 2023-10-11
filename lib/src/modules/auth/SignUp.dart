@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:notary_ping/src/controller/auth_controller.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
+import 'package:notary_ping/src/utility/StateDropDown.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 import 'package:notary_ping/src/utility/TextFieldName.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
+import '../../utility/CityDropDown.dart';
 import '../../utility/SubmitButton.dart';
 import '../../utility/TextField.dart';
 import '../../utility/TextFieldPassword.dart';
@@ -319,26 +321,16 @@ Widget notaryContent(BuildContext context) {
           child: TextFieldEmail()),
       const Padding(
           padding: EdgeInsets.only(top: 5, bottom: 10),
-          child: TextFieldWidget(
-            hintText: 'Select your City',
-            suffixIcon: Icon(
-              Icons.arrow_drop_down_sharp,
-              size: 30,
-            ),
-          )),
+          child: CityDropDown()
+      ),
       const Padding(
           padding: EdgeInsets.only(top: 5, bottom: 10),
-          child: TextFieldWidget(
-            hintText: 'State',
-            suffixIcon: Icon(
-              Icons.arrow_drop_down_sharp,
-              size: 30,
-            ),
-          )),
+          child: StateDropDown()
+      ),
       Padding(
         padding: const EdgeInsets.only(top: 5, bottom: 10),
         child: TextFieldWidget(
-          hintText: 'Select Commission Expiry date',
+          hintText: 'Select commission expiry date',
           prefixIcon: const Icon(
             Icons.calendar_month,
             color: Palette.primaryColor,

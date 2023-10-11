@@ -1,5 +1,6 @@
 class Infos {
-  final List<String> dropdownItems = ['+241', '+91', '+1'];
+  final List<String> cityDropdownItems = ['Select City', '+Delhi ', 'Mumbai'];
+  final List<String> stateDropdownItems = ['Select State', 'Haryana', 'Uttar Pradesh'];
   static List<Map<String, String>> contents = [
     {
       'title': 'Consultation Session',

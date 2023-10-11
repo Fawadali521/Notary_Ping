@@ -19,6 +19,7 @@ dependencies:
   avatar_glow: ^2.0.2
   expandable_page_view: ^1.0.17
   intl:
+  delayed_display: ^2.0.0
   get: ^4.6.6
 
 

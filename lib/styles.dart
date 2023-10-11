@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TextStyles {
   static const bodyText = TextStyle(
       fontWeight: FontWeight.w400,
-      fontSize: 16,
+      fontSize: 14,
       color: Colors.black,
       fontFamily: 'Montserrat-Light');
   static const normalHeading = TextStyle(
@@ -56,6 +56,11 @@ class TextStyles {
       fontWeight: FontWeight.w500,
       fontSize: 12,
       color: Palette.secondaryColor.withOpacity(0.9),
+      fontFamily: 'Montserrat-Medium');
+  TextStyle appBarTitle = TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 16,
+      color: Colors.black.withOpacity(0.9),
       fontFamily: 'Montserrat-Medium');
 }
 

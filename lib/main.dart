@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:notary_ping/LandingPage.dart';
+import 'package:notary_ping/src/modules/auth/ForgotPassword.dart';
 import 'package:notary_ping/src/modules/auth/SignIn.dart';
+import 'package:notary_ping/src/modules/auth/SignUp.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,13 +27,14 @@ class MyApp extends StatelessWidget {
       title: 'Notary Ping',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+
         fontFamily: 'Montserrat',
         scaffoldBackgroundColor: Colors.white,
         brightness: Brightness.light,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SignIn(),
+      home: const Profile(),
     );
   }
 }
