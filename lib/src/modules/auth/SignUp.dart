@@ -3,8 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:notary_ping/src/controller/auth_controller.dart';
-import 'package:notary_ping/src/utility/SocialButton.dart';
+ import 'package:notary_ping/src/utility/SocialButton.dart';
 import 'package:notary_ping/src/utility/StateDropDown.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 import 'package:notary_ping/src/utility/TextFieldName.dart';
@@ -26,8 +25,7 @@ class SignUp extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUp> {
-  final AuthController controller = Get.put(AuthController());
-  PageController pageController = PageController(initialPage: 0);
+   PageController pageController = PageController(initialPage: 0);
   int currentPage = 0; // Current page index
 
   DateTime? selectedDate; // Add selectedDate variable
@@ -296,6 +294,7 @@ class SignUpState extends State<SignUp> {
 
 Widget userContent() {
   return ListView(
+
     shrinkWrap: true,
     physics: const ClampingScrollPhysics(),
     children: const [
@@ -311,22 +310,26 @@ Widget userContent() {
 
 Widget notaryContent(BuildContext context) {
   return ListView(
+    padding: const EdgeInsets.only(top: 10),
     shrinkWrap: true,
     physics: const ClampingScrollPhysics(),
     children: [
       const Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 10), child: TextFieldName()),
+          padding: EdgeInsets.only(bottom: 10), child: TextFieldName()),
       const Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 10),
+          padding: EdgeInsets.only(bottom: 10),
           child: TextFieldEmail()),
       const Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 10),
+          padding: EdgeInsets.only(bottom: 10),
           child: Row(
+
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [CityDropDown(), StateDropDown()],
+            children: [
+              CityDropDown(),
+              StateDropDown()],
           )),
       Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 10),
+        padding: const EdgeInsets.only(bottom: 10),
         child: TextFieldWidget(
           hintText: 'Select commission expiry date',
           prefixIcon: const Icon(
@@ -355,7 +358,9 @@ Widget notaryContent(BuildContext context) {
         ),
       ),
       const Padding(
-          padding: EdgeInsets.only(top: 5, bottom: 10), child: PasswordField()),
+          padding: EdgeInsets.only( bottom: 10), child: PasswordField(
+
+      )),
     ],
   );
 }

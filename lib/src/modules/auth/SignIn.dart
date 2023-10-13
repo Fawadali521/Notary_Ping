@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:notary_ping/src/modules/auth/ForgotPassword.dart';
 import 'package:notary_ping/src/modules/auth/OtpVerification.dart';
 import 'package:notary_ping/src/modules/auth/SignUp.dart';
+import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
@@ -98,7 +99,7 @@ class _SignInState extends State<SignIn> {
                     context,
                     PageTransition(
                         type: PageTransitionType.fade,
-                        child: OtpVerification()));
+                        child: const Dashboard()));
               },
               title: "SIGN IN",
             ),

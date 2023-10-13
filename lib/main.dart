@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:notary_ping/LandingPage.dart';
+import 'package:notary_ping/src/modules/auth/ForgotPassword.dart';
 import 'package:notary_ping/src/modules/auth/OnBoardingScreen.dart';
+import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const OnBoardingScreen(),
+      home:   const LandingPage(),
     );
   }
 }

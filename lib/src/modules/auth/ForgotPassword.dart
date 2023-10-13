@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notary_ping/src/modules/auth/SignIn.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:notary_ping/src/utility/TextFieldEmail.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../styles.dart';
 import 'OtpVerification.dart';
+import 'SignUp.dart';
 
 //Asimkhan1122
 class ForgotPassword extends StatelessWidget {
@@ -20,46 +22,11 @@ class ForgotPassword extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-       appBar: AppBar(
-         backgroundColor: Colors.white,
-         elevation: 0,
-        leading: InkWell(
-          onTap: (){
-            Navigator.pop(context);
 
-          },
-          child: Padding(
-            padding: const EdgeInsets.
-          only(left: 10),
-            child: Container(
-              height: 50,
-              width: 50,
-              decoration:   BoxDecoration(
-                color: Palette.textFieldFill,
-                shape: BoxShape.circle,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.01),
-                    spreadRadius: 1,
-                    blurRadius: 1,
-                    offset: const Offset(0, 1),
-                  ),
-                ],
-
-              ),
-              child: const Center(child: Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Icon(Icons.arrow_back_ios),
-              ),),
-            ),
-          ),
-        ),
-         title: Text('Forgot Password' ,style: TextStyles().appBarTitle,),
-
-      ),
       body: ListView(
         padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         children: [
+          const SafeArea(child: SizedBox()),
           Padding(
             padding: const EdgeInsets.only(bottom: 30),
             child: Row(
@@ -83,7 +50,7 @@ class ForgotPassword extends StatelessWidget {
               style: TextStyles.authTitleHeadingBlack,
             ),
           ),
-            Padding(
+            const Padding(
             padding: EdgeInsets.only(
 
               bottom: 20
@@ -104,6 +71,35 @@ class ForgotPassword extends StatelessWidget {
              ),
            ),
           Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            type: PageTransitionType.fade,
+                            child: const SignUp()));
+                  },
+                  child: const Text("Sign Up",
+                      style: TextStyles.normalHeading),
+                ),
+                InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          PageTransition(
+                              type: PageTransitionType.fade,
+                              child: const SignIn()));
+                    },
+                    child: const Text("Try Sign In",
+                        style: TextStyles.normalHeading)),
+              ],
+            ),
+          ),
+          Padding(
             padding: const EdgeInsets.only(
                 bottom: 20
             ),
@@ -115,9 +111,7 @@ class ForgotPassword extends StatelessWidget {
                       child: OtpVerification()));
             }, title: 'SEND'),
           ),
-          SizedBox(
-            height: height * 0.02,
-          ),
+
         ],
       ),
     );

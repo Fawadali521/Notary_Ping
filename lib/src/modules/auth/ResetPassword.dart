@@ -54,7 +54,7 @@ class ResetPassword extends StatelessWidget {
             ),
           ),
         ),
-        title: Text('Reset Password' ,style: TextStyles().appBarTitle,),
+        title: Text('Reset Password' ,style: TextStyles().appBarTitleBlack,),
 
       ),
 

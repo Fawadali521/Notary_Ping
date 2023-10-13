@@ -27,6 +27,16 @@ class TextStyles {
       fontSize: 14,
       color: Colors.white,
       fontFamily: 'Montserrat-Bold');
+  static const bottomBarText = TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 14,
+      color: Colors.grey,
+      fontFamily: 'Montserrat-Bold');
+  TextStyle   profileTileText = TextStyle(
+      fontWeight: FontWeight.w600,
+      fontSize: 16,
+      color: Colors.black.withOpacity(0.7),
+      fontFamily: 'Montserrat-Bold');
   static const buttonTextBlack = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 14,
@@ -52,15 +62,35 @@ class TextStyles {
       fontSize: 12,
       color: Colors.black.withOpacity(0.8),
       fontFamily: 'Montserrat-Medium');
+  TextStyle profileWhite = const TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Medium');
+  TextStyle profileBold = const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 18,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Bold');
+  TextStyle profileLocation = const TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Medium');
   TextStyle privacySecondaryColor = TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 12,
       color: Palette.secondaryColor.withOpacity(0.9),
       fontFamily: 'Montserrat-Medium');
-  TextStyle appBarTitle = TextStyle(
+  TextStyle appBarTitleBlack = TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,
       color: Colors.black.withOpacity(0.9),
+      fontFamily: 'Montserrat-Medium');
+  TextStyle appBarTitleWhite = const TextStyle(
+      fontWeight: FontWeight.w700,
+      fontSize: 16,
+      color: Colors.white,
       fontFamily: 'Montserrat-Medium');
 }
 
