@@ -12,6 +12,16 @@ class TextStyles {
       fontSize: 14,
       color: Colors.black,
       fontFamily: 'Montserrat-SemiBold');
+  static const mediumBold = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+      color: Colors.black,
+      fontFamily: 'Montserrat-SemiBold');
+  static const languageTitle = TextStyle(
+      fontWeight: FontWeight.w500,
+      fontSize: 14,
+      color: Colors.black,
+      fontFamily: 'Montserrat-Regular');
   static const hintText = TextStyle(
       fontWeight: FontWeight.w200,
       fontSize: 14,
@@ -28,10 +38,10 @@ class TextStyles {
       color: Colors.white,
       fontFamily: 'Montserrat-Bold');
   static const bottomBarText = TextStyle(
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.w300,
       fontSize: 14,
       color: Colors.grey,
-      fontFamily: 'Montserrat-Bold');
+      fontFamily: 'Montserrat-Regular');
   TextStyle   profileTileText = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 16,

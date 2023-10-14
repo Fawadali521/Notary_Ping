@@ -22,6 +22,8 @@ class _ProfileState extends State<Profile> {
   Duration splashDelay = const Duration(milliseconds: 100);
   double scaleValue = 0.8;
   bool shouldAnimate = true;
+  bool switchValue = true; // Initialize the switch state to false (off).
+
   @override
   void initState() {
     super.initState();
@@ -58,12 +60,14 @@ class _ProfileState extends State<Profile> {
             // gradient: LinearGradient(colors: [Palette.blue1, Palette.blue2])
         ),
         child: ListView(
+          physics: const NeverScrollableScrollPhysics(),
+
           shrinkWrap: true,
           children: [
             const SafeArea(child: SizedBox()),
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 20, bottom: 10),
+                  left: 20, right: 20, top: 10,),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,10 +153,12 @@ class _ProfileState extends State<Profile> {
                                         scale: 0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
 
                                         child: CupertinoSwitch(
-                                          activeColor: Colors.grey.withOpacity(0.7),
-                                          value: true,
-                                          onChanged: (v){
+                                          activeColor: Palette.secondaryColor,
+                                          value: switchValue,
+                                          onChanged: (newValue){
                                             setState(() {
+                                              switchValue = newValue; // Update the switch state when it's toggled.
+
 
                                             });
                                           },
@@ -172,30 +178,29 @@ class _ProfileState extends State<Profile> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     children: [
                       Container(
-                        height: 102,
-                        width: 102,
-                        decoration: BoxDecoration(
+                        height: 100,
+                        width: 100,
+                        decoration: const BoxDecoration(
                           color: Palette.primaryColor,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
+                         ),
                         child: Center(
                           child: AnimatedSize(
-                            duration: const Duration(seconds: 1),
-                            curve: Curves.fastOutSlowIn,
+                            duration: const Duration(seconds: 2),
+                            curve: Curves.bounceInOut,
                              child: shouldAnimate ?
                              Transform.scale(
                                scale: scaleValue,
 
                                child: Container(
-                                 height: 96,
-                                 width: 96,
+                                 height: 100,
+                                 width: 100,
                                  decoration: BoxDecoration(
                                    image: const DecorationImage(
                                        image: AssetImage("assets/images/profileImage.png"),
@@ -205,8 +210,8 @@ class _ProfileState extends State<Profile> {
                                ),
                              ) :
                              Container(
-                               height: 96,
-                               width: 96,
+                               height: 100,
+                               width: 100,
                                decoration: BoxDecoration(
                                  image: const DecorationImage(
                                      image: AssetImage("assets/images/profileImage.png"),
@@ -263,9 +268,9 @@ class _ProfileState extends State<Profile> {
               ),
               child: Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 50),
-                child: Column(
-                  // shrinkWrap: true,
-                  // padding: EdgeInsets.only(top: 20, bottom: 100),
+                child: ListView(
+                 shrinkWrap: true,
+                 // padding: EdgeInsets.only(top: 20, bottom: 100),
                   children: [
                     DelayedDisplay(
                       delay: upRowDelay,
@@ -304,7 +309,7 @@ class _ProfileState extends State<Profile> {
                     ),
 
                     DelayedDisplay(
-                      delay: upRowDelay + upRowDelay * 1,
+                      delay: upRowDelay + const Duration(milliseconds: 300),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
                       child:    const ProfileItem(
