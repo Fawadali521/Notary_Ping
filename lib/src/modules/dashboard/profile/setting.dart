@@ -5,8 +5,6 @@ import 'package:notary_ping/src/utility/SubmitButton.dart';
 import '../../../../styles.dart';
 import '../../../utility/TextFieldPassword.dart';
 
-
-
 class Setting extends StatefulWidget {
   const Setting({Key? key}) : super(key: key);
 
@@ -21,51 +19,42 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const  IconThemeData(
-            color: Colors.white
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Palette.secondaryColor,
+        title: Text(
+          'App Setting',
+          style: TextStyles().appBarTitleWhite,
         ),
-        backgroundColor: Palette.primaryColor.withOpacity(0.7),
-
-        title: Text('App Setting', style: TextStyles().appBarTitleWhite,),
       ),
       body: ListView(
-        padding: const EdgeInsets.only(
-          top: 20,
-          left: 20,
-          right: 20
-        ),
-        children:   [
-
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+        children: [
           Padding(
-            padding: const EdgeInsets.only(
-              bottom: 20
-            ),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               height: 50,
               decoration: const BoxDecoration(
-                borderRadius: BorderStyles.norm,
-                color: Palette.textFieldFill
-              ),
+                  borderRadius: BorderStyles.norm,
+                  color: Palette.textFieldFill),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Padding(
-                    padding:   EdgeInsets.only(
-                      left: 10
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Notification',
+                      style: TextStyles.mediumBold,
                     ),
-
-                    child: Text('Notification' , style: TextStyles.mediumBold,),
                   ),
                   Transform.scale(
                     scale: 0.7,
                     child: CupertinoSwitch(
-                      activeColor: Palette.primaryColor,
+                        activeColor: Palette.primaryColor,
                         value: switchValue,
-                        onChanged: (newValue){
-
-                        setState(() {
-                          switchValue = newValue;
-                        });
+                        onChanged: (newValue) {
+                          setState(() {
+                            switchValue = newValue;
+                          });
                         }),
                   )
                 ],
@@ -73,31 +62,28 @@ class _SettingState extends State<Setting> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                bottom: 20
-            ),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               height: 50,
               decoration: const BoxDecoration(
                   borderRadius: BorderStyles.norm,
-                  color: Palette.textFieldFill
-              ),
+                  color: Palette.textFieldFill),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Availability',
+                      style: TextStyles.mediumBold,
                     ),
-                    child: Text('Availability' , style: TextStyles.mediumBold,),
                   ),
                   Transform.scale(
                     scale: 0.7,
                     child: CupertinoSwitch(
                         activeColor: Palette.primaryColor,
                         value: switchValue,
-                        onChanged: (newValue){
-
+                        onChanged: (newValue) {
                           setState(() {
                             switchValue = newValue;
                           });
@@ -110,36 +96,28 @@ class _SettingState extends State<Setting> {
           const Padding(
             padding: EdgeInsets.only(
               bottom: 20,
-
             ),
-            child: Text('Change Password',style: TextStyles.normalHeading,),
+            child: Text(
+              'Change Password',
+              style: TextStyles.normalHeading,
+            ),
           ),
-
           const Padding(
-            padding: EdgeInsets.only(
-              bottom: 20
-            ),
+            padding: EdgeInsets.only(bottom: 20),
             child: PasswordField(
               hint: 'Enter new password',
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(
-                bottom: 20
-            ),
+            padding: EdgeInsets.only(bottom: 20),
             child: PasswordField(
               hint: 'Confirm new password',
             ),
           ),
-
           Padding(
-            padding: const EdgeInsets.only(
-              bottom: 20
-            ),
-            child: SubmitButton(onTap: (){}, title: 'Change'),
+            padding: const EdgeInsets.only(bottom: 20),
+            child: SubmitButton(onTap: () {}, title: 'Change'),
           )
-
-
         ],
       ),
     );

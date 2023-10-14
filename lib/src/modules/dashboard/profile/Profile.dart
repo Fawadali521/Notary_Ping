@@ -1,4 +1,4 @@
-   import 'package:delayed_display/delayed_display.dart';
+import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,17 +32,18 @@ class _ProfileState extends State<Profile> {
   }
 
   void _startAnimation() async {
-    await Future.delayed(const Duration(seconds: 1)); // Delay the animation for 1 second
+    await Future.delayed(
+        const Duration(seconds: 1)); // Delay the animation for 1 second
     setState(() {
       shouldAnimate = false; // Stop the initial animation
     });
 
-    await Future.delayed(const Duration(seconds: 1)); // Delay for another 1 second
+    await Future.delayed(
+        const Duration(seconds: 1)); // Delay for another 1 second
     setState(() {
       shouldAnimate = true; // Start the reverse animation
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +56,25 @@ class _ProfileState extends State<Profile> {
       body: Container(
         height: height,
         width: width,
-        decoration:   const BoxDecoration(
-          color: Palette.primaryColor
-            // gradient: LinearGradient(colors: [Palette.blue1, Palette.blue2])
-        ),
+        decoration: const BoxDecoration(
+            // color: Palette.primaryColor
+            gradient: LinearGradient(
+          colors: [Palette.secondaryColor, Palette.primaryColor],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
+        )),
         child: ListView(
           physics: const NeverScrollableScrollPhysics(),
-
           shrinkWrap: true,
           children: [
             const SafeArea(child: SizedBox()),
+            //profile
             Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 10,),
+                left: 20,
+                right: 20,
+                top: 10,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +83,7 @@ class _ProfileState extends State<Profile> {
                     delay: upRowDelay,
                     slidingBeginOffset: const Offset(-1.0, 0.0),
                     slidingCurve: Curves.ease,
-                    child:   Text(
+                    child: Text(
                       "Profile",
                       style: TextStyles().profileBold,
                     ),
@@ -85,18 +92,16 @@ class _ProfileState extends State<Profile> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       DelayedDisplay(
-                        delay: upRowDelay ,
+                        delay: upRowDelay,
                         slidingBeginOffset: const Offset(1.0, 0.0),
                         slidingCurve: Curves.ease,
                         child: InkWell(
-                          onTap: () {
-
-                          },
+                          onTap: () {},
                           child: Container(
                             height: 42,
                             width: 42,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderStyles.norm2,
                               border: Border.all(
                                 color: Colors.white.withOpacity(0.2),
                                 width: 1,
@@ -129,9 +134,7 @@ class _ProfileState extends State<Profile> {
                           slidingBeginOffset: const Offset(1.0, 0.0),
                           slidingCurve: Curves.ease,
                           child: InkWell(
-                            onTap: () {
-
-                            },
+                            onTap: () {},
                             child: Container(
                               height: 42,
                               width: 42,
@@ -150,16 +153,16 @@ class _ProfileState extends State<Profile> {
                                     Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Transform.scale(
-                                        scale: 0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
+                                        scale:
+                                            0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
 
                                         child: CupertinoSwitch(
                                           activeColor: Palette.secondaryColor,
                                           value: switchValue,
-                                          onChanged: (newValue){
+                                          onChanged: (newValue) {
                                             setState(() {
-                                              switchValue = newValue; // Update the switch state when it's toggled.
-
-
+                                              switchValue =
+                                                  newValue; // Update the switch state when it's toggled.
                                             });
                                           },
                                         ),
@@ -177,6 +180,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
+            //image
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: Row(
@@ -189,67 +193,68 @@ class _ProfileState extends State<Profile> {
                         width: 100,
                         decoration: const BoxDecoration(
                           color: Palette.primaryColor,
-                         ),
+                        ),
                         child: Center(
                           child: AnimatedSize(
-                            duration: const Duration(seconds: 2),
-                            curve: Curves.bounceInOut,
-                             child: shouldAnimate ?
-                             Transform.scale(
-                               scale: scaleValue,
-
-                               child: Container(
-                                 height: 100,
-                                 width: 100,
-                                 decoration: BoxDecoration(
-                                   image: const DecorationImage(
-                                       image: AssetImage("assets/images/profileImage.png"),
-                                       fit: BoxFit.cover),
-                                   borderRadius: BorderRadius.circular(100),
-                                 ),
-                               ),
-                             ) :
-                             Container(
-                               height: 100,
-                               width: 100,
-                               decoration: BoxDecoration(
-                                 image: const DecorationImage(
-                                     image: AssetImage("assets/images/profileImage.png"),
-                                     fit: BoxFit.cover),
-                                 borderRadius: BorderRadius.circular(100),
-                               ),
-                             )
-                          ),
+                              duration: const Duration(seconds: 2),
+                              curve: Curves.bounceInOut,
+                              child: shouldAnimate
+                                  ? Transform.scale(
+                                      scale: scaleValue,
+                                      child: Container(
+                                        height: 100,
+                                        width: 100,
+                                        decoration: BoxDecoration(
+                                          image: const DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/profileImage.png"),
+                                              fit: BoxFit.cover),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 100,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                        image: const DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/profileImage.png"),
+                                            fit: BoxFit.cover),
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                    )),
                         ),
                       ),
-                        Padding(
-                        padding: const EdgeInsets.only(top: 10,bottom: 5),
-                        child: Opacity(
-                          opacity: 0.7,
-                          child: Text(
-                            "Brookly Simmons",
-                            style: TextStyles().profileWhite,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10, bottom: 5),
+                        child: Text(
+                          "Brookly Simmons",
+                          style: TextStyles().profileWhite,
                         ),
                       ),
                       Row(
                         children: [
-                          Image.asset(
-                            'assets/icon/location.png',
-                            color: Colors.white,
-                            height: 20,),
-                             Padding(
-                             padding: const EdgeInsets.only(
-                               left: 10
-                             ),
-                             child: Opacity(
-                               opacity: 0.7,
-                               child: Text(
-                                 "Lafate California 900001",
-                                 style: TextStyles().profileLocation,
-                               ),
-                             ),
-                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 3),
+                            child: Image.asset(
+                              'assets/icon/location.png',
+                              color: Colors.white,
+                              height: 18,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5),
+                            child: Opacity(
+                              opacity: 0.7,
+                              child: Text(
+                                "Lafate California 900001",
+                                style: TextStyles().profileLocation,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -257,7 +262,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-
+            //list
             Container(
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -267,52 +272,46 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 50),
+                padding: const EdgeInsets.only(top: 20, bottom: 80),
                 child: ListView(
-                 shrinkWrap: true,
-                 // padding: EdgeInsets.only(top: 20, bottom: 100),
+                  shrinkWrap: true,
+                  // padding: EdgeInsets.only(top: 20, bottom: 100),
                   children: [
                     DelayedDisplay(
                       delay: upRowDelay,
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:    ProfileItem(
-                          onTap: (){
+                      child: ProfileItem(
+                          onTap: () {
                             Navigator.push(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
                                     child: const Setting()));
                           },
-
-                          icon: "assets/icon/setting.png", title: "App Setting"),
+                          icon: "assets/icon/setting.png",
+                          title: "App Setting"),
                     ),
-
                     DelayedDisplay(
                       delay: upRowDelay + const Duration(milliseconds: 100),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:    const ProfileItem(
-                          icon: "assets/icon/prize.png", title: "My subscription"),
+                      child: const ProfileItem(
+                          icon: "assets/icon/prize.png",
+                          title: "My subscription"),
                     ),
-
                     DelayedDisplay(
-                      delay:  upRowDelay + const Duration(milliseconds: 200)
-
-
-
-                      ,
+                      delay: upRowDelay + const Duration(milliseconds: 200),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:  const ProfileItem(
+                      child: const ProfileItem(
                           icon: "assets/icon/edit.png", title: "Edit profile"),
                     ),
-
                     DelayedDisplay(
                       delay: upRowDelay + const Duration(milliseconds: 300),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:    const ProfileItem(
+                      child: const ProfileItem(
                           icon: "assets/icon/booking.png",
                           title: "Booking history"),
                     ),
@@ -320,25 +319,23 @@ class _ProfileState extends State<Profile> {
                       delay: upRowDelay + const Duration(milliseconds: 400),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:    ProfileItem(
-                          icon: "assets/icon/language.png",
-                          title: "Languages",
-                        onTap: (){
+                      child: ProfileItem(
+                        icon: "assets/icon/language.png",
+                        title: "Languages",
+                        onTap: () {
                           Navigator.push(
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
                                   child: const Languages()));
                         },
-
                       ),
                     ),
-
                     DelayedDisplay(
                       delay: upRowDelay + const Duration(milliseconds: 500),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:  const ProfileItem(
+                      child: const ProfileItem(
                           icon: "assets/icon/customer-support.png",
                           title: "Customer support"),
                     ),
@@ -346,29 +343,25 @@ class _ProfileState extends State<Profile> {
                       delay: upRowDelay + const Duration(milliseconds: 600),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:  ProfileItem(
-                          icon: "assets/icon/terms-and-conditions.png",
-                          title: "Terms and conditions",
-                          onTap: (){
-                            Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: const TermAndCondition()));
-                          },
-
+                      child: ProfileItem(
+                        icon: "assets/icon/terms-and-conditions.png",
+                        title: "Terms and conditions",
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: const TermAndCondition()));
+                        },
                       ),
                     ),
                     DelayedDisplay(
                       delay: upRowDelay + const Duration(seconds: 700),
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child:    const ProfileItem(
-                          icon: "assets/icon/logout.png",
-                          title: "Log Out"),
+                      child: const ProfileItem(
+                          icon: "assets/icon/logout.png", title: "Log Out"),
                     ),
-
-
                   ],
                 ),
               ),
@@ -378,81 +371,73 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
+}
 
- }
- class ProfileItem extends StatelessWidget {
-   const ProfileItem(
-       {Key? key,
-         required this.icon,
-         required this.title,
-         this.onTap
+class ProfileItem extends StatelessWidget {
+  const ProfileItem(
+      {Key? key, required this.icon, required this.title, this.onTap})
+      : super(key: key);
+  final String icon;
+  final String title;
+  final VoidCallback? onTap;
 
-       }) : super(key: key);
-   final String icon;
-   final String title;
-   final VoidCallback? onTap;
-
-
-   @override
-   Widget build(BuildContext context) {
-     final width = MediaQuery.sizeOf(context).width;
-     return Stack(
-       children: [
-         Padding(
-           padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-           child: Row(
-             children: [
-               Container(
-                 height: 40,
-                 width: 40,
-                 decoration: BoxDecoration(
-                   borderRadius: BorderRadius.circular(10),
-                   color: Palette.primaryColor.withOpacity(0.1),
-                 ),
-                 child: Center(
-                     child: Image.asset(
-                       icon,
-                       height: 22,
-                       fit: BoxFit.contain,
-                       color: Palette.primaryColor ,
-                     )),
-               ),
-               Padding(
-                 padding: const EdgeInsets.only(left: 20),
-                 child: Text(
-                   title,
-                   style: TextStyles().profileTileText,
-                 ),
-               ),
-               const Spacer(),
-               IconButton(
-                   onPressed:    onTap,
-
-
-
-                   icon: const Icon(
-                     Icons.arrow_forward,
-                     size: 20,
-                     color: Colors.black,
-                   ))
-             ],
-           ),
-         ),
-         Positioned(
-           bottom: 10,
-           child: Padding(
-             padding: const EdgeInsets.only(left: 70),
-             child: Container(
-               width: width,
-               height: 1,
-               decoration: BoxDecoration(
-                 color: Colors.black.withOpacity(0.05),
-               ),
-             ),
-           ),
-         )
-       ],
-     );
-   }
- }
-
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+          child: Row(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Palette.primaryColor.withOpacity(0.07),
+                ),
+                child: Center(
+                    child: Image.asset(
+                  icon,
+                  height: 22,
+                  fit: BoxFit.contain,
+                  color: Palette.primaryColor,
+                )),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: Text(
+                  title,
+                  style: TextStyles().profileTileText,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: onTap,
+                icon: const Icon(
+                  Icons.arrow_forward,
+                  size: 20,
+                  color: Colors.black,
+                ),
+              )
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 10,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 70),
+            child: Container(
+              width: width,
+              height: 1,
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.05),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}

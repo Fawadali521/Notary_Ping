@@ -42,7 +42,7 @@ class TextStyles {
       fontSize: 14,
       color: Colors.grey,
       fontFamily: 'Montserrat-Regular');
-  TextStyle   profileTileText = TextStyle(
+  TextStyle profileTileText = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 16,
       color: Colors.black.withOpacity(0.7),
@@ -73,13 +73,13 @@ class TextStyles {
       color: Colors.black.withOpacity(0.8),
       fontFamily: 'Montserrat-Medium');
   TextStyle profileWhite = const TextStyle(
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
+      fontWeight: FontWeight.w900,
+      fontSize: 16,
       color: Colors.white,
-      fontFamily: 'Montserrat-Medium');
+      fontFamily: 'Montserrat-Bold');
   TextStyle profileBold = const TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 18,
+      fontSize: 20,
       color: Colors.white,
       fontFamily: 'Montserrat-Bold');
   TextStyle profileLocation = const TextStyle(
@@ -106,6 +106,7 @@ class TextStyles {
 
 class BorderStyles {
   static const norm = BorderRadius.all(Radius.circular(7));
+  static const norm2 = BorderRadius.all(Radius.circular(15));
   static const textFieldBorderRadius = BorderRadius.all(Radius.circular(10));
   static const buttonRadius = BorderRadius.all(Radius.circular(16));
 }
