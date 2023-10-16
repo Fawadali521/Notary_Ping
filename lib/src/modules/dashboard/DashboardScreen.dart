@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notary_ping/src/modules/dashboard/home/Home.dart';
-import 'package:notary_ping/src/modules/dashboard/messages/Messages.dart';
-import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
+ import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
 import 'package:notary_ping/src/modules/dashboard/search/search.dart';
 
 import '../../../styles.dart';
+import 'chat/chart.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({
@@ -54,7 +54,7 @@ class _DashboardState extends State<Dashboard> {
         children: const [
           HomeScreen(),
           SearchScreen(),
-          MessagesScreen(),
+          Chats(),
           Profile(),
         ],
       ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/Languages.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/TermAndCondition.dart';
-import 'package:notary_ping/src/modules/dashboard/profile/setting.dart';
+import 'package:notary_ping/src/modules/dashboard/setting/setting.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../../../../styles.dart';
@@ -103,25 +103,18 @@ class _ProfileState extends State<Profile> {
                             decoration: BoxDecoration(
                               borderRadius: BorderStyles.norm2,
                               border: Border.all(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white,
                                 width: 1,
                               ),
                               color: Colors.transparent,
                             ),
-                            child: Center(
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.asset(
-                                      "assets/icon/notification.png",
-                                      height: 24,
-                                      fit: BoxFit.contain,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/icon/notification.png",
+                                height: 24,
+                                fit: BoxFit.contain,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -141,7 +134,7 @@ class _ProfileState extends State<Profile> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
+                                  color: Colors.white,
                                   width: 1,
                                 ),
                                 color: Palette.primaryColor.withOpacity(0.05),
@@ -272,10 +265,10 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 80),
+                padding: const EdgeInsets.only(top: 20, bottom: 20),
                 child: ListView(
                   shrinkWrap: true,
-                  // padding: EdgeInsets.only(top: 20, bottom: 100),
+                  //padding: EdgeInsets.only(top: 20, bottom: 100),
                   children: [
                     DelayedDisplay(
                       delay: upRowDelay,
@@ -415,11 +408,7 @@ class ProfileItem extends StatelessWidget {
               const Spacer(),
               IconButton(
                 onPressed: onTap,
-                icon: const Icon(
-                  Icons.arrow_forward,
-                  size: 20,
-                  color: Colors.black,
-                ),
+                icon:   Image.asset('assets/icon/right-arrow.png', height: 18,width: 18,),
               )
             ],
           ),

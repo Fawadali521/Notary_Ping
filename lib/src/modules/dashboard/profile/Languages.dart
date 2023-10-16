@@ -29,19 +29,16 @@ class _LanguagesState extends State<Languages> {
     final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Palette.secondaryColor,
+        title: Text(
+          'Languages',
+          style: TextStyles().appBarTitleWhite,
         ),
-        backgroundColor: Palette.primaryColor.withOpacity(0.7),
-        title: Text('Languages', style: TextStyles().appBarTitleWhite),
       ),
       body: ListView(
-        padding: EdgeInsets.only(
-          top: 10,
-          left: 20,
-          right: 20,
-        ),
-        children: [
+        padding: EdgeInsets.only(top: 10),
+         children: [
           buildLanguageRow('English'),
           buildLanguageRow('Spanish'),
           buildLanguageRow('French'),
@@ -59,29 +56,36 @@ class _LanguagesState extends State<Languages> {
         selectLanguage(language);
       },
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              language,
-              style: TextStyles.languageTitle.copyWith(
-                  // color: isSelected ? Palette.primaryColor : Colors.black,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        padding: const EdgeInsets.only(top: 10, left: 15 , right: 15),
+        child: Container(
+          height: 50,
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          decoration: const BoxDecoration(
+              borderRadius: BorderStyles.norm,
+              color: Palette.textFieldFill),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                language,
+                style: TextStyles.languageTitle.copyWith(
+                    // color: isSelected ? Palette.primaryColor : Colors.black,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
 
+                ),
+                // style: TextStyle(
+                //   fontSize: isSelected ? 16 : 14, // Adjust font size as needed
+                //   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                //   color: isSelected ? Palette.primaryColor : Colors.black,
+                // ),
               ),
-              // style: TextStyle(
-              //   fontSize: isSelected ? 16 : 14, // Adjust font size as needed
-              //   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              //   color: isSelected ? Palette.primaryColor : Colors.black,
-              // ),
-            ),
-            if (isSelected)
-              Image.asset(
-                'assets/icon/tick.png',
-                height: 24,
-              ),
-          ],
+              if (isSelected)
+                Image.asset(
+                  'assets/icon/tick.png',
+                  height: 24,
+                ),
+            ],
+          ),
         ),
       ),
     );
