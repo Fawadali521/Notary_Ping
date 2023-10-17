@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
     ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;

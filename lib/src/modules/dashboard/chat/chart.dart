@@ -26,24 +26,23 @@ class _ChatsState extends State<Chats> {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.black,
-      statusBarBrightness: Brightness.light,
+      statusBarBrightness: Brightness.dark,
     ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        decoration: const BoxDecoration(
+    return Container(
+      height: height,
+      width: width,
+      decoration: const BoxDecoration(
           color: Colors.white
 
-        ),
-        child: ListView(
-          shrinkWrap: true,
-          // physics: const NeverScrollableScrollPhysics(),
-          children: [
-            const SafeArea(child: SizedBox()),
-            Padding(
+      ),
+      child: ListView(
+        shrinkWrap: true,
+        // physics: const NeverScrollableScrollPhysics(),
+        children: [
+          const SafeArea(child: SizedBox()),
+          Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 15, bottom: 30),
               child: Row(
@@ -56,7 +55,7 @@ class _ChatsState extends State<Chats> {
                       child: CommonTextField(
                         hintText: 'Search here',
                         prefixIcon: Icon(Icons.search),
-                       ),
+                      ),
                     )
                   else
                     DelayedDisplay(
@@ -144,51 +143,50 @@ class _ChatsState extends State<Chats> {
                 ],
               )
 
-            ),
-             Container(
-              width: width,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
+          ),
+          Container(
+            width: width,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
-              child: ListView.builder(
-                itemCount: 12,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                padding: const EdgeInsets.only(
-                    left: 20, right: 20, top: 20, bottom: 50),
-                itemBuilder: (BuildContext context, int index) {
-                  return AnimationConfiguration.staggeredList(
-                    position: index,
-                    duration: listDelay,
-                    child: SlideAnimation(
-                      verticalOffset: 50.0,
-                      child: FadeInAnimation(
-                        child: InkWell(
-                          onTap: () {
-                            // pushNewScreen(
-                            //   context,
-                            //   screen: const ChatUi(),
-                            //   withNavBar: false,
-                            //   pageTransitionAnimation:
-                            //   PageTransitionAnimation.fade,
-                            // );
-                          },
-                          child: ChatTile(
-                            msgCount: (index + 1).toString(),
-                          ),
+            ),
+            child: ListView.builder(
+              itemCount: 12,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 50),
+              itemBuilder: (BuildContext context, int index) {
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: listDelay,
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: InkWell(
+                        onTap: () {
+                          // pushNewScreen(
+                          //   context,
+                          //   screen: const ChatUi(),
+                          //   withNavBar: false,
+                          //   pageTransitionAnimation:
+                          //   PageTransitionAnimation.fade,
+                          // );
+                        },
+                        child: ChatTile(
+                          msgCount: (index + 1).toString(),
                         ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
