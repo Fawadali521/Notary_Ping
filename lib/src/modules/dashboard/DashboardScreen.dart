@@ -40,40 +40,42 @@ class _DashboardState extends State<Dashboard> {
       statusBarBrightness: Brightness.light,
     ));
 
-    return Scaffold(
-      // backgroundColor: Colors.transparent,
-      //extendBody: true,
-      body: PageView(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (page) {
-          setState(() {
-            currentIndex = page;
-          });
-        },
-        children: const [
-          HomeScreen(),
-          SearchScreen(),
-          Chats(),
-          Profile(),
-        ],
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20, right: 20, left: 20),
-        child: Container(
-          height: 66,
-          decoration: BoxDecoration(
-            color: Colors.black,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildNavItem(0, "Home", "assets/icon/home.png"),
-              _buildNavItem(1, "Search", "assets/icon/search.png"),
-              _buildNavItem(2, "Messages", "assets/icon/messages.png"),
-              _buildNavItem(3, "Profile", "assets/icon/profile.png"),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        // backgroundColor: Colors.transparent,
+       //extendBody: true,
+        body: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (page) {
+            setState(() {
+              currentIndex = page;
+            });
+          },
+          children: const [
+            HomeScreen(),
+            SearchScreen(),
+            Chats(),
+            Profile(),
+          ],
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.only(bottom: 10, right: 20, left: 20),
+          child: Container(
+            height: 66,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildNavItem(0, "Home", "assets/icon/home.png"),
+                _buildNavItem(1, "Search", "assets/icon/search.png"),
+                _buildNavItem(2, "Messages", "assets/icon/messages.png"),
+                _buildNavItem(3, "Profile", "assets/icon/profile.png"),
+              ],
+            ),
           ),
         ),
       ),

@@ -330,7 +330,7 @@ Widget notaryContent(BuildContext context) {
           )),
       Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: TextFieldWidget(
+        child: CommonTextField(
           hintText: 'Select commission expiry date',
           prefixIcon: const Icon(
             Icons.calendar_month,

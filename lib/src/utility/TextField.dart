@@ -4,8 +4,8 @@ import '../../styles.dart';
 
 // Text field widget by AsimKhan1122
 
-class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget(
+class CommonTextField extends StatelessWidget {
+  const CommonTextField(
       {super.key,
       this.hintText,
       this.prefixIcon,

@@ -1,4 +1,5 @@
  import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../styles.dart';
 
@@ -12,16 +13,21 @@ class Notifications extends StatefulWidget {
 class _NotificationsState extends State<Notifications> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+      statusBarBrightness: Brightness.light,
+    ));
     return Scaffold(
 
+
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white,
+        iconTheme: const IconThemeData(color: Colors.white),
+        backgroundColor: Palette.secondaryColor,
+        title: Text(
+          'Notification',
+          style: TextStyles().appBarTitleWhite,
         ),
-        backgroundColor: Palette.primaryColor.withOpacity(0.7),
-        title: Text('Notification', style: TextStyles().appBarTitleWhite),
-      ),
-      body: ListView(
+      ),      body: ListView(
         children: const [
           NotificationTile(
             heading: "New Update Available!",
@@ -46,15 +52,15 @@ class _NotificationsState extends State<Notifications> {
           NotificationTile(
             heading: "New Follower",
             subHeading: "John Doe started following you.",
-            icon: AssetImage("assets/shop-icon/1.png"),
+            icon: AssetImage("assets/images/profileImage.png"),
           ),
           NotificationTile(
             heading: "Event Reminder",
             subHeading: "Music Fest 2023",
             description:
             "Don't forget! The Music Fest 2023 starts tomorrow at 6 PM. Make sure to have your tickets ready.",
-            icon: AssetImage("assets/shop-icon/1.png"),
-            banner: AssetImage("assets/dummy-image/1.png"),
+            icon: AssetImage("assets/images/profileImage.png"),
+            banner: AssetImage("assets/images/profileImage.png"),
           ),
         ],
       ),
@@ -82,7 +88,7 @@ class NotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Card(
-      color: Palette.blue2, // Adjust this color to suit your design
+      color: Palette.primaryColor, // Adjust this color to suit your design
       child: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

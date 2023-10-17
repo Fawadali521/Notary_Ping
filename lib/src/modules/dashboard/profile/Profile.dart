@@ -2,6 +2,7 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/Languages.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/TermAndCondition.dart';
 import 'package:notary_ping/src/modules/dashboard/setting/setting.dart';
@@ -16,33 +17,38 @@ class Profile extends StatefulWidget {
   State<Profile> createState() => _ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   Duration upRowDelay = const Duration(milliseconds: 500);
   Duration listDelay = const Duration(milliseconds: 200);
   Duration splashDelay = const Duration(milliseconds: 100);
   double scaleValue = 0.8;
   bool shouldAnimate = true;
-  bool switchValue = true; // Initialize the switch state to false (off).
+  bool switchValue = true;
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
     super.initState();
-    // Start the animation when the widget is initialized
-    _startAnimation();
+    loadingImageScale();
+   }
+  loadingImageScale() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 1, end: 1.3).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.bounceIn),
+    )..addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
+    _controller.forward();
   }
 
-  void _startAnimation() async {
-    await Future.delayed(
-        const Duration(seconds: 1)); // Delay the animation for 1 second
-    setState(() {
-      shouldAnimate = false; // Stop the initial animation
-    });
-
-    await Future.delayed(
-        const Duration(seconds: 1)); // Delay for another 1 second
-    setState(() {
-      shouldAnimate = true; // Start the reverse animation
-    });
+   void _startScaleAnimation() {
+    _controller.forward();
   }
 
   @override
@@ -68,7 +74,7 @@ class _ProfileState extends State<Profile> {
           shrinkWrap: true,
           children: [
             const SafeArea(child: SizedBox()),
-            //profile
+            //Upper row
             Padding(
               padding: const EdgeInsets.only(
                 left: 20,
@@ -95,28 +101,45 @@ class _ProfileState extends State<Profile> {
                         delay: upRowDelay,
                         slidingBeginOffset: const Offset(1.0, 0.0),
                         slidingCurve: Curves.ease,
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            height: 42,
-                            width: 42,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderStyles.norm2,
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 1,
-                              ),
-                              color: Colors.transparent,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                "assets/icon/notification.png",
-                                height: 24,
-                                fit: BoxFit.contain,
-                                color: Colors.white,
-                              ),
-                            ),
+                        child: GestureDetector(
+                          onTap: () {
+                            _startScaleAnimation();
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: const Notifications()));
+
+                            // Call this function when the container is tapped
+                          },
+                          child: AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, child) {
+                              return ScaleTransition(
+                                scale: _scaleAnimation,
+                                child: Container(
+                                  height: 42,
+                                  width: 42,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderStyles.norm2,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 1,
+                                    ),
+                                    color: Colors.transparent,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(
+                                      "assets/icon/notification.png",
+                                      height: 24,
+                                      fit: BoxFit.contain,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -173,7 +196,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-            //image
+            // profile image
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
               child: Row(
@@ -181,44 +204,13 @@ class _ProfileState extends State<Profile> {
                 children: [
                   Column(
                     children: [
-                      Container(
-                        height: 100,
-                        width: 100,
-                        decoration: const BoxDecoration(
-                          color: Palette.primaryColor,
-                        ),
-                        child: Center(
-                          child: AnimatedSize(
-                              duration: const Duration(seconds: 2),
-                              curve: Curves.bounceInOut,
-                              child: shouldAnimate
-                                  ? Transform.scale(
-                                      scale: scaleValue,
-                                      child: Container(
-                                        height: 100,
-                                        width: 100,
-                                        decoration: BoxDecoration(
-                                          image: const DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/images/profileImage.png"),
-                                              fit: BoxFit.cover),
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                        ),
-                                      ),
-                                    )
-                                  : Container(
-                                      height: 100,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        image: const DecorationImage(
-                                            image: AssetImage(
-                                                "assets/images/profileImage.png"),
-                                            fit: BoxFit.cover),
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                    )),
+                      Center(
+                        child: ScaleTransition(
+                          scale: _scaleAnimation,
+                          child: const CircleAvatar(
+                            radius: 50, // Adjust the radius as needed
+                            backgroundImage: AssetImage('assets/images/profileImage.png'), // Replace with your image
+                          ),
                         ),
                       ),
                       Padding(
