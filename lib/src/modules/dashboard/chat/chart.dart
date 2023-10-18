@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:notary_ping/src/utility/TextFieldName.dart';
 import 'package:notary_ping/src/utility/TextFieldPassword.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../../../styles.dart';
 import '../../../utility/TextField.dart';
 import 'ChartTile.dart';
+import 'ChatInbox.dart';
 
 
 class Chats extends StatefulWidget {
@@ -62,42 +64,13 @@ class _ChatsState extends State<Chats> {
                       delay: upRowDelay,
                       slidingBeginOffset: const Offset(1.0, 0.0),
                       slidingCurve: Curves.ease,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            width: 1,
-                            color: Colors.white.withOpacity(0.2),
-                          ),
-                          borderRadius: BorderRadius.circular(15),
+                      child: Padding(
+                        padding:  const EdgeInsets.only(
+                             bottom: 5,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 10,
-                            right: 10,
-                            top: 5,
-                            bottom: 5,
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Opacity(
-                                opacity: 0.8,
-                                child: Text(
-                                  "Messages ",
-                                  style: TextStyles.normalHeading,
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(),
-                                child: Icon(
-                                  Icons.add,
-                                  size: 15,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
+                        child: Text(
+                          "Messages ",
+                          style: TextStyles().appBarTitleBlack,
                         ),
                       ),
                     ),
@@ -168,13 +141,11 @@ class _ChatsState extends State<Chats> {
                     child: FadeInAnimation(
                       child: InkWell(
                         onTap: () {
-                          // pushNewScreen(
-                          //   context,
-                          //   screen: const ChatUi(),
-                          //   withNavBar: false,
-                          //   pageTransitionAnimation:
-                          //   PageTransitionAnimation.fade,
-                          // );
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.fade,
+                                  child: const ChatInbox()));
                         },
                         child: ChatTile(
                           msgCount: (index + 1).toString(),

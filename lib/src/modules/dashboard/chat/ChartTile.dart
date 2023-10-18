@@ -22,8 +22,7 @@ class _ChatTileState extends State<ChatTile> {
       child: Container(
         height: 110,
         decoration: const BoxDecoration(
-          color: Palette.textFieldFill,
-        ),
+         ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: Row(
@@ -57,7 +56,7 @@ class _ChatTileState extends State<ChatTile> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 5),
+                            padding: const EdgeInsets.only(top: 10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,9 +126,19 @@ class _ChatTileState extends State<ChatTile> {
                               ],
                             ),
                           ),
-                        ],
+                         ],
                       ),
-                     ],
+                      Positioned(
+                        bottom: -15,
+                        child: Container(
+                          width: width - 60 - 54,
+                          height: 2,
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.05)),
+                        ),
+                      )
+
+                    ],
                   ),
                 ),
               )

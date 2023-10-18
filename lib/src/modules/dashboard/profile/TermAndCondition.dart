@@ -1,10 +1,14 @@
 
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:notary_ping/styles.dart';
+ import 'package:flutter/services.dart';
+ import 'package:notary_ping/styles.dart';
 
 class TermAndCondition extends StatelessWidget {
   const TermAndCondition({Key? key}) : super(key: key);
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class TermAndCondition extends StatelessWidget {
         title: Text('Term and condition', style: TextStyles().appBarTitleWhite,),
       ),
       body: ListView(
-        padding: EdgeInsets.only(
+        padding: const  EdgeInsets.only(
           top: 20,
           left: 15,
           right: 15
@@ -43,6 +47,12 @@ class TermAndCondition extends StatelessWidget {
           ),
 
           const Text("Term and condition " , style: TextStyles.normalHeading,),
+
+           // Html(
+           //   data: '<a href="https://eezly.com/terms/">Terms of Service</a>',
+           //
+           //
+           //  ),
 
           Wrap(
             children: [

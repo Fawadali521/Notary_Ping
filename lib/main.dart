@@ -5,6 +5,8 @@ import 'package:notary_ping/LandingPage.dart';
 import 'package:notary_ping/src/modules/auth/ForgotPassword.dart';
 import 'package:notary_ping/src/modules/auth/OnBoardingScreen.dart';
 import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
+import 'package:notary_ping/src/modules/dashboard/chat/ChartTile.dart';
+import 'package:notary_ping/src/modules/dashboard/chat/ChatSearch.dart';
 import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
 
 void main() {
