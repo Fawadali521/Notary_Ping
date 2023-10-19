@@ -145,7 +145,7 @@ class _ChatsState extends State<Chats> {
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child: const ChatInbox()));
+                                  child:   ChatInbox()));
                         },
                         child: ChatTile(
                           msgCount: (index + 1).toString(),
