@@ -43,10 +43,10 @@ class TextStyles {
       color: Colors.grey,
       fontFamily: 'Montserrat-Regular');
   TextStyle profileTileText = TextStyle(
-      fontWeight: FontWeight.w600,
+      fontWeight: FontWeight.bold,
       fontSize: 16,
       color: Colors.black.withOpacity(0.7),
-      fontFamily: 'Montserrat-Bold');
+      fontFamily: 'Montserrat-Regular');
   static const buttonTextBlack = TextStyle(
       fontWeight: FontWeight.w600,
       fontSize: 14,

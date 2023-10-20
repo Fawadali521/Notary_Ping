@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notary_ping/src/modules/dashboard/home/Home.dart';
- import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
 import 'package:notary_ping/src/modules/dashboard/search/search.dart';
 
 import '../../../styles.dart';
@@ -42,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       // backgroundColor: Colors.transparent,
-     //extendBody: true,
+      //extendBody: true,
       body: PageView(
         controller: pageController,
         physics: const NeverScrollableScrollPhysics(),
@@ -59,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10, right: 20, left: 20),
+        padding: const EdgeInsets.only(bottom: 15, right: 20, left: 20),
         child: Container(
           height: 66,
           decoration: BoxDecoration(
@@ -87,27 +87,30 @@ class _DashboardState extends State<Dashboard> {
         pageController?.jumpToPage(index);
         setState(() {});
       },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 5),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ImageIcon(
-              AssetImage(iconPath),
-              size: 20,
-              color: currentIndex == index ? Palette.primaryColor : Colors.grey,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: Text(
-                label,
-                style: TextStyles.bottomBarText.copyWith(
-                    color: currentIndex == index
-                        ? Palette.primaryColor
-                        : Colors.grey),
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 5, bottom: 5),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ImageIcon(
+                AssetImage(iconPath),
+                size: 20,
+                color:
+                    currentIndex == index ? Palette.primaryColor : Colors.grey,
               ),
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.only(top: 3.5),
+                child: Text(
+                  label,
+                  style: TextStyles.bottomBarText.copyWith(
+                      color: currentIndex == index
+                          ? Palette.primaryColor
+                          : Colors.grey),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

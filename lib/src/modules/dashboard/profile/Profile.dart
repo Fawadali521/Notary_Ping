@@ -31,7 +31,8 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     loadingImageScale();
-   }
+  }
+
   loadingImageScale() {
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
@@ -40,14 +41,14 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     _scaleAnimation = Tween<double>(begin: 1, end: 1.3).animate(
       CurvedAnimation(parent: _controller, curve: Curves.bounceIn),
     )..addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.reverse();
-      }
-    });
+        if (status == AnimationStatus.completed) {
+          _controller.reverse();
+        }
+      });
     _controller.forward();
   }
 
-   void _startScaleAnimation() {
+  void _startScaleAnimation() {
     _controller.forward();
   }
 
@@ -72,6 +73,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
         child: ListView(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
+          padding: const EdgeInsets.only(top: 20),
           children: [
             const SafeArea(child: SizedBox()),
             //Upper row
@@ -79,7 +81,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
               padding: const EdgeInsets.only(
                 left: 20,
                 right: 20,
-                top: 10,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,34 +113,26 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
 
                             // Call this function when the container is tapped
                           },
-                          child: AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              return ScaleTransition(
-                                scale: _scaleAnimation,
-                                child: Container(
-                                  height: 42,
-                                  width: 42,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderStyles.norm2,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                    color: Colors.transparent,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(
-                                      "assets/icon/notification.png",
-                                      height: 24,
-                                      fit: BoxFit.contain,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
+                          child: Container(
+                            height: 42,
+                            width: 42,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderStyles.norm2,
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.5),
+                                width: 1,
+                              ),
+                              color: Colors.transparent,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/icon/notification.png",
+                                height: 24,
+                                fit: BoxFit.contain,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -157,7 +150,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
-                                  color: Colors.white,
+                                  color: Colors.white.withOpacity(0.5),
                                   width: 1,
                                 ),
                                 color: Palette.primaryColor.withOpacity(0.05),
@@ -167,13 +160,15 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                   clipBehavior: Clip.none,
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(12.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 10, vertical: 15),
                                       child: Transform.scale(
                                         scale:
                                             0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
 
                                         child: CupertinoSwitch(
                                           activeColor: Palette.secondaryColor,
+                                          trackColor: Colors.grey[300],
                                           value: switchValue,
                                           onChanged: (newValue) {
                                             setState(() {
@@ -209,7 +204,8 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                           scale: _scaleAnimation,
                           child: const CircleAvatar(
                             radius: 50, // Adjust the radius as needed
-                            backgroundImage: AssetImage('assets/images/profileImage.png'), // Replace with your image
+                            backgroundImage: AssetImage(
+                                'assets/images/profileImage.png'), // Replace with your image
                           ),
                         ),
                       ),
@@ -257,97 +253,103 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 ),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
-                child: ListView(
-                  shrinkWrap: true,
-                  //padding: EdgeInsets.only(top: 20, bottom: 100),
-                  children: [
-                    DelayedDisplay(
-                      delay: upRowDelay,
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: ProfileItem(
+                padding: const EdgeInsets.only(top: 20, bottom: 100),
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    //padding: EdgeInsets.only(top: 20, bottom: 100),
+                    children: [
+                      DelayedDisplay(
+                        delay: upRowDelay,
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: ProfileItem(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: const Setting()));
+                            },
+                            icon: "assets/icon/setting.png",
+                            title: "App Setting"),
+                      ),
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 100),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: const ProfileItem(
+                            icon: "assets/icon/prize.png",
+                            title: "My subscription"),
+                      ),
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 200),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: const ProfileItem(
+                            icon: "assets/icon/edit.png",
+                            title: "Edit profile"),
+                      ),
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 300),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: const ProfileItem(
+                            icon: "assets/icon/booking.png",
+                            title: "Booking history"),
+                      ),
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 400),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: ProfileItem(
+                          icon: "assets/icon/language.png",
+                          title: "Languages",
                           onTap: () {
                             Navigator.push(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
-                                    child: const Setting()));
+                                    child: const Languages()));
                           },
-                          icon: "assets/icon/setting.png",
-                          title: "App Setting"),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 100),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: const ProfileItem(
-                          icon: "assets/icon/prize.png",
-                          title: "My subscription"),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 200),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: const ProfileItem(
-                          icon: "assets/icon/edit.png", title: "Edit profile"),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 300),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: const ProfileItem(
-                          icon: "assets/icon/booking.png",
-                          title: "Booking history"),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 400),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: ProfileItem(
-                        icon: "assets/icon/language.png",
-                        title: "Languages",
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: const Languages()));
-                        },
+                        ),
                       ),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 500),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: const ProfileItem(
-                          icon: "assets/icon/customer-support.png",
-                          title: "Customer support"),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(milliseconds: 600),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: ProfileItem(
-                        icon: "assets/icon/terms-and-conditions.png",
-                        title: "Terms and conditions",
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageTransition(
-                                  type: PageTransitionType.fade,
-                                  child: const TermAndCondition()));
-                        },
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 500),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: const ProfileItem(
+                            icon: "assets/icon/customer-support.png",
+                            title: "Customer support"),
                       ),
-                    ),
-                    DelayedDisplay(
-                      delay: upRowDelay + const Duration(seconds: 700),
-                      slidingBeginOffset: const Offset(-1.0, 0.0),
-                      slidingCurve: Curves.ease,
-                      child: const ProfileItem(
-                          icon: "assets/icon/logout.png", title: "Log Out"),
-                    ),
-                  ],
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(milliseconds: 600),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: ProfileItem(
+                          icon: "assets/icon/terms-and-conditions.png",
+                          title: "Terms and conditions",
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                PageTransition(
+                                    type: PageTransitionType.fade,
+                                    child: const TermAndCondition()));
+                          },
+                        ),
+                      ),
+                      DelayedDisplay(
+                        delay: upRowDelay + const Duration(seconds: 700),
+                        slidingBeginOffset: const Offset(-1.0, 0.0),
+                        slidingCurve: Curves.ease,
+                        child: const ProfileItem(
+                            icon: "assets/icon/logout.png", title: "Log Out"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -400,7 +402,11 @@ class ProfileItem extends StatelessWidget {
               const Spacer(),
               IconButton(
                 onPressed: onTap,
-                icon:   Image.asset('assets/icon/right-arrow.png', height: 18,width: 18,),
+                icon: Image.asset(
+                  'assets/icon/right-arrow.png',
+                  height: 18,
+                  width: 18,
+                ),
               )
             ],
           ),
