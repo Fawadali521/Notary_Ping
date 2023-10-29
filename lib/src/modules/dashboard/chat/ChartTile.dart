@@ -29,24 +29,14 @@ class _ChatTileState extends State<ChatTile> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 25,
-                backgroundColor: Palette.primaryColor.withOpacity(0.2),
-                child: const Center(
-                  child: CircleAvatar(
-                    radius: 26,
-                    backgroundColor: Colors.white,
-                    child: Center(
-                      child: CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Palette.primaryColor,
-                        backgroundImage: AssetImage("assets/images/profileImage.png"),
-                      ),
-                    ),
-                  ),
+              const CircleAvatar(
+                radius: 26,
+                backgroundColor: Palette.blue2,
+                child: CircleAvatar(
+                  radius: 24,
+                  backgroundImage: AssetImage("assets/images/profileImage.png"),
                 ),
-              ),
-              Padding(
+              ),              Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: SizedBox(
                   width: width - 60 - 54,

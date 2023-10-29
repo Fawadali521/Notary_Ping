@@ -1,4 +1,5 @@
    import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../../../styles.dart';
@@ -17,6 +18,9 @@ class _ChatSearchState extends State<ChatSearch> {
   Duration listDelay = const Duration(milliseconds: 350);
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+    ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -39,14 +43,15 @@ class _ChatSearchState extends State<ChatSearch> {
           ),
         ),
         title: const Padding(
-          padding: const EdgeInsets.only(bottom: 10),
+          padding: EdgeInsets.only(bottom: 10),
           child: CommonTextField(
              hintText : "Search People Here",
+
 
           ),
         ),
         flexibleSpace: Container(
-          decoration:   BoxDecoration(
+          decoration:   const BoxDecoration(
             gradient: LinearGradient(
               colors: [Palette.primaryColor, Palette.secondaryColor],
               end: Alignment.centerRight,
@@ -59,8 +64,12 @@ class _ChatSearchState extends State<ChatSearch> {
         height: height,
         width: width,
         decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(10),
+            topRight: Radius.circular(10)
+          ),
           gradient: LinearGradient(
-            colors: [Palette.primaryColor, Palette.secondaryColor],
+            colors: [Colors.white, Colors.white],
             end: Alignment.centerRight,
             begin: Alignment.centerLeft,
           ),

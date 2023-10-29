@@ -7,6 +7,11 @@ class TextStyles {
       fontSize: 14,
       color: Colors.black,
       fontFamily: 'Montserrat-Light');
+  static const requestText = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Light');
   static const normalHeading = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 14,

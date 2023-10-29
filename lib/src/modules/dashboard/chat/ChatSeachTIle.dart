@@ -68,14 +68,14 @@ class _ChatSearchTileState extends State<ChatSearchTile> {
             Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Palette.blue2,
+                color: Palette.blue1,
               ),
               child: const Padding(
                 padding:
                 EdgeInsets.only(left: 10, right: 10, top: 3.0, bottom: 4),
                 child: Text(
                   "Request",
-                  style: TextStyles.bodyText,
+                  style: TextStyles.requestText,
                 ),
               ),
             )
