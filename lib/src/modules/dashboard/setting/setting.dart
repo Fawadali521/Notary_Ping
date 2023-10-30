@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
@@ -13,12 +14,14 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
-  bool switchValue = true; // Initialize the switch state to false (off).
+  bool notificationSwitchValue = true;
+  bool availableSwitchValue = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Palette.secondaryColor,
         title: Text(
@@ -50,10 +53,10 @@ class _SettingState extends State<Setting> {
                     scale: 0.7,
                     child: CupertinoSwitch(
                         activeColor: Palette.primaryColor,
-                        value: switchValue,
+                        value: notificationSwitchValue,
                         onChanged: (newValue) {
                           setState(() {
-                            switchValue = newValue;
+                            notificationSwitchValue = newValue;
                           });
                         }),
                   )
@@ -82,10 +85,10 @@ class _SettingState extends State<Setting> {
                     scale: 0.7,
                     child: CupertinoSwitch(
                         activeColor: Palette.primaryColor,
-                        value: switchValue,
+                        value: availableSwitchValue,
                         onChanged: (newValue) {
                           setState(() {
-                            switchValue = newValue;
+                            availableSwitchValue = newValue;
                           });
                         }),
                   )
@@ -105,18 +108,18 @@ class _SettingState extends State<Setting> {
           const Padding(
             padding: EdgeInsets.only(bottom: 20),
             child: PasswordField(
-              hint: 'Enter new password',
+              hint: 'Enter Old password',
             ),
           ),
           const Padding(
             padding: EdgeInsets.only(bottom: 20),
             child: PasswordField(
-              hint: 'Confirm new password',
+              hint: 'Enter new password',
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(bottom: 20),
-            child: SubmitButton(onTap: () {}, title: 'Change'),
+            child: SubmitButton(onTap: () {}, title: 'Update Password'),
           )
         ],
       ),

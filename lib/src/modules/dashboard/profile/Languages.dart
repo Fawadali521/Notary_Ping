@@ -1,8 +1,8 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../../../styles.dart';
+
 class Languages extends StatefulWidget {
   const Languages({Key? key}) : super(key: key);
 
@@ -21,14 +21,9 @@ class _LanguagesState extends State<Languages> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.black,
-      statusBarBrightness: Brightness.light,
-    ));
-    final height = MediaQuery.sizeOf(context).height;
-    final width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Palette.secondaryColor,
         title: Text(
@@ -37,8 +32,10 @@ class _LanguagesState extends State<Languages> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.only(top: 10),
-         children: [
+        padding: EdgeInsets.only(
+            top: 20, left: 20, right: 20
+        ),
+        children: [
           buildLanguageRow('English'),
           buildLanguageRow('Spanish'),
           buildLanguageRow('French'),
@@ -51,41 +48,41 @@ class _LanguagesState extends State<Languages> {
   Widget buildLanguageRow(String language) {
     final isSelected = selectedLanguage == language;
 
-    return GestureDetector(
-      onTap: () {
-        selectLanguage(language);
-      },
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 15 , right: 15),
-        child: Container(
-          height: 50,
-          padding: const EdgeInsets.only(left: 10, right: 10),
-          decoration: const BoxDecoration(
-              borderRadius: BorderStyles.norm,
-              color: Palette.textFieldFill),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                language,
-                style: TextStyles.languageTitle.copyWith(
-                    // color: isSelected ? Palette.primaryColor : Colors.black,
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 20
+      ),
+      child: Container(
+        padding: EdgeInsets.only(
+          left: 10,
 
-                ),
-                // style: TextStyle(
-                //   fontSize: isSelected ? 16 : 14, // Adjust font size as needed
-                //   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                //   color: isSelected ? Palette.primaryColor : Colors.black,
-                // ),
+        ),
+        height: 50,
+         decoration: BoxDecoration(
+             borderRadius: BorderStyles.norm,
+             color: Palette.textFieldFill
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              language,
+              style: TextStyle(
+                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
-              if (isSelected)
-                Image.asset(
-                  'assets/icon/tick.png',
-                  height: 24,
-                ),
-            ],
-          ),
+            ),
+            Transform.scale(
+              scale: 0.7,
+              child: CupertinoSwitch(
+                activeColor: Palette.primaryColor,
+
+                value: isSelected,
+                onChanged: (value) {
+                  selectLanguage(language);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

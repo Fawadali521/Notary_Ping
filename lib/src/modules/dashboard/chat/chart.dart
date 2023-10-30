@@ -2,12 +2,17 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:notary_ping/src/modules/dashboard/chat/ChatInbox.dart';
 import 'package:page_transition/page_transition.dart';
+
 
 import '../../../../styles.dart';
 import 'ChartTile.dart';
 import 'ChatSearch.dart';
+import 'chatting/chat-ui.dart';
+
+
+
+
 
 
 class Chats extends StatefulWidget {
@@ -51,7 +56,7 @@ class _ChatsState extends State<Chats> {
                   slidingCurve: Curves.ease,
                   child:   Text(
                     "Chat",
-                    style: TextStyles().appBarTitleWhite,
+                    style: TextStyles().profileBold,
                   ),
                 ),
                 Row(
@@ -70,7 +75,7 @@ class _ChatsState extends State<Chats> {
                             ),
                             borderRadius: BorderRadius.circular(15)),
                         child:   Padding(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               left: 10, right: 10, top: 5, bottom: 5),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -78,12 +83,14 @@ class _ChatsState extends State<Chats> {
                               Opacity(
                                 opacity: 0.8,
                                 child: Text(
-                                  "New Group ",
-                                  style: TextStyles().appBarTitleWhite,
+                                  "New Message ",
+                                  style: TextStyles().newChat,
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(),
+                                padding: EdgeInsets.only(
+
+                                ),
                                 child: Icon(
                                   Icons.add,
                                   size: 15,
@@ -101,40 +108,33 @@ class _ChatsState extends State<Chats> {
                         delay: upRowDelay,
                         slidingBeginOffset: const Offset(1.0, 0.0),
                         slidingCurve: Curves.ease,
-                        child: InkWell(
+                        child: GestureDetector(
                           onTap: () {
-                            //TODO
-
                             Navigator.push(
                                 context,
                                 PageTransition(
                                     type: PageTransitionType.fade,
-                                    child:   const ChatSearch()));
-
+                                    child: const ChatSearch()));
 
                           },
                           child: Container(
                             height: 42,
                             width: 42,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
+                              borderRadius: BorderStyles.norm2,
                               border: Border.all(
                                 color: Colors.white.withOpacity(0.5),
                                 width: 1,
                               ),
                               color: Colors.transparent,
                             ),
-                            child: Center(
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(),
-                                  child: Image.asset(
-                                    "assets/icon/search.png",
-                                    width: 20,
-                                    fit: BoxFit.contain,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(
+                                "assets/icon/search.png",
+                                height: 24,
+                                fit: BoxFit.contain,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -162,8 +162,8 @@ class _ChatsState extends State<Chats> {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(25),
-                topRight: Radius.circular(25),
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
               ),
             ),
             child: ListView.builder(
@@ -171,7 +171,7 @@ class _ChatsState extends State<Chats> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 20, bottom: 50),
+                  left: 10, right: 10, top: 10, bottom: 0),
               itemBuilder: (BuildContext context, int index) {
                 return AnimationConfiguration.staggeredList(
                   position: index,
@@ -185,7 +185,7 @@ class _ChatsState extends State<Chats> {
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child:   ChatInbox()));
+                                  child:   const ChatUi()));
 
 
                         },

@@ -22,10 +22,11 @@ class TermAndCondition extends StatelessWidget {
     return   Scaffold(
 
       appBar: AppBar(
+        centerTitle: true,
         iconTheme: const  IconThemeData(
           color: Colors.white
         ),
-        backgroundColor: Palette.primaryColor.withOpacity(0.7),
+        backgroundColor: Palette.secondaryColor,
 
         title: Text('Term and condition', style: TextStyles().appBarTitleWhite,),
       ),

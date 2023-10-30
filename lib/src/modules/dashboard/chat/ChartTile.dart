@@ -24,16 +24,16 @@ class _ChatTileState extends State<ChatTile> {
         decoration: const BoxDecoration(
          ),
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const CircleAvatar(
-                radius: 26,
+                radius: 24,
                 backgroundColor: Palette.blue2,
                 child: CircleAvatar(
-                  radius: 24,
+                  radius: 22,
                   backgroundImage: AssetImage("assets/images/profileImage.png"),
                 ),
               ),              Padding(
@@ -46,7 +46,7 @@ class _ChatTileState extends State<ChatTile> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: const EdgeInsets.only(top:  20),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,7 +58,7 @@ class _ChatTileState extends State<ChatTile> {
                                       Flexible(
                                         child: Text(
                                           "John Thomas",
-                                          style: TextStyles.bodyText
+                                          style: TextStyles.normalHeading
                                         ),
                                       ),
                                     ],
@@ -74,52 +74,49 @@ class _ChatTileState extends State<ChatTile> {
                               ],
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: width - 60 - 54 - 30,
-                                  height: 50,
-                                  child: Row(
-                                    children: [
-                                      Flexible(
-                                          child: RichText(
-                                            overflow: TextOverflow.visible,
-                                            text: const TextSpan(
-                                              children: [
-                                                 TextSpan(
-                                                  text:
-                                                  'Here is text message sent by peoples ',
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: width - 60 - 54 - 30,
+                                height: 50,
+                                child: Row(
+                                  children: [
+                                    Flexible(
+                                        child: RichText(
+                                          overflow: TextOverflow.visible,
+                                          text: const TextSpan(
+                                            children: [
+                                               TextSpan(
+                                                text:
+                                                'Here is text message sent by peoples ',
 
 
-                                                  style: TextStyles.bodyText,
-                                                ),
-                                              ],
-                                            ),
-                                          )),
-                                    ],
-                                  ),
+                                                style: TextStyles.bodyText,
+                                              ),
+                                            ],
+                                          ),
+                                        )),
+                                  ],
                                 ),
-                                SizedBox(
-                                    width: 20,
-                                    child: CircleAvatar(
-                                      backgroundColor: Palette.primaryColor,
-                                      child: Text(
-                                        widget.msgCount,
-                                        style: TextStyles.bodyText,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    )),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                  width: 20,
+                                  child: CircleAvatar(
+                                    backgroundColor: Palette.primaryColor,
+                                    child: Text(
+                                      widget.msgCount,
+                                      style: TextStyles.chatCount,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )),
+                            ],
                           ),
                          ],
                       ),
                       Positioned(
-                        bottom: -15,
+                        bottom: 0,
                         child: Container(
                           width: width - 60 - 54,
                           height: 2,

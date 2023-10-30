@@ -7,6 +7,11 @@ class TextStyles {
       fontSize: 14,
       color: Colors.black,
       fontFamily: 'Montserrat-Light');
+  static const chatCount = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 12,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Light');
   static const requestText = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 14,
@@ -107,6 +112,25 @@ class TextStyles {
       fontSize: 16,
       color: Colors.white,
       fontFamily: 'Montserrat-Medium');
+  TextStyle newChat = const TextStyle(
+      fontWeight: FontWeight.w900,
+      fontSize: 12,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Medium');
+  static const chatPersonName = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'Montserrat-SemiBold');
+
+  static const chatOnlineTyping = TextStyle(
+      fontWeight: FontWeight.w400,
+      fontSize: 14,
+      color: Colors.white,
+      fontFamily: 'Montserrat-Light');
+
+
+
 }
 
 class BorderStyles {

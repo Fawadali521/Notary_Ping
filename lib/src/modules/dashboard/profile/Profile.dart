@@ -204,17 +204,14 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                                 children: [
                                   Column(
                                     children: [
-                                      Center(
-                                        child: ScaleTransition(
-                                          scale: _scaleAnimation,
+                                      const Center(
+                                        child: CircleAvatar(
+                                          radius: 52,
+                                          backgroundColor: Colors.white,
                                           child: CircleAvatar(
-                                            radius: 52,
-                                            backgroundColor: Palette.secondaryColor,
-                                            child: const CircleAvatar(
-                                              radius: 50, // Adjust the radius as needed
-                                              backgroundImage: AssetImage(
-                                                  'assets/images/profileImage.png'), // Replace with your image
-                                            ),
+                                            radius: 50, // Adjust the radius as needed
+                                            backgroundImage: AssetImage(
+                                                'assets/images/profileImage.png'), // Replace with your image
                                           ),
                                         ),
                                       ),
@@ -257,7 +254,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                 ),
                )),
           Positioned(
-              top: height * 0.36,
+              top: height * 0.3,
               child: Container(
 
               height: height * 0.6,
@@ -276,8 +273,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                   shrinkWrap: true,
                   padding: const  EdgeInsets.only(
                     top: 10,
-                    left: 20,
-                    right: 20
+
                   ),
                   children: [
 
