@@ -53,12 +53,12 @@ class _LanguagesState extends State<Languages> {
         bottom: 20
       ),
       child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 10,
 
         ),
         height: 50,
-         decoration: BoxDecoration(
+         decoration: const BoxDecoration(
              borderRadius: BorderStyles.norm,
              color: Palette.textFieldFill
         ),
