@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -45,84 +47,84 @@ class _SplashScreenState extends State<SplashScreen> {
 
     return Scaffold(
         body: SizedBox(
-          height: height,
-          width: width,
-          child: SizedBox(
-            height: height,
-            width: width,
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                SizedBox(
-                  height: height,
-                  width: width,
-                ),
-                if (isLogoMoved)
-                  AnimatedPositioned(
-                    duration: initialDelay2,
-                    top: (height - afterHeight) / 2,
-                    curve: Curves.fastEaseInToSlowEaseOut,
-                    left: isTextMoved
-                        ? (width - afterHeight - textHeight - padding) / 2 +
+      height: height,
+      width: width,
+      child: SizedBox(
+        height: height,
+        width: width,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            SizedBox(
+              height: height,
+              width: width,
+            ),
+            if (isLogoMoved)
+              AnimatedPositioned(
+                duration: initialDelay2,
+                top: (height - afterHeight) / 2,
+                curve: Curves.fastEaseInToSlowEaseOut,
+                left: isTextMoved
+                    ? (width - afterHeight - textHeight - padding) / 2 +
                         afterHeight +
                         padding
-                        : (width - afterHeight - textHeight - padding) / 2,
-                    child: AnimatedOpacity(
-                      duration: initialDelay3,
-                      opacity: isTextMoved ? 1 : 0,
-                      child: SizedBox(
-                        width: textHeight,
-                        height: afterHeight,
-                        child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/logo/logo-text.png',
-                                height: textHeight,
-                                width: textHeight,
-                              )
-                            ],
-                          ),
-                        ),
+                    : (width - afterHeight - textHeight - padding) / 2,
+                child: AnimatedOpacity(
+                  duration: initialDelay3,
+                  opacity: isTextMoved ? 1 : 0,
+                  child: SizedBox(
+                    width: textHeight,
+                    height: afterHeight,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/logo/logo-text.png',
+                            height: textHeight,
+                            width: textHeight,
+                          )
+                        ],
                       ),
                     ),
                   ),
-                SizedBox(
-                  height: height,
-                  width: width,
-                  child: Stack(
-                    children: [
-                      AnimatedPositioned(
-                        duration: initialDelay,
-                        left: isLogoMoved
-                            ? (width - afterHeight - textHeight - padding) / 2
-                            : width / 2 - normalHeight / 2,
-                        height: isLogoMoved ? afterHeight : normalHeight,
-                        width: isLogoMoved ? afterHeight : normalHeight,
-                        top: isLogoMoved
-                            ? (height - afterHeight) / 2
-                            : (height - normalHeight) / 2,
-                        curve: Curves.easeIn,
-                        child: Stack(
-                          clipBehavior: Clip.none,
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset(
-                              "assets/logo/icon.png",
-                              height: normalHeight,
-                              width: normalHeight,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
                 ),
-              ],
+              ),
+            SizedBox(
+              height: height,
+              width: width,
+              child: Stack(
+                children: [
+                  AnimatedPositioned(
+                    duration: initialDelay,
+                    left: isLogoMoved
+                        ? (width - afterHeight - textHeight - padding) / 2
+                        : width / 2 - normalHeight / 2,
+                    height: isLogoMoved ? afterHeight : normalHeight,
+                    width: isLogoMoved ? afterHeight : normalHeight,
+                    top: isLogoMoved
+                        ? (height - afterHeight) / 2
+                        : (height - normalHeight) / 2,
+                    curve: Curves.easeIn,
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/logo/icon.png",
+                          height: normalHeight,
+                          width: normalHeight,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    ));
   }
 }

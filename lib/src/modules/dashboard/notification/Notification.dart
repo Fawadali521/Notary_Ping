@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../../styles.dart';
@@ -18,8 +20,6 @@ class _NotificationsState extends State<Notifications> {
       statusBarBrightness: Brightness.light,
     ));
     return Scaffold(
-
-
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: Palette.secondaryColor,
@@ -27,7 +27,8 @@ class _NotificationsState extends State<Notifications> {
           'Notification',
           style: TextStyles().appBarTitleWhite,
         ),
-      ),      body: ListView(
+      ),
+      body: ListView(
         children: const [
           NotificationTile(
             heading: "New Update Available!",
@@ -40,13 +41,13 @@ class _NotificationsState extends State<Notifications> {
             heading: "New Update Available!",
             subHeading: "Version 2.0.1",
             description:
-            "We've made some improvements and fixed some bugs. Update now for the best experience.",
+                "We've made some improvements and fixed some bugs. Update now for the best experience.",
           ),
           NotificationTile(
             heading: "Summer Sale!",
             subHeading: "Up to 50% off",
             description:
-            "Check out our summer collection and get up to 50% off on select items.",
+                "Check out our summer collection and get up to 50% off on select items.",
             banner: AssetImage("assets/images/profileImage.png"),
           ),
           NotificationTile(
@@ -58,7 +59,7 @@ class _NotificationsState extends State<Notifications> {
             heading: "Event Reminder",
             subHeading: "Music Fest 2023",
             description:
-            "Don't forget! The Music Fest 2023 starts tomorrow at 6 PM. Make sure to have your tickets ready.",
+                "Don't forget! The Music Fest 2023 starts tomorrow at 6 PM. Make sure to have your tickets ready.",
             icon: AssetImage("assets/images/profileImage.png"),
             banner: AssetImage("assets/images/profileImage.png"),
           ),

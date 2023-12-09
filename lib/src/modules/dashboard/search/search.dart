@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../styles.dart';
@@ -13,11 +12,12 @@ class SearchScreen extends StatefulWidget {
 class _SearchState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      body: Container(
-        child: Center(child:
-        Text('Search', style: TextStyles.heading1,),),
+    return const Scaffold(
+      body: Center(
+        child: Text(
+          'Search',
+          style: TextStyles.heading1,
+        ),
       ),
     );
   }

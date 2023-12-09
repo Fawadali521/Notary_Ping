@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
   bool shouldAnimate = true;
   bool switchValue = true;
   late AnimationController _controller;
-  late Animation<double> _scaleAnimation;
+  late Animation<double> scaleAnimation;
 
   @override
   void initState() {
@@ -38,7 +40,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 1, end: 1.3).animate(
+    scaleAnimation = Tween<double>(begin: 1, end: 1.3).animate(
       CurvedAnimation(parent: _controller, curve: Curves.bounceIn),
     )..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
@@ -48,9 +50,9 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     _controller.forward();
   }
 
-  void _startScaleAnimation() {
-    _controller.forward();
-  }
+  // void _startScaleAnimation() {
+  //   _controller.forward();
+  // }
 
   @override
   Widget build(BuildContext context) {

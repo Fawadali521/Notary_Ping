@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 
 import '../../../../styles.dart';
 
@@ -14,15 +16,12 @@ class _ChatTileState extends State<ChatTile> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return Padding(
-      padding: const EdgeInsets.only(
-        top: 10, bottom: 10
-      ),
+      padding: const EdgeInsets.only(top: 10, bottom: 10),
       child: Container(
         height: 110,
-        decoration: const BoxDecoration(
-         ),
+        decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Row(
@@ -36,7 +35,8 @@ class _ChatTileState extends State<ChatTile> {
                   radius: 22,
                   backgroundImage: AssetImage("assets/images/profileImage.png"),
                 ),
-              ),              Padding(
+              ),
+              Padding(
                 padding: const EdgeInsets.only(left: 20),
                 child: SizedBox(
                   width: width - 60 - 54,
@@ -46,7 +46,7 @@ class _ChatTileState extends State<ChatTile> {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top:  20),
+                            padding: const EdgeInsets.only(top: 20),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,10 +56,8 @@ class _ChatTileState extends State<ChatTile> {
                                   child: const Row(
                                     children: [
                                       Flexible(
-                                        child: Text(
-                                          "John Thomas",
-                                          style: TextStyles.normalHeading
-                                        ),
+                                        child: Text("John Thomas",
+                                            style: TextStyles.normalHeading),
                                       ),
                                     ],
                                   ),
@@ -85,19 +83,17 @@ class _ChatTileState extends State<ChatTile> {
                                   children: [
                                     Flexible(
                                         child: RichText(
-                                          overflow: TextOverflow.visible,
-                                          text: const TextSpan(
-                                            children: [
-                                               TextSpan(
-                                                text:
+                                      overflow: TextOverflow.visible,
+                                      text: const TextSpan(
+                                        children: [
+                                          TextSpan(
+                                            text:
                                                 'Here is text message sent by peoples ',
-
-
-                                                style: TextStyles.bodyText,
-                                              ),
-                                            ],
+                                            style: TextStyles.bodyText,
                                           ),
-                                        )),
+                                        ],
+                                      ),
+                                    )),
                                   ],
                                 ),
                               ),
@@ -113,7 +109,7 @@ class _ChatTileState extends State<ChatTile> {
                                   )),
                             ],
                           ),
-                         ],
+                        ],
                       ),
                       Positioned(
                         bottom: 0,
@@ -124,7 +120,6 @@ class _ChatTileState extends State<ChatTile> {
                               color: Colors.black.withOpacity(0.05)),
                         ),
                       )
-
                     ],
                   ),
                 ),

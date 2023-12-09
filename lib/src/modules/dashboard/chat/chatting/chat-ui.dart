@@ -1,15 +1,16 @@
+// ignore_for_file: file_names
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
- import 'package:notary_ping/src/modules/dashboard/chat/chatting/request-money-bubble.dart';
+import 'package:notary_ping/src/modules/dashboard/chat/chatting/request-money-bubble.dart';
 import 'package:notary_ping/src/modules/dashboard/chat/chatting/send-money-bubble.dart';
 
 import '../../../../../styles.dart';
- import 'chat-bubble.dart';
+import '../../../../utility/datas.dart';
+import 'chat-bubble.dart';
 import 'chat-meassage.dart';
 import 'chat-msg-input.dart';
-import '../../../../utility/datas.dart';
 
 class ChatUi extends StatefulWidget {
   const ChatUi({super.key});
@@ -129,8 +130,7 @@ class _ChatUiState extends State<ChatUi> {
       body: Container(
         height: height,
         width: width,
-        decoration:   BoxDecoration(
-         ),
+        decoration: const BoxDecoration(),
         child: Stack(
           children: [
             ListView.builder(
@@ -165,6 +165,7 @@ class _ChatUiState extends State<ChatUi> {
                     messageContent: messages[reversedIndex].messageContent,
                   );
                 }
+                return null;
               },
             ),
             Align(
@@ -192,12 +193,13 @@ class _ChatUiState extends State<ChatUi> {
   void sendMessage(String? content) {
     if (content != null) {
       final newMessage = ChatMessage(
-         messageType: "sender",
+        messageType: "sender",
         isMedia: false,
         time: DateTime.now(),
         isSeen: false,
         sendMoney: false,
-        requestMoney: false, messageContent: content,
+        requestMoney: false,
+        messageContent: content,
       );
       setState(() {
         messages.add(newMessage);
@@ -219,12 +221,13 @@ class _ChatUiState extends State<ChatUi> {
       //   pageTransitionAnimation: PageTransitionAnimation.cupertino,
       // );
       final newMessage = ChatMessage(
-         messageType: "sender",
+        messageType: "sender",
         isMedia: false,
         time: DateTime.now(),
         isSeen: false,
         sendMoney: true,
-        requestMoney: false, messageContent: content,
+        requestMoney: false,
+        messageContent: content,
       );
       setState(() {
         messages.add(newMessage);
@@ -236,13 +239,13 @@ class _ChatUiState extends State<ChatUi> {
   void requestMoney(String? content) {
     if (content != null) {
       final newMessage = ChatMessage(
-         messageType: "sender",
+        messageType: "sender",
         isMedia: false,
         time: DateTime.now(),
         isSeen: false,
         sendMoney: false,
-        requestMoney: true, messageContent: content,
-
+        requestMoney: true,
+        messageContent: content,
       );
       setState(() {
         messages.add(newMessage);

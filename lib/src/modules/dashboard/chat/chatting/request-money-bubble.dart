@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 
 import '../../../../../styles.dart';
 
@@ -21,8 +23,6 @@ class RequestMoneyBubble extends StatefulWidget {
 class _RequestMoneyBubbleState extends State<RequestMoneyBubble> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     if (widget.messageType == "sender") {
       return Padding(
         padding: const EdgeInsets.only(left: 7, right: 7, top: 10, bottom: 10),
@@ -44,8 +44,7 @@ class _RequestMoneyBubbleState extends State<RequestMoneyBubble> {
                       bottomLeft: Radius.circular(25)),
               color: (widget.messageType == "receiver")
                   ? Palette.blue3
-                  : Palette.
-              blue1,
+                  : Palette.blue1,
             ),
             padding:
                 const EdgeInsets.only(left: 15, bottom: 15, top: 15, right: 15),

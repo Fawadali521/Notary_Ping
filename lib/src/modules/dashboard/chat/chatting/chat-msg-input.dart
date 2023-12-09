@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 
 import '../../../../../styles.dart';
 
@@ -81,7 +83,7 @@ class _ChatMsgInputState extends State<ChatMsgInput> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return SizedBox(
       width: width,
       height: 55 + extraHeight,
@@ -137,7 +139,7 @@ class _ChatMsgInputState extends State<ChatMsgInput> {
               duration: duration0,
               width: width - 30,
               height: 55,
-              decoration:   BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient:
                     LinearGradient(colors: [Palette.blue2, Palette.blue2]),
                 borderRadius: BorderRadius.all(Radius.circular(30)),

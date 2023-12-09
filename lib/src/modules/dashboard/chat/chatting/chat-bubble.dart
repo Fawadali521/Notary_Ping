@@ -1,4 +1,6 @@
- import 'package:flutter/cupertino.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/cupertino.dart';
 
 import '../../../../../styles.dart';
 
@@ -16,7 +18,7 @@ class _ChatBubbleState extends State<ChatBubble> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    // double height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.only(left: 7, right: 7, top: 5, bottom: 5),
       child: Align(

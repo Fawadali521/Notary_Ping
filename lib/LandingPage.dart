@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:notary_ping/src/modules/auth/onboarding/OnBoarding.dart';
 import 'package:page_transition/page_transition.dart';

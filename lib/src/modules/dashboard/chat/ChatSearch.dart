@@ -1,11 +1,12 @@
-   import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../../../styles.dart';
 import '../../../utility/TextField.dart';
 import 'ChatSeachTIle.dart';
-
 
 class ChatSearch extends StatefulWidget {
   const ChatSearch({super.key});
@@ -45,13 +46,11 @@ class _ChatSearchState extends State<ChatSearch> {
         title: const Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: CommonTextField(
-             hintText : "Search People Here",
-
-
+            hintText: "Search People Here",
           ),
         ),
         flexibleSpace: Container(
-          decoration:   const BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [Palette.primaryColor, Palette.secondaryColor],
               end: Alignment.centerRight,
@@ -65,9 +64,7 @@ class _ChatSearchState extends State<ChatSearch> {
         width: width,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10)
-          ),
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           gradient: LinearGradient(
             colors: [Colors.white, Colors.white],
             end: Alignment.centerRight,

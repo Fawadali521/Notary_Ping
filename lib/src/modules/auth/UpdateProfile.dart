@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../../../styles.dart';
-import '../../utility/common_button.dart';
 import '../../utility/TextField.dart';
+import '../../utility/common_button.dart';
 
 //Asimkhan1122
 class UpdateProfileScreen extends StatelessWidget {
@@ -10,22 +12,24 @@ class UpdateProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return   Scaffold(
+    return Scaffold(
       backgroundColor: Palette.blue2,
-
-
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: height * 0.08,),
+              SizedBox(
+                height: height * 0.08,
+              ),
               Center(
-                child: Text('Add your account information',
-                  style: TextStyles.heading1.copyWith(fontSize: 14),),
+                child: Text(
+                  'Add your account information',
+                  style: TextStyles.heading1.copyWith(fontSize: 14),
+                ),
               ),
               Stack(
                 children: [
@@ -37,23 +41,24 @@ class UpdateProfileScreen extends StatelessWidget {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 1, // Use responsive_sizer for spreadRadius
+                          spreadRadius:
+                              1, // Use responsive_sizer for spreadRadius
                           blurRadius: 1, // Use responsive_sizer for blurRadius
                           offset: const Offset(0, 1),
                         ),
                       ],
-
                       shape: BoxShape.circle,
                       border: Border.all(
-
                         color: Colors.orange, // Border color
                         width: 4, // Border width
                       ),
                     ),
-                    child:  CircleAvatar(
+                    child: const CircleAvatar(
                       radius: 60, // Adjust the radius as needed
-                      backgroundColor: Colors.white, // Background color of the circle
-                      backgroundImage: AssetImage('assets/logo/icon.png'), // Profile picture image
+                      backgroundColor:
+                          Colors.white, // Background color of the circle
+                      backgroundImage: AssetImage(
+                          'assets/logo/icon.png'), // Profile picture image
                     ),
                   ),
 
@@ -64,117 +69,227 @@ class UpdateProfileScreen extends StatelessWidget {
                       onTap: () {
                         // Handle the camera icon tap event
                       },
-                      child: Icon(
+                      child: const Icon(
                         Icons.add_a_photo,
                         color: Colors.orange, // Icon color
                         size: 18, // Icon size
                       ),
                     ),
                   ),
-
                 ],
               ),
 
+              SizedBox(
+                height: height * 0.04,
+              ),
+              const Text(
+                'Contact Information',
+                style: TextStyles.heading1,
+              ),
 
-              SizedBox(height: height * 0.04,),
-              Text('Contact Information',style: TextStyles.heading1,),
-
-
-              SizedBox(height: height * 0.04,),
-              Text('Organaization ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.04,
+              ),
+              const Text(
+                'Organaization ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
-              Text('Address  ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.02,),
-              const CommonTextField(
-               ),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
+              const Text(
+                'Address  ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const CommonTextField(),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
-              Text('Address  ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.02,),
+              const Text(
+                'Address  ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
               const CommonTextField(
                 suffixIcon: Icon(Icons.arrow_drop_down),
               ),
-              SizedBox(height: height * 0.02,),
-              Text('City ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'City ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(
                 suffixIcon: Icon(Icons.arrow_drop_down),
               ),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              Text('State ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'State ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              Text('Zip ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'Zip ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              const Text('Work place ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'Work place ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
 
               //
-              Text('personal  Information',style: TextStyles.heading1,),
-              SizedBox(height: height * 0.04,),
-              Text('First Name  ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.02,),
+              const Text(
+                'personal  Information',
+                style: TextStyles.heading1,
+              ),
+              SizedBox(
+                height: height * 0.04,
+              ),
+              const Text(
+                'First Name  ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
-              Text('Registration Date  ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.02,),
+              const Text(
+                'Registration Date  ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
               const CommonTextField(
                 suffixIcon: Icon(Icons.calendar_month),
               ),
-              SizedBox(height: height * 0.02,),
-              Text('City ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'City ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              Text('State ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'State ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              Text('Email ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'Email ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-              const Text('Password ',style: TextStyles.bodyText,),
-              SizedBox(height: height * 0.01,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const Text(
+                'Password ',
+                style: TextStyles.bodyText,
+              ),
+              SizedBox(
+                height: height * 0.01,
+              ),
               const CommonTextField(),
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
-              SizedBox(height: height * 0.02,),
-              SizedBox(height: height * 0.02,),
-               SizedBox(height: height * 0.02,),
-              ElevatedButtonWidget(buttonText: 'Continues', buttonColor: Colors.orange,),
-              SizedBox(height: height * 0.02,),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
+              const ElevatedButtonWidget(
+                buttonText: 'Continues',
+                buttonColor: Colors.orange,
+              ),
+              SizedBox(
+                height: height * 0.02,
+              ),
 
-
-              SizedBox(height: height * 0.02,),
-
-
-
-
-
-
-
-
-
-
-
-
-
+              SizedBox(
+                height: height * 0.02,
+              ),
             ],
           ),
         ),

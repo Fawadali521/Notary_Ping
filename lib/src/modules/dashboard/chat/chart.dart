@@ -81,7 +81,7 @@ class _ChatsState extends State<Chats> {
                                   style: TextStyles().newChat,
                                 ),
                               ),
-                              Padding(
+                              const Padding(
                                 padding: EdgeInsets.only(),
                                 child: Icon(
                                   Icons.add,

@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 
 import '../../../../../styles.dart';
 
@@ -15,8 +17,6 @@ class SendMoneyBubble extends StatefulWidget {
 class _SendMoneyBoubleState extends State<SendMoneyBubble> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     if (widget.messageType == "sender") {
       return Padding(
         padding: const EdgeInsets.only(left: 7, right: 7, top: 10, bottom: 10),
@@ -64,7 +64,8 @@ class _SendMoneyBoubleState extends State<SendMoneyBubble> {
                             size: 20,
                           ),
                         ),
-                        Text("Send Securely", style: TextStyles.chatOnlineTyping),
+                        Text("Send Securely",
+                            style: TextStyles.chatOnlineTyping),
                         Spacer(),
                         Padding(
                           padding: EdgeInsets.only(right: 0, top: 10),

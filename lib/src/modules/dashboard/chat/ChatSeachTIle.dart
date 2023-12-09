@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+// ignore_for_file: file_names
+
+import 'package:flutter/material.dart';
 
 import '../../../../styles.dart';
 
@@ -28,7 +30,8 @@ class _ChatSearchTileState extends State<ChatSearchTile> {
                   backgroundColor: Palette.blue2,
                   child: CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage("assets/images/profileImage.png"),
+                    backgroundImage:
+                        AssetImage("assets/images/profileImage.png"),
                   ),
                 ),
               ),
@@ -72,7 +75,7 @@ class _ChatSearchTileState extends State<ChatSearchTile> {
               ),
               child: const Padding(
                 padding:
-                EdgeInsets.only(left: 10, right: 10, top: 3.0, bottom: 4),
+                    EdgeInsets.only(left: 10, right: 10, top: 3.0, bottom: 4),
                 child: Text(
                   "Request",
                   style: TextStyles.requestText,
