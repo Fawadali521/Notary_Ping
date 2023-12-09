@@ -1,5 +1,5 @@
-import 'package:notary_ping/LandingPage.dart';
 import 'package:notary_ping/index.dart';
+import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 
 import 'src/services/Languages.dart';
 
@@ -35,7 +35,7 @@ class NotaryPingApp extends StatelessWidget {
           brightness: Brightness.light,
           useMaterial3: true,
         ),
-        home: const LandingPage(),
+        home: const Dashboard(),
       ),
     );
   }

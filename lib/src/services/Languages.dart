@@ -59,6 +59,16 @@ class Languages extends Translations {
           'resetDescription':
               'Your password must be different from previously used  password',
           'Enter new password': 'Enter new password',
+          'Home': 'Home',
+          'Bookings': 'Bookings',
+          'Message': 'Message',
+          'Profile': 'Profile',
+          'Booking': 'Booking',
+          'History': 'History',
+          'Currents booking': 'Currents booking',
+          'Tracking': 'Tracking',
+          'Signature for property documents':
+              'Signature for property documents',
           '': '',
         },
       };

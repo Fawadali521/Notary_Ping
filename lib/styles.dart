@@ -197,6 +197,7 @@ class BorderStyles {
 }
 
 class Palette {
+  static const Color bgColor = Color(0xFFF9F9F9);
   static const Color primaryColor = Color(0xFF0DB1EF);
   static const Color bgTextFeildColor = Color(0xFFF9F9F9);
   static const Color secondaryColor = blue2;
@@ -209,4 +210,6 @@ class Palette {
   static const Color lightBlue = Color(0xFFCFEFFC);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
+  static const Color orangColor = Color(0xFFF78100);
+  static const Color lightBlueColor = Color(0xFFE0F3FE);
 }

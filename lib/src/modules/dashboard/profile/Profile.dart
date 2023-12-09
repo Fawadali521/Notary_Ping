@@ -3,7 +3,6 @@
 import 'package:delayed_display/delayed_display.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/Languages.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/TermAndCondition.dart';
@@ -56,9 +55,6 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-    ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(

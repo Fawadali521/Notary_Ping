@@ -1,13 +1,11 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:notary_ping/src/modules/dashboard/chat/chart.dart';
 import 'package:notary_ping/src/modules/dashboard/home/Home.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
-import 'package:notary_ping/src/modules/dashboard/search/search.dart';
+import 'package:notary_ping/src/modules/dashboard/bookings/Bookings.dart';
 
-import '../../../styles.dart';
-import 'chat/chart.dart';
+import '../../../index.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({
@@ -19,9 +17,8 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int currentIndex = 3; // Set the initial index to 0
+  int currentIndex = 1;
   late final PageController? pageController;
-
   @override
   void initState() {
     pageController = PageController(
@@ -38,47 +35,35 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light,
-    ));
-
-    return SafeArea(
-      child: Scaffold(
-        // backgroundColor: Colors.transparent,
-        //extendBody: true,
-        body: PageView(
-          controller: pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (page) {
-            setState(() {
-              currentIndex = page;
-            });
-          },
-          children: const [
-            HomeScreen(),
-            SearchScreen(),
-            Chats(),
-            Profile(),
+    return Scaffold(
+      extendBody: true,
+      body: PageView(
+        controller: pageController,
+        physics: const NeverScrollableScrollPhysics(),
+        onPageChanged: (page) {
+          setState(() {
+            currentIndex = page;
+          });
+        },
+        children: const [
+          HomeScreen(),
+          Bookings(),
+          Chats(),
+          Profile(),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: 70,
+        color: Palette.whiteColor,
+        padding: EdgeInsets.symmetric(horizontal: 20.w),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildNavItem(0, "Home", homeIcon),
+            _buildNavItem(1, "Bookings", bookingsIcon),
+            _buildNavItem(2, "Message", messageIcon),
+            _buildNavItem(3, "Profile", userIcon),
           ],
-        ),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.only(bottom: 15, right: 20, left: 20),
-          child: Container(
-            height: 66,
-            decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildNavItem(0, "Home", "assets/icon/home.png"),
-                _buildNavItem(1, "Search", "assets/icon/search.png"),
-                _buildNavItem(2, "Messages", "assets/icon/messages.png"),
-                _buildNavItem(3, "Profile", "assets/icon/profile.png"),
-              ],
-            ),
-          ),
         ),
       ),
     );
@@ -91,31 +76,28 @@ class _DashboardState extends State<Dashboard> {
         pageController?.jumpToPage(index);
         setState(() {});
       },
-      child: SizedBox(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 5),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ImageIcon(
-                AssetImage(iconPath),
-                size: 20,
-                color:
-                    currentIndex == index ? Palette.primaryColor : Colors.grey,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 3.5),
-                child: Text(
-                  label,
-                  style: TextStyles.bottomBarText.copyWith(
-                      color: currentIndex == index
-                          ? Palette.primaryColor
-                          : Colors.grey),
-                ),
-              ),
-            ],
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ImageIcon(
+            AssetImage(iconPath),
+            size: 24,
+            color: currentIndex == index
+                ? Palette.primaryColor
+                : Palette.greyTextColor,
           ),
-        ),
+          Padding(
+            padding: EdgeInsets.only(top: 5.h),
+            child: Text(
+              label.tr,
+              style: TextStyles.bodySmall.copyWith(
+                color: currentIndex == index
+                    ? Palette.primaryColor
+                    : Palette.greyTextColor,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

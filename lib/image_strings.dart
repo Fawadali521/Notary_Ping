@@ -21,9 +21,12 @@ const String nextButtonIcon = "$icons/next.png";
 const String emailIcon = "$icons/email.png";
 const String userIcon = "$icons/user.png";
 const String passwordIcon = "$icons/password.png";
+const String bookingsIcon = "$icons/bookings.png";
+const String homeIcon = "$icons/home.png";
+const String messageIcon = "$icons/message.png";
 
 ///
 ///dynamic images
 ///
-const String user = "$images/user1.png";
+const String user = "$images/profileImage.png";
 const String electronic = "$images/khasab.png";
