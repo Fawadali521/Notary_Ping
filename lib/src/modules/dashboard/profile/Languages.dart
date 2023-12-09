@@ -32,9 +32,7 @@ class _LanguagesState extends State<Languages> {
         ),
       ),
       body: ListView(
-        padding: EdgeInsets.only(
-            top: 20, left: 20, right: 20
-        ),
+        padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
         children: [
           buildLanguageRow('English'),
           buildLanguageRow('Spanish'),
@@ -49,19 +47,14 @@ class _LanguagesState extends State<Languages> {
     final isSelected = selectedLanguage == language;
 
     return Padding(
-      padding: const EdgeInsets.only(
-        bottom: 20
-      ),
+      padding: const EdgeInsets.only(bottom: 20),
       child: Container(
         padding: const EdgeInsets.only(
           left: 10,
-
         ),
         height: 50,
-         decoration: const BoxDecoration(
-             borderRadius: BorderStyles.norm,
-             color: Palette.textFieldFill
-        ),
+        decoration: BoxDecoration(
+            borderRadius: BorderStyles.normal, color: Palette.textFieldFill),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -75,7 +68,6 @@ class _LanguagesState extends State<Languages> {
               scale: 0.7,
               child: CupertinoSwitch(
                 activeColor: Palette.primaryColor,
-
                 value: isSelected,
                 onChanged: (value) {
                   selectLanguage(language);

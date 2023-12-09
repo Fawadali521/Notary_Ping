@@ -4,16 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:page_transition/page_transition.dart';
 
-
 import '../../../../styles.dart';
 import 'ChartTile.dart';
 import 'ChatSearch.dart';
 import 'chatting/chat-ui.dart';
-
-
-
-
-
 
 class Chats extends StatefulWidget {
   const Chats({super.key});
@@ -32,20 +26,20 @@ class _ChatsState extends State<Chats> {
     ));
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    return   Container(
+    return Container(
       height: height,
       width: width,
-      decoration:   const BoxDecoration(
-          gradient:
-          LinearGradient(colors: [Palette.secondaryColor, Palette.primaryColor])),
+      decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              colors: [Palette.secondaryColor, Palette.primaryColor])),
       child: ListView(
         shrinkWrap: true,
         // physics: const NeverScrollableScrollPhysics(),
         children: [
           const SafeArea(child: SizedBox()),
           Padding(
-            padding: const EdgeInsets.only(
-                left: 20, right: 20, top: 15, bottom: 30),
+            padding:
+                const EdgeInsets.only(left: 20, right: 20, top: 15, bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +48,7 @@ class _ChatsState extends State<Chats> {
                   delay: upRowDelay,
                   slidingBeginOffset: const Offset(-1.0, 0.0),
                   slidingCurve: Curves.ease,
-                  child:   Text(
+                  child: Text(
                     "Chat",
                     style: TextStyles().profileBold,
                   ),
@@ -74,7 +68,7 @@ class _ChatsState extends State<Chats> {
                               color: Colors.white.withOpacity(0.5),
                             ),
                             borderRadius: BorderRadius.circular(15)),
-                        child:   Padding(
+                        child: Padding(
                           padding: const EdgeInsets.only(
                               left: 10, right: 10, top: 5, bottom: 5),
                           child: Row(
@@ -88,9 +82,7 @@ class _ChatsState extends State<Chats> {
                                 ),
                               ),
                               Padding(
-                                padding: EdgeInsets.only(
-
-                                ),
+                                padding: EdgeInsets.only(),
                                 child: Icon(
                                   Icons.add,
                                   size: 15,
@@ -115,13 +107,12 @@ class _ChatsState extends State<Chats> {
                                 PageTransition(
                                     type: PageTransitionType.fade,
                                     child: const ChatSearch()));
-
                           },
                           child: Container(
                             height: 42,
                             width: 42,
                             decoration: BoxDecoration(
-                              borderRadius: BorderStyles.norm2,
+                              borderRadius: BorderStyles.medium,
                               border: Border.all(
                                 color: Colors.white.withOpacity(0.5),
                                 width: 1,
@@ -185,9 +176,7 @@ class _ChatsState extends State<Chats> {
                               context,
                               PageTransition(
                                   type: PageTransitionType.fade,
-                                  child:   const ChatUi()));
-
-
+                                  child: const ChatUi()));
                         },
                         child: ChatTile(
                           msgCount: (index + 1).toString(),

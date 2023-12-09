@@ -1,7 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:notary_ping/index.dart';
 
-//Asimkhan
+const String fontFamilyInter = "Inter";
+
 class TextStyles {
+  static const headlineLarge = TextStyle(
+    fontWeight: FontWeight.w700,
+    fontSize: 20,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const headlineMedium = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 24,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const headlineSmall = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+
+  static const titleLarge = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const titleMedium = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 14,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const titleSmall = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 16,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const bodyLarge = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 14,
+    fontFamily: fontFamilyInter,
+    color: Colors.black,
+  );
+  static const bodyMedium = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    fontFamily: fontFamilyInter,
+    color: Palette.greyTextColor,
+  );
+  static const bodySmall = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    fontFamily: fontFamilyInter,
+    color: Palette.greyTextColor,
+  );
+
+  /// previous
   static const bodyText = TextStyle(
       fontWeight: FontWeight.w400,
       fontSize: 14,
@@ -128,24 +187,26 @@ class TextStyles {
       fontSize: 14,
       color: Colors.white,
       fontFamily: 'Montserrat-Light');
-
-
-
 }
 
 class BorderStyles {
-  static const norm = BorderRadius.all(Radius.circular(7));
-  static const norm2 = BorderRadius.all(Radius.circular(15));
+  static final normal = BorderRadius.circular(8);
+  static final medium = BorderRadius.circular(12);
   static const textFieldBorderRadius = BorderRadius.all(Radius.circular(10));
-  static const buttonRadius = BorderRadius.all(Radius.circular(16));
+  static const buttonRadius = BorderRadius.all(Radius.circular(15));
 }
 
 class Palette {
-  static const Color primaryColor = blue3;
+  static const Color primaryColor = Color(0xFF0DB1EF);
+  static const Color bgTextFeildColor = Color(0xFFF9F9F9);
   static const Color secondaryColor = blue2;
   static const Color textFieldFill = Color(0xFFf5f7f9);
-
   static const Color blue1 = Color(0xFF0DB1EF);
   static const Color blue2 = Color(0xFF244e9d);
   static const Color blue3 = Color(0xFF00aeef);
+  static const Color bgOnboardingColor = Color(0xFFF9FDFF);
+  static const Color greyTextColor = Color(0xFF767676);
+  static const Color lightBlue = Color(0xFFCFEFFC);
+  static const Color whiteColor = Color(0xFFFFFFFF);
+  static const Color blackColor = Color(0xFF000000);
 }

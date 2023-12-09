@@ -1,34 +1,41 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: file_names
 
-import '../../styles.dart';
+import '../../index.dart';
 
 class SubmitButton extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
-  final Color color;
+  final Color? backGroundColor;
+  final Color? titleColor;
   final bool? isLoading;
-  const SubmitButton(
-      {super.key,
-      required this.onTap,
-      required this.title,
-      this.color = Palette.primaryColor,
-      this.isLoading});
+  const SubmitButton({
+    super.key,
+    required this.onTap,
+    required this.title,
+    this.backGroundColor,
+    this.titleColor,
+    this.isLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       onPressed: isLoading == true ? null : onTap,
       elevation: 0,
-      height: 45,
-      color: color,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderStyles.buttonRadius,
+      color: backGroundColor ?? Palette.primaryColor,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderStyles.normal,
       ),
-      child: Center(
-        child: Text(
-          title,
-          style: TextStyles.buttonText,
-          textAlign: TextAlign.center,
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 12.h),
+        child: Center(
+          child: Text(
+            title,
+            style: TextStyles.titleSmall.copyWith(
+              color: titleColor ?? Palette.whiteColor,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );

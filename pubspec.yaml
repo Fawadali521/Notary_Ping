@@ -21,6 +21,8 @@ dependencies:
   intl:
   delayed_display: ^2.0.0
   get: ^4.6.6
+  flutter_screenutil: ^5.9.0
+  dots_indicator: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -38,51 +40,15 @@ flutter:
     - assets/icon/
 
   fonts:
-    - family: Montserrat
-      fonts:
-        - asset: fonts/montserrat/Montserrat-VariableFont.ttf
-    - family: Montserrat-Regular
-      fonts:
-        - asset: fonts/montserrat/Montserrat-Regular.ttf
-    - family: Montserrat-Medium
-      fonts:
-        - asset: fonts/montserrat/Montserrat-Medium.ttf
-    - family: Montserrat-Light
-      fonts:
-        - asset: fonts/montserrat/Montserrat-Light.ttf
-    - family: Montserrat-SemiBold
-      fonts:
-        - asset: fonts/montserrat/Montserrat-SemiBold.ttf
-    - family: Montserrat-Bold
-      fonts:
-        - asset: fonts/montserrat/Montserrat-Bold.ttf
     - family: Inter
       fonts:
-        - asset: fonts/Inter/Inter-VariableFont.ttf
-    - family: Inter-Regular
-      fonts:
-        - asset: fonts/Inter/Inter-Regular.ttf
-    - family: Inter-Light
-      fonts:
-        - asset: fonts/Inter/Inter-Light.ttf
-    - family: Inter-Medium
-      fonts:
-        - asset: fonts/Inter/Inter-Medium.ttf
-    - family: Inter-SemiBold
-      fonts:
-        - asset: fonts/Inter/Inter-SemiBold.ttf
-    - family: Inter-Bold
-      fonts:
-        - asset: fonts/Inter/Inter-Bold.ttf
-    - family: Inter-ExtraBold
-      fonts:
-        - asset: fonts/Inter/Inter-ExtraBold.ttf
-    - family: Oxygen
-      fonts:
-        - asset: fonts/oxygen/Oxygen-Regular.ttf
-    - family: Oxygen-Light
-      fonts:
-        - asset: fonts/oxygen/Oxygen-Light.ttf
-    - family: Oxygen-Bold
-      fonts:
-        - asset: fonts/oxygen/Oxygen-Bold.ttf
+        - asset: assets/fonts/Inter-Thin.ttf
+        - asset: assets/fonts/Inter-ExtraLight.ttf
+        - asset: assets/fonts/Inter-Light.ttf
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+        - asset: assets/fonts/Inter-SemiBold.ttf
+        - asset: assets/fonts/Inter-Bold.ttf
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+        - asset: assets/fonts/Inter-Black.ttf
+  

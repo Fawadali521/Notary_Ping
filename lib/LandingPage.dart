@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notary_ping/src/modules/auth/OnBoardingScreen.dart';
+import 'package:notary_ping/src/modules/auth/onboarding/OnBoarding.dart';
 import 'package:page_transition/page_transition.dart';
 
 import 'SplashScreen.dart';
@@ -21,7 +21,7 @@ class _LandingPageState extends State<LandingPage> {
         context,
         PageTransition(
           type: PageTransitionType.fade,
-          child: const OnBoardingScreen(),
+          child: Onboarding(),
         ),
       );
     });

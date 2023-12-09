@@ -60,223 +60,219 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-
       body: Stack(
         children: [
-           Positioned(
-            top: 0,
+          Positioned(
+              top: 0,
               left: 0,
               right: 0,
               child: Container(
-                height: height/2.5,
+                height: height / 2.5,
                 width: width,
-                  decoration: const BoxDecoration(
-                      // color: Palette.primaryColor
-                      gradient: LinearGradient(
-                    colors: [Palette.secondaryColor, Palette.primaryColor],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                  )
-                  ),
+                decoration: const BoxDecoration(
+                    // color: Palette.primaryColor
+                    gradient: LinearGradient(
+                  colors: [Palette.secondaryColor, Palette.primaryColor],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                )),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 10
-                  ),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Column(
                     children: [
-                            //Upper row
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                left: 20,
-                                right: 20,
+                      //Upper row
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 20,
+                          right: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DelayedDisplay(
+                              delay: upRowDelay,
+                              slidingBeginOffset: const Offset(-1.0, 0.0),
+                              slidingCurve: Curves.ease,
+                              child: Text(
+                                "Profile",
+                                style: TextStyles().profileBold,
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  DelayedDisplay(
-                                    delay: upRowDelay,
-                                    slidingBeginOffset: const Offset(-1.0, 0.0),
-                                    slidingCurve: Curves.ease,
-                                    child: Text(
-                                      "Profile",
-                                      style: TextStyles().profileBold,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                DelayedDisplay(
+                                  delay: upRowDelay,
+                                  slidingBeginOffset: const Offset(1.0, 0.0),
+                                  slidingCurve: Curves.ease,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              type: PageTransitionType.fade,
+                                              child: const Notifications()));
+                                    },
+                                    child: Container(
+                                      height: 42,
+                                      width: 42,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderStyles.medium,
+                                        border: Border.all(
+                                          color: Colors.white.withOpacity(0.5),
+                                          width: 1,
+                                        ),
+                                        color: Colors.transparent,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(
+                                          "assets/icon/notification.png",
+                                          height: 24,
+                                          fit: BoxFit.contain,
+                                          color: Colors.white,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      DelayedDisplay(
-                                        delay: upRowDelay,
-                                        slidingBeginOffset: const Offset(1.0, 0.0),
-                                        slidingCurve: Curves.ease,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                             Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                    type: PageTransitionType.fade,
-                                                    child: const Notifications()));
-
-                                           },
-                                          child: Container(
-                                            height: 42,
-                                            width: 42,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderStyles.norm2,
-                                              border: Border.all(
-                                                color: Colors.white.withOpacity(0.5),
-                                                width: 1,
-                                              ),
-                                              color: Colors.transparent,
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Image.asset(
-                                                "assets/icon/notification.png",
-                                                height: 24,
-                                                fit: BoxFit.contain,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 15),
+                                  child: DelayedDisplay(
+                                    delay: upRowDelay,
+                                    slidingBeginOffset: const Offset(1.0, 0.0),
+                                    slidingCurve: Curves.ease,
+                                    child: InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 42,
+                                        width: 42,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                            color:
+                                                Colors.white.withOpacity(0.5),
+                                            width: 1,
                                           ),
+                                          color: Palette.primaryColor
+                                              .withOpacity(0.05),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 15),
-                                        child: DelayedDisplay(
-                                          delay: upRowDelay,
-                                          slidingBeginOffset: const Offset(1.0, 0.0),
-                                          slidingCurve: Curves.ease,
-                                          child: InkWell(
-                                            onTap: () {},
-                                            child: Container(
-                                              height: 42,
-                                              width: 42,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(15),
-                                                border: Border.all(
-                                                  color: Colors.white.withOpacity(0.5),
-                                                  width: 1,
-                                                ),
-                                                color: Palette.primaryColor.withOpacity(0.05),
-                                              ),
-                                              child: Center(
-                                                child: Stack(
-                                                  clipBehavior: Clip.none,
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets.symmetric(
-                                                          horizontal: 10, vertical: 15),
-                                                      child: Transform.scale(
-                                                        scale:
-                                                            0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
+                                        child: Center(
+                                          child: Stack(
+                                            clipBehavior: Clip.none,
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 15),
+                                                child: Transform.scale(
+                                                  scale:
+                                                      0.6, // Adjust the scale factor as needed (0.8 scales it down to 80% of its original size)
 
-                                                        child: CupertinoSwitch(
-                                                          activeColor: Palette.secondaryColor,
-                                                          trackColor: Colors.grey[300],
-                                                          value: switchValue,
-                                                          onChanged: (newValue) {
-                                                            setState(() {
-                                                              switchValue =
-                                                                  newValue; // Update the switch state when it's toggled.
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  child: CupertinoSwitch(
+                                                    activeColor:
+                                                        Palette.secondaryColor,
+                                                    trackColor:
+                                                        Colors.grey[300],
+                                                    value: switchValue,
+                                                    onChanged: (newValue) {
+                                                      setState(() {
+                                                        switchValue =
+                                                            newValue; // Update the switch state when it's toggled.
+                                                      });
+                                                    },
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                            ],
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Column(
-                                    children: [
-                                      const Center(
-                                        child: CircleAvatar(
-                                          radius: 52,
-                                          backgroundColor: Colors.white,
-                                          child: CircleAvatar(
-                                            radius: 50, // Adjust the radius as needed
-                                            backgroundImage: AssetImage(
-                                                'assets/images/profileImage.png'), // Replace with your image
-                                          ),
-                                        ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Column(
+                              children: [
+                                const Center(
+                                  child: CircleAvatar(
+                                    radius: 52,
+                                    backgroundColor: Colors.white,
+                                    child: CircleAvatar(
+                                      radius: 50, // Adjust the radius as needed
+                                      backgroundImage: AssetImage(
+                                          'assets/images/profileImage.png'), // Replace with your image
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Text(
+                                    "Brookly Simmons",
+                                    style: TextStyles().profileWhite,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 3),
+                                      child: Image.asset(
+                                        'assets/icon/location.png',
+                                        color: Colors.white,
+                                        height: 18,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 10, bottom: 5),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5),
+                                      child: Opacity(
+                                        opacity: 0.7,
                                         child: Text(
-                                          "Brookly Simmons",
-                                          style: TextStyles().profileWhite,
+                                          "Lafate California 900001",
+                                          style: TextStyles().profileLocation,
                                         ),
                                       ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(bottom: 3),
-                                            child: Image.asset(
-                                              'assets/icon/location.png',
-                                              color: Colors.white,
-                                              height: 18,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(left: 5),
-                                            child: Opacity(
-                                              opacity: 0.7,
-                                              child: Text(
-                                                "Lafate California 900001",
-                                                style: TextStyles().profileLocation,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
-               )),
+              )),
           Positioned(
               top: height * 0.3,
               child: Container(
-
-              height: height * 0.6,
-              width: width,
-
-
-             decoration: const BoxDecoration(
-               color: Colors.white,
-               borderRadius: BorderRadius.only(
-                 topRight: Radius.circular(12),
-                 topLeft: Radius.circular(12)
-               )
-             ),
-
+                height: height * 0.6,
+                width: width,
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(12),
+                        topLeft: Radius.circular(12))),
                 child: ListView(
                   shrinkWrap: true,
-                  padding: const  EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 10,
-
                   ),
                   children: [
-
                     DelayedDisplay(
                       delay: upRowDelay,
                       slidingBeginOffset: const Offset(-1.0, 0.0),
@@ -305,8 +301,7 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       slidingBeginOffset: const Offset(-1.0, 0.0),
                       slidingCurve: Curves.ease,
                       child: const ProfileItem(
-                          icon: "assets/icon/edit.png",
-                          title: "Edit profile"),
+                          icon: "assets/icon/edit.png", title: "Edit profile"),
                     ),
                     DelayedDisplay(
                       delay: upRowDelay + const Duration(milliseconds: 300),
@@ -363,11 +358,9 @@ class _ProfileState extends State<Profile> with TickerProviderStateMixin {
                       child: const ProfileItem(
                           icon: "assets/icon/logout.png", title: "Log Out"),
                     ),
-
                   ],
                 ),
-           )),
-
+              )),
         ],
       ),
       // body: Container(

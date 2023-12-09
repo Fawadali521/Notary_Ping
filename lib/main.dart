@@ -1,41 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:notary_ping/LandingPage.dart';
-import 'package:notary_ping/src/modules/auth/ForgotPassword.dart';
-import 'package:notary_ping/src/modules/auth/OnBoardingScreen.dart';
-import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
-import 'package:notary_ping/src/modules/dashboard/chat/ChartTile.dart';
-import 'package:notary_ping/src/modules/dashboard/chat/ChatSearch.dart';
-import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
+import 'package:notary_ping/index.dart';
+
+import 'src/services/Languages.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-      overlays: [SystemUiOverlay.top]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarBrightness: Brightness.dark,
+    statusBarColor: Colors.transparent,
   ));
-  runApp(const MyApp());
+  runApp(const NotaryPingApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class NotaryPingApp extends StatelessWidget {
+  const NotaryPingApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Notary Ping',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        scaffoldBackgroundColor: Colors.white,
-        brightness: Brightness.light,
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) => GetMaterialApp(
+        translations: Languages(),
+        locale: const Locale('en', 'US'),
+        fallbackLocale: const Locale('en', 'US'),
+        defaultTransition: Transition.fadeIn,
+        title: 'Notary Ping',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: 'Montserrat',
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: Colors.white,
+          brightness: Brightness.light,
+          useMaterial3: true,
+        ),
+        home: const LandingPage(),
       ),
-      home:   const Dashboard(),
     );
   }
 }

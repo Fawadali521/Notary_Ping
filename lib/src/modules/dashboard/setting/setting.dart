@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
@@ -36,8 +35,8 @@ class _SettingState extends State<Setting> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               height: 50,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderStyles.norm,
+              decoration: BoxDecoration(
+                  borderRadius: BorderStyles.normal,
                   color: Palette.textFieldFill),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -68,8 +67,8 @@ class _SettingState extends State<Setting> {
             padding: const EdgeInsets.only(bottom: 20),
             child: Container(
               height: 50,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderStyles.norm,
+              decoration: BoxDecoration(
+                  borderRadius: BorderStyles.normal,
                   color: Palette.textFieldFill),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

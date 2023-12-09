@@ -1,21 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../styles.dart';
-
-
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
-
-import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
 import 'chatting/chat-meassage.dart';
-
-
 
 class ChatInbox extends StatefulWidget {
   const ChatInbox({super.key});
@@ -31,43 +17,41 @@ class ChatInboxState extends State<ChatInbox> with TickerProviderStateMixin {
   void _handleSubmitted(String text, String sender) {
     _textController.clear();
     ChatMessage message = ChatMessage(
-
-       requestMoney: true, sendMoney: true,
-      isSeen: false, time: DateTime.now(), isMedia: false, messageType: 'sender', messageContent: '',
+      requestMoney: true,
+      sendMoney: true,
+      isSeen: false,
+      time: DateTime.now(),
+      isMedia: false,
+      messageType: 'sender',
+      messageContent: '',
     );
     setState(() {
       _messages.insert(0, message);
     });
-   }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-
         body: Padding(
-          padding: const EdgeInsets.only(
-            top: 20,
-            left: 10,
-            right: 10
-          ),
+          padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
           child: Column(
             children: [
               // Name row
               Padding(
                 padding: const EdgeInsets.only(
-                    top: 20,
-                    left: 20,
-                    right: 20,
-                    bottom: 20
-                ),
+                    top: 20, left: 20, right: 20, bottom: 20),
                 child: Row(
                   children: [
-                    IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    },
-                        icon: const Icon(Icons.arrow_back_ios , color: Colors.black,)),
-
+                    IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.black,
+                        )),
                     CircleAvatar(
                       radius: 20,
                       backgroundColor: Palette.primaryColor.withOpacity(0.2),
@@ -79,20 +63,20 @@ class ChatInboxState extends State<ChatInbox> with TickerProviderStateMixin {
                             child: CircleAvatar(
                               radius: 25,
                               backgroundColor: Palette.primaryColor,
-                              backgroundImage: AssetImage("assets/images/profileImage.png"),
+                              backgroundImage:
+                                  AssetImage("assets/images/profileImage.png"),
                             ),
                           ),
                         ),
                       ),
                     ),
-
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text(
+                        "John thomas",
+                        style: TextStyles().appBarTitleBlack,
                       ),
-                      child: Text("John thomas", style: TextStyles().appBarTitleBlack,),
                     )
-
                   ],
                 ),
               ),
@@ -103,38 +87,34 @@ class ChatInboxState extends State<ChatInbox> with TickerProviderStateMixin {
                   itemBuilder: (_, int index) => Container(),
                 ),
               ),
-               Padding(
-                 padding: const EdgeInsets.only(
-                   bottom: 10,
-                   left: 10,
-                   right: 10
-
-                 ),
-                 child: Container(
-                   height: 40,
-                   decoration: const BoxDecoration(
-                     color: Palette.primaryColor,
-                     borderRadius: BorderStyles.norm
-
-
-                   ),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Icon(Icons.arrow_upward,color: Colors.white,),
-                       Text('Add Documents', style: TextStyles.buttonText,),
-                     ],
-                   ),
-                 ),
-               ),
-               Padding(
-                padding: const EdgeInsets.only(bottom:20, left: 10, right: 10),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                      color: Palette.primaryColor,
+                      borderRadius: BorderStyles.normal),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.arrow_upward,
+                        color: Colors.white,
+                      ),
+                      Text(
+                        'Add Documents',
+                        style: TextStyles.buttonText,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
                 child: Container(
                   decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey
-                    ),
-                    borderRadius: BorderStyles.norm,
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderStyles.normal,
                       color: Palette.textFieldFill),
                   child: _buildTextComposer(),
                 ),
@@ -159,13 +139,14 @@ class ChatInboxState extends State<ChatInbox> with TickerProviderStateMixin {
                 controller: _textController,
                 onSubmitted: (text) => _handleSubmitted(text, 'User 1'),
                 decoration: const InputDecoration.collapsed(
-                  hintText: 'Send a message',
-                  hintStyle: TextStyles.textField
-                ),
+                    hintText: 'Send a message',
+                    hintStyle: TextStyles.textField),
               ),
             ),
-            IconButton(onPressed: (){},
-              icon: const Icon(Icons.mic),            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.mic),
+            ),
             IconButton(
               icon: const Icon(Icons.send),
               onPressed: () => _handleSubmitted(_textController.text, 'User 1'),

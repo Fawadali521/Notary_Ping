@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:notary_ping/styles.dart';
+// ignore_for_file: file_names
+
+import '../../index.dart';
 
 class SocialButton extends StatelessWidget {
   final String status;
@@ -9,18 +9,18 @@ class SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      child: MaterialButton(
-        elevation: 0,
-        onPressed: () {
-          HapticFeedback.lightImpact();
-          onTap();
-        },
-        color: socialColor(status),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderStyles.buttonRadius,
-        ),
+    return MaterialButton(
+      elevation: 0,
+      onPressed: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      color: socialColor(status),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderStyles.normal,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 12.h),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
@@ -29,8 +29,8 @@ class SocialButton extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  socialTitle(status),
-                  style: TextStyles.buttonText,
+                  socialTitle(status).tr,
+                  style: TextStyles.titleSmall,
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -39,7 +39,6 @@ class SocialButton extends StatelessWidget {
               socialIcon(status),
               fit: BoxFit.contain,
               height: 24,
-              color: Colors.white,
             )
           ],
         ),
@@ -59,22 +58,15 @@ class SocialButton extends StatelessWidget {
   }
 
   Color socialColor(String status) {
-    if (status == "GO") {
-      return Colors.red;
-    }
-    if (status == "FB") {
-      return Colors.blue;
-    } else {
-      return Colors.black;
-    }
+    return Palette.bgTextFeildColor;
   }
 
   String socialIcon(String status) {
     if (status == "GO") {
-      return "assets/images/google.png";
+      return "$images/googlee.png";
     }
     if (status == "AP") {
-      return "assets/images/apple.png";
+      return "$images/apple.png";
     } else {
       return "assets/social/apple.png";
     }
