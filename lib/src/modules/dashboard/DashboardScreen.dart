@@ -1,9 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:notary_ping/src/modules/dashboard/chat/chart.dart';
-import 'package:notary_ping/src/modules/dashboard/home/Home.dart';
-import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/Bookings.dart';
+import 'package:notary_ping/src/modules/dashboard/home/Home.dart';
+import 'package:notary_ping/src/modules/dashboard/message/Message.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/Profile.dart';
 
 import '../../../index.dart';
 
@@ -17,7 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int currentIndex = 1;
+  int currentIndex = 2;
   late final PageController? pageController;
   @override
   void initState() {
@@ -36,69 +36,68 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
-      body: PageView(
-        controller: pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        onPageChanged: (page) {
-          setState(() {
-            currentIndex = page;
-          });
-        },
-        children: const [
-          HomeScreen(),
-          Bookings(),
-          Chats(),
-          Profile(),
-        ],
-      ),
-      bottomNavigationBar: Container(
-        height: 70,
-        color: Palette.whiteColor,
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        extendBody: true,
+        body: PageView(
+          controller: pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          onPageChanged: (page) {
+            setState(() {
+              currentIndex = page;
+            });
+          },
           children: [
-            _buildNavItem(0, "Home", homeIcon),
-            _buildNavItem(1, "Bookings", bookingsIcon),
-            _buildNavItem(2, "Message", messageIcon),
-            _buildNavItem(3, "Profile", userIcon),
+            const HomeScreen(),
+            const Bookings(),
+            Message(),
+            Profile(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem(int index, String label, String iconPath) {
-    return GestureDetector(
-      onTap: () {
-        currentIndex = index;
-        pageController?.jumpToPage(index);
-        setState(() {});
-      },
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ImageIcon(
-            AssetImage(iconPath),
-            size: 24,
-            color: currentIndex == index
-                ? Palette.primaryColor
-                : Palette.greyTextColor,
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 5.h),
-            child: Text(
-              label.tr,
-              style: TextStyles.bodySmall.copyWith(
-                color: currentIndex == index
-                    ? Palette.primaryColor
-                    : Palette.greyTextColor,
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: currentIndex,
+          onTap: (index) {
+            currentIndex = index;
+            pageController?.jumpToPage(index);
+            setState(() {});
+          },
+          backgroundColor: Palette.whiteColor,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedItemColor: Palette.primaryColor,
+          unselectedItemColor: Palette.greyTextColor,
+          selectedLabelStyle:
+              TextStyles.bodySmall.copyWith(color: Palette.primaryColor),
+          unselectedLabelStyle: TextStyles.bodySmall,
+          items: [
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                AssetImage(homeIcon),
+                size: 24,
               ),
+              label: 'Home'.tr,
             ),
-          ),
-        ],
-      ),
-    );
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                AssetImage(bookingsIcon),
+                size: 24,
+              ),
+              label: 'Bookings'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                AssetImage(messageIcon),
+                size: 24,
+              ),
+              label: 'Message'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: const ImageIcon(
+                AssetImage(userIcon),
+                size: 24,
+              ),
+              label: 'Profile'.tr,
+            ),
+          ],
+        ));
   }
 }

@@ -24,6 +24,15 @@ const String passwordIcon = "$icons/password.png";
 const String bookingsIcon = "$icons/bookings.png";
 const String homeIcon = "$icons/home.png";
 const String messageIcon = "$icons/message.png";
+const String editIcon = "$icons/edit.png";
+const String lockIcon = "$icons/Lock.png";
+const String logoutIcon = "$icons/logout.png";
+const String policyIcon = "$icons/policy.png";
+const String termsIcon = "$icons/terms.png";
+const String supportIcon = "$icons/support.png";
+const String settingIcon = "$icons/setting.png";
+const String reportIcon = "$icons/report.png";
+const String deleteIcon = "$icons/delete.png";
 
 ///
 ///dynamic images

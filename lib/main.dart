@@ -1,5 +1,5 @@
+import 'package:notary_ping/LandingPage.dart';
 import 'package:notary_ping/index.dart';
-import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 
 import 'src/services/Languages.dart';
 
@@ -25,7 +25,7 @@ class NotaryPingApp extends StatelessWidget {
         translations: Languages(),
         locale: const Locale('en', 'US'),
         fallbackLocale: const Locale('en', 'US'),
-        defaultTransition: Transition.fadeIn,
+        defaultTransition: Transition.fade,
         title: 'Notary Ping',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -34,8 +34,12 @@ class NotaryPingApp extends StatelessWidget {
           primaryColor: Colors.white,
           brightness: Brightness.light,
           useMaterial3: true,
+          hoverColor: Colors.transparent,
+          splashColor: Colors.transparent,
+          highlightColor: Colors.transparent,
+          focusColor: Colors.transparent,
         ),
-        home: const Dashboard(),
+        home: const LandingPage(),
       ),
     );
   }

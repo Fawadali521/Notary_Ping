@@ -1,18 +1,17 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-import '../../../../styles.dart';
+import '../../../../index.dart';
 
-class Languages extends StatefulWidget {
-  const Languages({Key? key}) : super(key: key);
+class AppSetting extends StatefulWidget {
+  const AppSetting({Key? key}) : super(key: key);
 
   @override
-  State<Languages> createState() => _LanguagesState();
+  State<AppSetting> createState() => _AppSettingState();
 }
 
-class _LanguagesState extends State<Languages> {
+class _AppSettingState extends State<AppSetting> {
   String selectedLanguage = 'English';
 
   void selectLanguage(String language) {
@@ -24,14 +23,11 @@ class _LanguagesState extends State<Languages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
-        backgroundColor: Palette.secondaryColor,
-        title: Text(
-          'Languages',
-          style: TextStyles().appBarTitleWhite,
-        ),
+      backgroundColor: Palette.whiteColor,
+      appBar: CustomAppBar(
+        color: Palette.whiteColor,
+        title: 'App setting'.tr,
+        isBack: true,
       ),
       body: ListView(
         padding: const EdgeInsets.only(top: 20, left: 20, right: 20),

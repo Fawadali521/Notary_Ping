@@ -190,6 +190,7 @@ class TextStyles {
 }
 
 class BorderStyles {
+  static final thin = BorderRadius.circular(4);
   static final normal = BorderRadius.circular(8);
   static final medium = BorderRadius.circular(12);
   static const textFieldBorderRadius = BorderRadius.all(Radius.circular(10));
@@ -207,9 +208,9 @@ class Palette {
   static const Color blue3 = Color(0xFF00aeef);
   static const Color bgOnboardingColor = Color(0xFFF9FDFF);
   static const Color greyTextColor = Color(0xFF767676);
-  static const Color lightBlue = Color(0xFFCFEFFC);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
   static const Color orangColor = Color(0xFFF78100);
   static const Color lightBlueColor = Color(0xFFE0F3FE);
+  static const Color greenColor = Color(0xFF46C45D);
 }

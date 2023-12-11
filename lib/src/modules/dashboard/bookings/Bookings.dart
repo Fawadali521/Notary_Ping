@@ -2,8 +2,29 @@
 
 import '../../../../index.dart';
 
-class Bookings extends StatelessWidget {
+class Bookings extends StatefulWidget {
   const Bookings({Key? key}) : super(key: key);
+
+  @override
+  State<Bookings> createState() => _BookingsState();
+}
+
+class _BookingsState extends State<Bookings> {
+  int currentIndex = 0;
+  late final PageController? pageController;
+  @override
+  void initState() {
+    pageController = PageController(
+      initialPage: currentIndex,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    pageController?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,80 +32,90 @@ class Bookings extends StatelessWidget {
       backgroundColor: Palette.bgColor,
       appBar: CustomAppBar(
         title: 'Booking'.tr,
-        // isBack: false,
+        isNotification: true,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Row(
               children: [
                 Expanded(
+                  flex: 3,
                   child: CustomBookingButon(
-                    onTap: () {},
+                    onTap: () {
+                      currentIndex = 0;
+                      pageController?.jumpToPage(0);
+                      setState(() {});
+                    },
                     title: 'Currents booking'.tr,
                     icon: bookingsIcon,
-                    isSlected: true,
+                    isSlected: currentIndex == 0 ? true : false,
                   ),
                 ),
                 SizedBox(width: 16.w),
                 Expanded(
+                  flex: 2,
                   child: CustomBookingButon(
-                    onTap: () {},
+                    onTap: () {
+                      currentIndex = 1;
+                      pageController?.jumpToPage(1);
+                      setState(() {});
+                    },
                     title: 'History'.tr,
                     icon: bookingsIcon,
-                    isSlected: false,
+                    isSlected: currentIndex == 1 ? true : false,
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20.h),
-            const CustomBookingItem(
-              imgUrl: user,
-              name: 'John Doe',
-              date: 'June 10,2023',
-              time: '10:30 AM',
-            ),
-            SizedBox(height: 20.h),
-            const CustomBookingItem(
-              imgUrl: user,
-              name: 'John Doe',
-              date: 'June 10,2023',
-              time: '10:30 AM',
-              payemnt: "300",
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ignore: non_constant_identifier_names
-  PreferredSize CustomAppBar({required String title, bool? isBack}) {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(60),
-      child: AppBar(
-        backgroundColor: Palette.bgColor,
-        centerTitle: true,
-        title: Text(
-          title,
-          style: TextStyles.headlineLarge,
-        ),
-        elevation: 0,
-        leading: isBack == true
-            ? GestureDetector(
-                onTap: () => Get.back(),
-                child: Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                  child: Icon(
-                    Icons.arrow_back_ios,
-                    color: Palette.blackColor.withOpacity(0.7),
-                  ),
+          ),
+          SizedBox(height: 20.h),
+          Expanded(
+            child: PageView(
+              controller: pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              onPageChanged: (page) {
+                setState(() {
+                  currentIndex = page;
+                });
+              },
+              children: [
+                ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const CustomBookingItem(
+                      imgUrl: user,
+                      name: 'John Doe',
+                      date: 'June 10,2023',
+                      time: '10:30 AM',
+                    );
+                  },
                 ),
-              )
-            : null,
+                ListView.builder(
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return const CustomBookingItem(
+                      imgUrl: user,
+                      name: 'John Doe',
+                      date: 'June 10,2023',
+                      time: '10:30 AM',
+                      isHistory: true,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          //
+          // SizedBox(height: 20.h),
+          // const CustomBookingItem(
+          //   imgUrl: user,
+          //   name: 'John Doe',
+          //   date: 'June 10,2023',
+          //   time: '10:30 AM',
+          // ),
+        ],
       ),
     );
   }
@@ -95,19 +126,21 @@ class CustomBookingItem extends StatelessWidget {
   final String name;
   final String date;
   final String time;
-  final String? payemnt;
+  final bool isHistory;
+
   const CustomBookingItem({
     super.key,
     required this.imgUrl,
     required this.name,
     required this.date,
     required this.time,
-    this.payemnt,
+    this.isHistory = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 6.h, horizontal: 20.w),
       padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
       decoration: BoxDecoration(
         color: Palette.whiteColor,
@@ -117,15 +150,19 @@ class CustomBookingItem extends StatelessWidget {
         children: [
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    ClipOval(
-                      child: Image.asset(
-                        imgUrl,
-                        height: 65.w,
-                        width: 70.w,
-                        fit: BoxFit.fill,
+                    Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(imgUrl),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     SizedBox(width: 12.w),
@@ -136,9 +173,12 @@ class CustomBookingItem extends StatelessWidget {
                           name,
                           style: TextStyles.titleMedium,
                         ),
-                        Text(
-                          date,
-                          style: TextStyles.bodySmall,
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4.h),
+                          child: Text(
+                            date,
+                            style: TextStyles.bodySmall,
+                          ),
                         ),
                         Text(
                           time,
@@ -151,37 +191,37 @@ class CustomBookingItem extends StatelessWidget {
                 SizedBox(height: 12.h),
                 Container(
                   padding:
-                      EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
                   decoration: BoxDecoration(
                     color: Palette.bgTextFeildColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Text(
                     "Signature for property documents".tr,
-                    style: TextStyles.titleMedium,
+                    style: TextStyles.bodyLarge.copyWith(
+                      fontSize: 10,
+                    ),
                   ),
                 )
               ],
             ),
           ),
-          payemnt == null
-              ? Container(
+          isHistory
+              ? const SizedBox()
+              : Container(
                   padding:
                       EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
                   decoration: BoxDecoration(
-                    color: Palette.lightBlueColor,
-                    borderRadius: BorderStyles.normal,
+                    color: Palette.lightBlueColor.withOpacity(0.7),
+                    borderRadius: BorderStyles.thin,
                   ),
                   child: Text(
                     "Tracking".tr,
-                    style: TextStyles.titleMedium.copyWith(
+                    style: TextStyles.bodyLarge.copyWith(
+                      fontSize: 10,
                       color: Palette.primaryColor,
                     ),
                   ),
-                )
-              : Text(
-                  "Total:\$$payemnt",
-                  style: TextStyles.titleMedium,
                 ),
         ],
       ),
@@ -215,16 +255,16 @@ class CustomBookingButon extends StatelessWidget {
         child: Row(
           children: [
             CircleAvatar(
-              radius: 13.sp,
+              radius: 16.sp,
               backgroundColor:
                   isSlected ? Palette.whiteColor : Palette.orangColor,
               child: Image.asset(
                 bookingsIcon,
-                height: 18.sp,
+                height: 20.sp,
                 color: isSlected ? Palette.primaryColor : Palette.whiteColor,
               ),
             ),
-            SizedBox(width: 5.w),
+            SizedBox(width: 8.w),
             Text(
               title,
               style: TextStyles.titleMedium.copyWith(

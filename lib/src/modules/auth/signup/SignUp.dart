@@ -18,156 +18,157 @@ class SignUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.whiteColor,
-      body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-          children: [
-            Image.asset(
-              logo,
-              fit: BoxFit.contain,
-              height: 60.h,
+      body: ListView(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+        children: [
+          const SafeArea(child: SizedBox()),
+          Image.asset(
+            logo,
+            fit: BoxFit.contain,
+            height: 60.h,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: 24.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 18.h,
-              ),
-              child: Text(
-                "Register".tr,
-                style: TextStyles.headlineMedium,
-              ),
+            child: Text(
+              "Register".tr,
+              style: TextStyles.headlineMedium,
             ),
-            Text(
-              "Create your account now".tr,
-              style: TextStyles.bodyMedium,
-            ),
-            SizedBox(height: 8.h),
-            CustomTextField(
-              hintText: 'Enter your name'.tr,
-              onChange: (value) {
-                controller.state.name = value;
+          ),
+          SizedBox(height: 8.h),
+          Text(
+            "Create your account now".tr,
+            style: TextStyles.bodyMedium,
+          ),
+          SizedBox(height: 8.h),
+          CustomTextField(
+            hintText: 'Enter your name'.tr,
+            onChange: (value) {
+              controller.state.name = value;
+            },
+            prefixIcon: userIcon,
+          ),
+          SizedBox(height: 16.h),
+          CustomTextField(
+            hintText: 'Enter your email'.tr,
+            onChange: (value) {
+              controller.state.email = value;
+            },
+            prefixIcon: emailIcon,
+          ),
+          SizedBox(height: 16.h),
+          CustomTextField(
+            hintText: 'Enter your password'.tr,
+            onChange: (value) {
+              controller.state.newPassword = value;
+            },
+            prefixIcon: passwordIcon,
+            isuffixIconPassword: true,
+          ),
+          SizedBox(height: 16.h),
+          CustomTextField(
+            hintText: 'confirmPassword'.tr,
+            onChange: (value) {
+              controller.state.confirmPassword = value;
+            },
+            prefixIcon: passwordIcon,
+            isuffixIconPassword: true,
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 24.h),
+            child: SubmitButton(
+              backGroundColor: Palette.primaryColor,
+              onTap: () {
+                Get.offAll(() => const Dashboard());
               },
-              validator: controller.validateName,
-              prefixIcon: userIcon,
+              title: "Sign up".tr,
             ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'Enter your email'.tr,
-              onChange: (value) {
-                controller.state.email = value;
-              },
-              validator: controller.validateEmail,
-              prefixIcon: emailIcon,
-            ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'Enter your password'.tr,
-              onChange: (value) {
-                controller.state.newPassword = value;
-              },
-              validator: controller.validatePassword,
-              prefixIcon: passwordIcon,
-              isuffixIconPassword: true,
-            ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'confirmPassword'.tr,
-              onChange: (value) {
-                controller.state.confirmPassword = value;
-              },
-              validator: controller.validateConfirmPassword,
-              prefixIcon: passwordIcon,
-              isuffixIconPassword: true,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 28.h),
-              child: SubmitButton(
-                backGroundColor: Palette.primaryColor,
-                onTap: () {
-                  Get.offAll(() => const Dashboard());
-                },
-                title: "Sign up".tr,
-              ),
-            ),
-            Row(
-              children: [
-                const Expanded(
-                  child: CustomDivider(),
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 12.h),
+                child: Text(
+                  'Have an account?'.tr,
+                  style: TextStyles.bodyMedium,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () => Get.offAll(() => SignIn()),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: Text(
-                    "or".tr,
-                    style: TextStyles.bodyLarge,
+                    'Sign in'.tr,
+                    style: TextStyles.bodyMedium.copyWith(
+                      color: Palette.primaryColor,
+                    ),
                   ),
                 ),
-                const Expanded(
-                  child: CustomDivider(),
-                ),
-              ],
-            ),
-            SizedBox(height: 28.h),
-            SocialButton(
-              onTap: () {},
-              status: "GO",
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 16.h),
-              child: SocialButton(
-                onTap: () {},
-                status: "AP",
               ),
+            ],
+          ),
+
+          Row(
+            children: [
+              const Expanded(
+                child: CustomDivider(),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.w),
+                child: Text(
+                  "or".tr,
+                  style: TextStyles.bodyLarge,
+                ),
+              ),
+              const Expanded(
+                child: CustomDivider(),
+              ),
+            ],
+          ),
+          SizedBox(height: 24.h),
+          SocialButton(
+            onTap: () {},
+            status: "GO",
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
+            child: SocialButton(
+              onTap: () {},
+              status: "AP",
             ),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'Have an account?'.tr,
-                    style: TextStyles.bodyMedium,
-                  ),
-                  TextSpan(
-                    text: 'Login'.tr,
+          ),
+          // SizedBox(height: 16.h),
+          RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'By signing in you accept our'.tr,
+                  style: TextStyles.bodyMedium,
+                ),
+                TextSpan(
+                    text: 'Terms of Services'.tr,
                     style: TextStyles.bodyMedium
                         .copyWith(color: Palette.primaryColor),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Get.offAll(() => SignIn());
-                      },
-                  ),
-                ],
-              ),
+                    recognizer: TapGestureRecognizer()..onTap = () {}),
+                TextSpan(
+                  text: 'and'.tr,
+                  style: TextStyles.bodyMedium,
+                ),
+                TextSpan(
+                    text: 'Privacy Policy.'.tr,
+                    style: TextStyles.bodyMedium
+                        .copyWith(color: Palette.primaryColor),
+                    recognizer: TapGestureRecognizer()..onTap = () {}),
+              ],
             ),
-            SizedBox(height: 16.h),
-            RichText(
-              textAlign: TextAlign.center,
-              text: TextSpan(
-                children: <TextSpan>[
-                  TextSpan(
-                    text: 'By signing in you accept our'.tr,
-                    style: TextStyles.bodyMedium,
-                  ),
-                  TextSpan(
-                      text: 'Terms of Services'.tr,
-                      style: TextStyles.bodyMedium
-                          .copyWith(color: Palette.primaryColor),
-                      recognizer: TapGestureRecognizer()..onTap = () {}),
-                  TextSpan(
-                    text: 'and'.tr,
-                    style: TextStyles.bodyMedium,
-                  ),
-                  TextSpan(
-                      text: 'Privacy Policy.'.tr,
-                      style: TextStyles.bodyMedium
-                          .copyWith(color: Palette.primaryColor),
-                      recognizer: TapGestureRecognizer()..onTap = () {}),
-                ],
-              ),
-            ),
-            SizedBox(height: 12.h)
-          ],
-        ),
+          ),
+          SizedBox(height: 12.h)
+        ],
       ),
     );
   }

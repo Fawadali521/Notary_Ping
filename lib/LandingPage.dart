@@ -6,7 +6,6 @@ import 'package:page_transition/page_transition.dart';
 
 import 'SplashScreen.dart';
 
-//Asimkhan1122
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
 

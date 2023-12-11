@@ -2,8 +2,8 @@
 
 import '../../../../index.dart';
 
-class TermAndCondition extends StatelessWidget {
-  const TermAndCondition({Key? key}) : super(key: key);
+class PrivacyPolicy extends StatelessWidget {
+  const PrivacyPolicy({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,7 @@ class TermAndCondition extends StatelessWidget {
         backgroundColor: Palette.whiteColor,
         appBar: CustomAppBar(
           color: Palette.whiteColor,
-          title: 'Terms and conditions'.tr,
+          title: 'Privacy policy'.tr,
           isBack: true,
         ),
         body: const Center(child: Text("terms and condition")));

@@ -68,7 +68,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       focusNode: widget.focusnode,
       maxLines: widget.maxline,
       autovalidateMode: AutovalidateMode.onUserInteraction,
-      style: TextStyles.titleSmall,
+      style: TextStyles.bodyMedium.copyWith(
+        color: Palette.blackColor,
+      ),
       keyboardType: widget.keyboardType ?? TextInputType.text,
       cursorColor: Palette.blackColor,
       obscureText: obscureText,
@@ -78,7 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: InputDecoration(
         helperMaxLines: widget.hintMaxLines ?? 1,
         errorMaxLines: 3,
-        contentPadding: EdgeInsets.only(left: 20.w, right: 20.w),
+        contentPadding: EdgeInsets.only(left: 20.w, right: 20.w, top: 16.h),
         prefixIcon: widget.prefixIcon == null
             ? null
             : Padding(
@@ -112,9 +114,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         fillColor: Palette.bgTextFeildColor,
         filled: true,
         hintText: widget.hintText,
-        hintStyle: TextStyles.titleSmall.copyWith(
-          color: Palette.greyTextColor,
-        ),
+        hintStyle: TextStyles.bodyMedium,
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderStyles.normal,
           borderSide: const BorderSide(

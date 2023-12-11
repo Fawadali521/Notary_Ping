@@ -13,71 +13,69 @@ class ForgotPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.whiteColor,
-      body: SafeArea(
-        child: ListView(
-          shrinkWrap: true,
-          physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Image.asset(
-                  logo,
-                  fit: BoxFit.contain,
-                  height: 60.h,
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () => Get.back(),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
-                      child: const Icon(
-                        Icons.arrow_back_ios_new_outlined,
-                        color: Palette.blackColor,
-                      ),
+      body: ListView(
+        shrinkWrap: true,
+        physics: const ClampingScrollPhysics(),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+        children: [
+          const SafeArea(child: SizedBox()),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.asset(
+                logo,
+                fit: BoxFit.contain,
+                height: 60.h,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      color: Palette.blackColor,
                     ),
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 18.h,
               ),
-              child: Text(
-                "Forgot password?".tr,
-                style: TextStyles.headlineMedium,
-              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 18.h,
             ),
-            Text(
-              "foegotDescription".tr,
-              style: TextStyles.bodyMedium,
+            child: Text(
+              "Forgot password?".tr,
+              style: TextStyles.headlineMedium,
             ),
-            SizedBox(height: 12.h),
-            CustomTextField(
-              hintText: 'Enter your email'.tr,
-              onChange: (value) {
-                controller.state.email = value;
+          ),
+          Text(
+            "foegotDescription".tr,
+            style: TextStyles.bodyMedium,
+          ),
+          SizedBox(height: 16.h),
+          CustomTextField(
+            hintText: 'Enter your email'.tr,
+            onChange: (value) {
+              controller.state.email = value;
+            },
+            prefixIcon: emailIcon,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 48.h),
+            child: SubmitButton(
+              backGroundColor: Palette.primaryColor,
+              onTap: () {
+                Get.to(() => OtpVerification());
               },
-              validator: controller.validateEmail,
-              prefixIcon: emailIcon,
+              title: "send".tr,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 38.h),
-              child: SubmitButton(
-                backGroundColor: Palette.primaryColor,
-                onTap: () {
-                  Get.to(() => OtpVerification());
-                },
-                title: "send".tr,
-              ),
-            ),
-            SizedBox(height: 12.h)
-          ],
-        ),
+          ),
+          SizedBox(height: 12.h)
+        ],
       ),
     );
   }
