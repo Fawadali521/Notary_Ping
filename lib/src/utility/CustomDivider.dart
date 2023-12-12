@@ -3,14 +3,16 @@
 import '../../index.dart';
 
 class CustomDivider extends StatelessWidget {
+  final Color? color;
   const CustomDivider({
     super.key,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Palette.blackColor.withOpacity(0.3),
+      color: color ?? Palette.blackColor.withOpacity(0.3),
       thickness: 1,
       height: 0,
       indent: 0,

@@ -213,4 +213,5 @@ class Palette {
   static const Color orangColor = Color(0xFFF78100);
   static const Color lightBlueColor = Color(0xFFE0F3FE);
   static const Color greenColor = Color(0xFF46C45D);
+  static const Color reciveChatColor = Color(0xFFF2F7FB);
 }
