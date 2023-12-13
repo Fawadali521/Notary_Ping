@@ -42,7 +42,7 @@ class NotaryPingApp extends StatelessWidget {
         title: 'Notary Ping',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: 'Montserrat',
+          fontFamily: 'Inter',
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.white,
           brightness: Brightness.light,

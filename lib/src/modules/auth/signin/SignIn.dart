@@ -23,7 +23,7 @@ class SignIn extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
         children: [
-          const SafeArea(child: SizedBox()),
+          const SafeArea(bottom: false, child: SizedBox()),
           Image.asset(
             logo,
             fit: BoxFit.contain,
@@ -74,7 +74,7 @@ class SignIn extends StatelessWidget {
               onTap: () {
                 Get.offAll(() => const Dashboard());
               },
-              title: "Sign in",
+              title: "Sign In",
             ),
           ),
           Row(
@@ -92,7 +92,7 @@ class SignIn extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: Text(
-                    'Sign up'.tr,
+                    'Sign Up'.tr,
                     style: TextStyles.bodyMedium.copyWith(
                       color: Palette.primaryColor,
                     ),

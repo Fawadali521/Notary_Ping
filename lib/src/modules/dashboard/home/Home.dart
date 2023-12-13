@@ -45,7 +45,7 @@ class HomeState extends State<Home> {
         isLoding = false;
       });
     } catch (e) {
-      checkLocationStatus();
+      // checkLocationStatus();
     }
   }
 

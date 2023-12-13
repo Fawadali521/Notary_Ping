@@ -1,13 +1,12 @@
 // ignore_for_file: file_names
 
-import 'package:flutter/material.dart';
+import '../../../../../index.dart';
 
 const double BUBBLE_RADIUS = 16;
 
 class TextMessage extends StatelessWidget {
   final double bubbleRadius;
   final bool isSender;
-  final Color color;
   final String text;
   final bool tail;
   final bool sent;
@@ -24,7 +23,6 @@ class TextMessage extends StatelessWidget {
     this.constraints,
     this.bubbleRadius = BUBBLE_RADIUS,
     this.isSender = true,
-    this.color = Colors.white70,
     this.tail = true,
     this.sent = false,
     this.delivered = false,
@@ -84,13 +82,17 @@ class TextMessage extends StatelessWidget {
           constraints: constraints ??
               BoxConstraints(maxWidth: MediaQuery.of(context).size.width * .8),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: !isSender
+                ? EdgeInsets.only(right: MediaQuery.of(context).size.width * .2)
+                : const EdgeInsets.symmetric(horizontal: 20),
             child: Stack(
               children: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 24),
+                  margin: EdgeInsets.only(bottom: time == null ? 10 : 20),
                   decoration: BoxDecoration(
-                    color: color,
+                    color: isSender
+                        ? Palette.primaryColor
+                        : Palette.reciveChatColor,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(bubbleRadius),
                       bottomRight: Radius.circular(bubbleRadius),

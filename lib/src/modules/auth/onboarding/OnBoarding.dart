@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:notary_ping/src/modules/auth/signup/SignUp.dart';
+import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
 import 'package:notary_ping/src/states/onboarding/OnboardingController.dart';
 
 import '../../../../index.dart';
@@ -18,14 +18,14 @@ class Onboarding extends StatelessWidget {
         backgroundColor: Palette.bgOnboardingColor,
         body: Column(
           children: [
-            const SafeArea(child: SizedBox()),
+            const SafeArea(bottom: false, child: SizedBox()),
             Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
-                onTap: () => Get.offAll(() => SignUp()),
+                onTap: () => Get.offAll(() => SignIn()),
                 child: Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
                   child: Text(
                     'Skip'.tr,
                     style: TextStyles.titleSmall,
@@ -41,17 +41,22 @@ class Onboarding extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           controller.state.currentPageIndex.value != 1
                               ? Expanded(
-                                  child: Image.asset(
-                                    controller
-                                        .state
-                                        .onboardingDatas[controller
-                                            .state.currentPageIndex.value]
-                                        .imgUrl,
-                                    width: MediaQuery.of(context).size.width,
-                                    fit: BoxFit.fill,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20.w),
+                                    child: Image.asset(
+                                      controller
+                                          .state
+                                          .onboardingDatas[controller
+                                              .state.currentPageIndex.value]
+                                          .imgUrl,
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 )
                               : const SizedBox(),
@@ -123,14 +128,18 @@ class Onboarding extends StatelessWidget {
                           ),
                           controller.state.currentPageIndex.value == 1
                               ? Expanded(
-                                  child: Image.asset(
-                                    controller
-                                        .state
-                                        .onboardingDatas[controller
-                                            .state.currentPageIndex.value]
-                                        .imgUrl,
-                                    width: MediaQuery.of(context).size.width,
-                                    fit: BoxFit.fill,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 20.w),
+                                    child: Image.asset(
+                                      controller
+                                          .state
+                                          .onboardingDatas[controller
+                                              .state.currentPageIndex.value]
+                                          .imgUrl,
+                                      width: MediaQuery.of(context).size.width,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 )
                               : const SizedBox(),
@@ -149,55 +158,59 @@ class Onboarding extends StatelessWidget {
             ///
             /// Dots indicator and buttons
             ///
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 20.w, top: 20),
-                  child: DotsIndicator(
-                    dotsCount: controller.state.onboardingDatas.length,
-                    position: controller.state.currentPageIndex.value,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    decorator: DotsDecorator(
-                      color: Palette.primaryColor.withOpacity(0.5),
-                      activeColor: Palette.primaryColor,
-                      size: const Size(12.0, 12.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      activeSize: const Size(20.0, 9.0),
-                      activeShape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () => controller.nextPage(),
-                  child: Container(
-                    height: 110,
-                    width: 80,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.bottomRight,
-                        image: AssetImage(
-                          nextButtonIcon,
+            SizedBox(
+              height: 110.h,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.w, top: 20),
+                    child: DotsIndicator(
+                      dotsCount: controller.state.onboardingDatas.length,
+                      position: controller.state.currentPageIndex.value,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      decorator: DotsDecorator(
+                        color: Palette.dotColor,
+                        activeColor: Palette.primaryColor,
+                        size: const Size(12.0, 12.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      ),
-                    ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 12, top: 20),
-                        child: Icon(
-                          Icons.arrow_forward,
-                          size: 32,
-                          color: Palette.whiteColor,
+                        activeSize: const Size(20.0, 9.0),
+                        activeShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
                     ),
                   ),
-                )
-              ],
+                  GestureDetector(
+                    onTap: () => controller.nextPage(),
+                    child: Container(
+                      height: 110.h,
+                      width: 100.w,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          alignment: Alignment.bottomRight,
+                          fit: BoxFit.contain,
+                          image: AssetImage(
+                            nextButtonIcon,
+                          ),
+                        ),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: 20.w, top: 20.w),
+                          child: const Icon(
+                            Icons.arrow_forward,
+                            size: 32,
+                            color: Palette.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

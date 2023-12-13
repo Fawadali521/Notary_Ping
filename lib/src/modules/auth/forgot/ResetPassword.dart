@@ -19,7 +19,7 @@ class ResetPassword extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
         children: [
-          const SafeArea(child: SizedBox()),
+          const SafeArea(bottom: false, child: SizedBox()),
           Stack(
             alignment: Alignment.center,
             children: [

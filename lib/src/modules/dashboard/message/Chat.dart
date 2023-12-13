@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audio_waveforms/audio_waveforms.dart';
 import "package:cached_network_image/cached_network_image.dart";
 import 'package:notary_ping/src/constant/time_formate.dart';
-import 'package:notary_ping/src/modules/dashboard/message/MessageBar.dart';
-import 'package:notary_ping/src/modules/dashboard/message/TextMessage.dart';
+import 'package:notary_ping/src/modules/dashboard/message/utility/MessageBar.dart';
+import 'package:notary_ping/src/modules/dashboard/message/utility/TextMessage.dart';
 import 'package:notary_ping/src/utility/CustomDivider.dart';
 
 import '../../../../index.dart';
@@ -17,13 +17,8 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  Duration duration = const Duration();
-  Duration position = const Duration();
-  bool isPlaying = false;
-  bool isLoading = false;
-  bool isPause = false;
-
+  RecorderController controller = RecorderController(); // Initialise
+  // Dispose controller
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -37,41 +32,164 @@ class _ChatState extends State<Chat> {
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                // BubbleNormalImage(
-                //   id: 'id001',
-                //   image: _image(),
-                //   color: Colors.transparent,
-                //   tail: true,
-                // ),
-                // BubbleNormalAudio(
-                //   color: Palette.primaryColor,
-                //   duration: duration.inSeconds.toDouble(),
-                //   position: position.inSeconds.toDouble(),
-                //   isPlaying: isPlaying,
-                //   isLoading: isLoading,
-                //   isPause: isPause,
-                //   onSeekChanged: _changeSeek,
-                //   onPlayPauseButtonClick: _playAudio,
-                // ),
-                const SizedBox(
-                  height: 120,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          user,
+                          fit: BoxFit.cover,
+                          height: 40,
+                          width: 40,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Fawad",
+                              style: TextStyles.bodyLarge,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: TextMessage(
+                                text: 'bubble noal with normal with with tail',
+                                isSender: false,
+                                tail: true,
+                                textStyle: TextStyles.bodyMedium.copyWith(
+                                  color: Palette.blackColor,
+                                ),
+                                timeStyle: TextStyles.bodySmall,
+                                // time: onlyTime.format(now),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 72),
+                  child: TextMessage(
+                    text: 'bubble noal with normal with with tail',
+                    isSender: false,
+                    tail: true,
+                    textStyle: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    timeStyle: TextStyles.bodySmall,
+                    // time: onlyTime.format(now),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 72),
+                  child: TextMessage(
+                    text: 'bubble noal',
+                    isSender: false,
+                    tail: true,
+                    textStyle: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    timeStyle: TextStyles.bodySmall,
+                    time: onlyTime.format(now),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.h),
+                  child: TextMessage(
+                    text:
+                        'bubble normal with normal with normal with normal with normal with tail',
+                    isSender: true,
+                    tail: true,
+                    time: onlyTime.format(now),
+                    timeStyle: TextStyles.bodySmall,
+                    textStyle: TextStyles.bodyMedium.copyWith(
+                      color: Palette.whiteColor,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Image.asset(
+                          user,
+                          fit: BoxFit.cover,
+                          height: 40,
+                          width: 40,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Fawad",
+                              style: TextStyles.bodyLarge,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
+                              child: TextMessage(
+                                text:
+                                    'bubble normal with normal with normal with normal with normal with tail',
+                                isSender: false,
+                                tail: true,
+                                time: onlyTime.format(now),
+                                timeStyle: TextStyles.bodySmall,
+                                textStyle: TextStyles.bodyMedium.copyWith(
+                                  color: Palette.blackColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.h),
+                  child: TextMessage(
+                    text:
+                        'bubble normal with normal with normal with normal with normal with tail',
+                    isSender: true,
+                    tail: true,
+                    time: onlyTime.format(now),
+                    timeStyle: TextStyles.bodySmall,
+                    textStyle: TextStyles.bodyMedium.copyWith(
+                      color: Palette.whiteColor,
+                    ),
+                  ),
                 ),
                 TextMessage(
-                  text: 'bubble noal with normal with with tail',
-                  isSender: false,
-                  color: Palette.reciveChatColor,
+                  text: 'bubble normal with normalh normal with tail',
+                  isSender: true,
                   tail: true,
                   textStyle: TextStyles.bodyMedium.copyWith(
-                    color: Palette.blackColor,
+                    color: Palette.whiteColor,
                   ),
-                  timeStyle: TextStyles.bodySmall,
-                  time: onlyTime.format(now),
                 ),
                 TextMessage(
-                  text:
-                      'bubble normal with normal with normal with normal with normal with tail',
+                  text: 'bubble normal with nor',
                   isSender: true,
-                  color: Palette.primaryColor,
+                  tail: true,
+                  textStyle: TextStyles.bodyMedium.copyWith(
+                    color: Palette.whiteColor,
+                  ),
+                ),
+                TextMessage(
+                  text: ' with tail',
+                  isSender: true,
                   tail: true,
                   time: onlyTime.format(now),
                   timeStyle: TextStyles.bodySmall,
@@ -79,6 +197,7 @@ class _ChatState extends State<Chat> {
                     color: Palette.whiteColor,
                   ),
                 ),
+                SizedBox(height: 90.h),
               ],
             ),
           ),
@@ -97,18 +216,18 @@ class _ChatState extends State<Chat> {
     return AppBar(
       backgroundColor: Palette.whiteColor,
       surfaceTintColor: Colors.transparent,
-      elevation: 4,
+      elevation: 1,
       shadowColor: Palette.greyTextColor.withOpacity(0.2),
       centerTitle: false,
-      leadingWidth: 36.sp,
+      leadingWidth: 40.sp,
       leading: InkWell(
         onTap: () => Get.back(),
         child: Padding(
-          padding: EdgeInsets.only(left: 20.w, right: 12.w),
+          padding: EdgeInsets.only(left: 20.w, right: 16.w),
           child: Icon(
             Icons.arrow_back_ios_new_outlined,
             color: Palette.blackColor,
-            size: 20.sp,
+            size: 16.sp,
           ),
         ),
       ),
@@ -143,7 +262,7 @@ class _ChatState extends State<Chat> {
                         borderRadius: BorderRadius.circular(50),
                         child: Image.asset(
                           user,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                           height: 60,
                           width: 60,
                         ),
@@ -275,56 +394,5 @@ class _ChatState extends State<Chat> {
         errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
     );
-  }
-
-  void _changeSeek(double value) {
-    setState(() {
-      audioPlayer.seek(Duration(seconds: value.toInt()));
-    });
-  }
-
-  void _playAudio() async {
-    const url =
-        'https://file-examples.com/storage/fef1706276640fa2f99a5a4/2017/11/file_example_MP3_700KB.mp3';
-    if (isPause) {
-      await audioPlayer.resume();
-      setState(() {
-        isPlaying = true;
-        isPause = false;
-      });
-    } else if (isPlaying) {
-      await audioPlayer.pause();
-      setState(() {
-        isPlaying = false;
-        isPause = true;
-      });
-    } else {
-      setState(() {
-        isLoading = true;
-      });
-      await audioPlayer.play(UrlSource(url));
-      setState(() {
-        isPlaying = true;
-      });
-    }
-
-    audioPlayer.onDurationChanged.listen((Duration d) {
-      setState(() {
-        duration = d;
-        isLoading = false;
-      });
-    });
-    audioPlayer.onPositionChanged.listen((Duration p) {
-      setState(() {
-        position = p;
-      });
-    });
-    audioPlayer.onPlayerComplete.listen((event) {
-      setState(() {
-        isPlaying = false;
-        duration = const Duration();
-        position = const Duration();
-      });
-    });
   }
 }

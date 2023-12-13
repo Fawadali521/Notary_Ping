@@ -6,9 +6,9 @@ class Languages extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'en_US': {
-          'Connect face-to-face': 'Connect face-to-face',
-          'with a registered': ' with a registered',
-          'notary': ' notary.',
+          'Connect face-to-face': 'Connect face-to-face\n',
+          'with a registered': 'with a registered\n',
+          'notary': 'notary.',
           'oboardingDescription1':
               "Revolutionizing Notarization establish trust through personal connections seamlessly connect face-to-face with verified notaries on notaryping.",
           'Skip': 'Skip',
@@ -17,21 +17,23 @@ class Languages extends Translations {
           'anytime, anywhere': 'anytime, anywhere',
           'oboardingDescription2':
               'Elevate trust seamlessly notarize documents with notaryPing—instant, secure, and anywhere You need.',
-          'Certified notaries': 'Certified notaries ',
-          'seal with confidence': 'seal with confidence ',
+          'Certified notaries': 'Certified notaries\n',
+          'seal with confidence': 'seal with confidence\n',
           'on notaryping': 'on notaryping',
           'oboardingDescription3':
               'Unlock trust with certified notaries: seamless, secure notarization on Notaryping.confidence in every seal connect instantly, anytime, anywhere.',
           'Enter your email': 'Enter your email',
           'Enter your password': 'Enter your password',
-          "Let's Sign You In!": "Let's Sign You In!",
-          'Sign up!': 'Sign up!',
-          'Forgot password': 'Forgot password',
+          "Let's Sign You In!": "Let's\nSign You In!",
+          "Let's Sign You Up!": "Let's\nSign You Up!",
+          'Sign Up!': 'Sign Up!',
+          'Sign In': 'Sign In',
+          'Forgot password': 'Forgot password?',
           'or': 'or',
           'Continue With Google': 'Continue With Google',
           'Continue With Facebook': 'Continue With Facebook',
           'Continue With Apple': 'Continue With Apple',
-          'Have an account?': 'Have an account? ',
+          'Already have an account?': 'Already have an account?',
           'Login': 'Login',
           'By signing in you accept our': 'By signing in you accept our ',
           'Terms of Services': 'Terms of Services ',
@@ -87,6 +89,7 @@ class Languages extends Translations {
           'Our 24x7 customer service': 'Our 24x7 customer service',
           'Report id': 'Report id',
           'Delete': 'Delete',
+          'Phone number': 'Phone number',
           '': '',
         },
       };

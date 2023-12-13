@@ -23,7 +23,7 @@ class SignUp extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
         children: [
-          const SafeArea(child: SizedBox()),
+          const SafeArea(bottom: false, child: SizedBox()),
           Image.asset(
             logo,
             fit: BoxFit.contain,
@@ -34,7 +34,7 @@ class SignUp extends StatelessWidget {
               top: 24.h,
             ),
             child: Text(
-              "Register".tr,
+              "Let's Sign You Up!".tr,
               style: TextStyles.headlineMedium,
             ),
           ),
@@ -60,6 +60,93 @@ class SignUp extends StatelessWidget {
             prefixIcon: emailIcon,
           ),
           SizedBox(height: 16.h),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: RawAutocomplete<String>(
+                  optionsViewBuilder: (BuildContext context,
+                      AutocompleteOnSelected<String> onSelected,
+                      Iterable<String> options) {
+                    return Align(
+                      alignment: Alignment.topLeft,
+                      child: Material(
+                        elevation: 4.0,
+                        child: SizedBox(
+                          height: 180.0,
+                          width: 100.w,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.all(8.0),
+                            itemCount: options.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final String option = options.elementAt(index);
+                              return GestureDetector(
+                                onTap: () {
+                                  onSelected(option);
+                                },
+                                child: ListTile(
+                                  title: Text(option),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  initialValue: const TextEditingValue(
+                    text: "+92",
+                  ),
+                  optionsBuilder: (textValue) {
+                    if (textValue.text.isEmpty) {
+                      return List.empty();
+                    } else {
+                      if (textValue.text.length == 1) {
+                        controller.state.countryCode.text = "";
+                        return controller.state.slectCountryCode.where(
+                            (element) => element
+                                .toLowerCase()
+                                .contains(textValue.text.toLowerCase()));
+                      } else {
+                        controller.state.countryCode.text = textValue.text;
+                        return controller.state.slectCountryCode.where(
+                            (element) => element
+                                .toLowerCase()
+                                .contains(textValue.text.toLowerCase()));
+                      }
+                    }
+                  },
+                  fieldViewBuilder: (context, textEditingController, focusNode,
+                      onFieldSubmitted) {
+                    if (textEditingController.text.isEmpty) {
+                      textEditingController.text = "+92";
+                    }
+                    return CustomTextField(
+                      focusnode: focusNode,
+                      onEditingComplete: onFieldSubmitted,
+                      controller: textEditingController,
+                      hintText: ''.tr,
+                      onChange: (value) {
+                        // controller.state.categoryName = value;
+                      },
+                    );
+                  },
+                ),
+              ),
+              SizedBox(width: 8.w),
+              Expanded(
+                flex: 7,
+                child: CustomTextField(
+                  hintText: 'Phone number'.tr,
+                  onChange: (value) {
+                    // controller.state.confirmPassword = value;
+                  },
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.h),
           CustomTextField(
             hintText: 'Enter your password'.tr,
             onChange: (value) {
@@ -68,15 +155,7 @@ class SignUp extends StatelessWidget {
             prefixIcon: passwordIcon,
             isuffixIconPassword: true,
           ),
-          SizedBox(height: 16.h),
-          CustomTextField(
-            hintText: 'confirmPassword'.tr,
-            onChange: (value) {
-              controller.state.confirmPassword = value;
-            },
-            prefixIcon: passwordIcon,
-            isuffixIconPassword: true,
-          ),
+
           Padding(
             padding: EdgeInsets.only(top: 24.h),
             child: SubmitButton(
@@ -84,7 +163,7 @@ class SignUp extends StatelessWidget {
               onTap: () {
                 Get.offAll(() => const Dashboard());
               },
-              title: "Sign up".tr,
+              title: "Sign Up".tr,
             ),
           ),
           Row(
@@ -92,7 +171,7 @@ class SignUp extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 12.h),
                 child: Text(
-                  'Have an account?'.tr,
+                  'Already have an account?'.tr,
                   style: TextStyles.bodyMedium,
                 ),
               ),
@@ -102,7 +181,7 @@ class SignUp extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 12.h),
                   child: Text(
-                    'Sign in'.tr,
+                    'Sign In'.tr,
                     style: TextStyles.bodyMedium.copyWith(
                       color: Palette.primaryColor,
                     ),
@@ -167,7 +246,7 @@ class SignUp extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 12.h)
+          SizedBox(height: 36.h)
         ],
       ),
     );

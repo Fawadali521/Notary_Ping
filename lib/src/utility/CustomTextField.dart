@@ -88,16 +88,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: InputDecoration(
         helperMaxLines: widget.hintMaxLines ?? 1,
         errorMaxLines: 3,
-        contentPadding: EdgeInsets.only(left: 20.w, right: 20.w, top: 16.h),
+        contentPadding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
         prefixIcon: widget.prefixIcon == null
             ? null
             : Padding(
-                padding: EdgeInsets.only(left: 16.w, right: 20.w),
+                padding: EdgeInsets.only(left: 16.w, right: 16.w),
                 child: Image.asset(
                   widget.prefixIcon!,
-                  height: 24,
-                  width: 24,
+                  height: 20,
+                  width: 20,
                   color: widget.prefixIconColor ?? Palette.primaryColor,
+                  fit: BoxFit.contain,
                 ),
               ),
         suffixIcon: widget.isuffixIconPassword == true
@@ -108,12 +109,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   });
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(right: 16.w, left: 20.w),
+                  padding: EdgeInsets.only(right: 16.w, left: 16.w),
                   child: Icon(
                     obscureText
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
                     color: Palette.primaryColor,
+                    size: 20,
                   ),
                 ),
               )
@@ -121,7 +123,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         counterText: '',
         fillColor: widget.fillColor ?? Palette.bgTextFeildColor,
         filled: true,
-        hintText: widget.hintText,
+        hintText: widget.hintText.tr,
         hintStyle: TextStyles.bodyMedium,
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: widget.borderRadius ?? BorderStyles.normal,

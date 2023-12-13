@@ -1,8 +1,9 @@
 // ignore_for_file: file_names
 
-import 'package:flutter_slidable_panel/controllers/slide_controller.dart';
 import 'package:flutter_slidable_panel/widgets/slidable_panel.dart';
 import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
+import 'package:notary_ping/src/modules/dashboard/message/utility/CustomMessageItem.dart';
+import 'package:notary_ping/src/states/message/MessageController.dart';
 
 import '../../../../index.dart';
 
@@ -14,18 +15,52 @@ class Message extends StatefulWidget {
 }
 
 class _MessageState extends State<Message> {
-  bool isslide = false;
-  final SlideController _slideController = SlideController(
-    usePreActionController: true,
-    usePostActionController: true,
-  );
+  int isSelect = -1;
+
+  final MessageController controller = Get.put(MessageController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
           const SafeArea(bottom: false, child: SizedBox()),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    user,
+                    fit: BoxFit.cover,
+                    height: 36,
+                    width: 36,
+                  ),
+                ),
+                const SizedBox(width: 9),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Hello".tr,
+                      style: TextStyles.bodyMedium,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      "Fawad Khan".tr,
+                      style: TextStyles.titleSmall,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: CustomTextField(
@@ -35,228 +70,70 @@ class _MessageState extends State<Message> {
               borderRadius: BorderStyles.searchTextField,
             ),
           ),
-          const CustomMessageItem(
-            lastMessage:
-                'No rush, mate! Just let...No rush, mate! Just let...No rush, mate! Just let...',
-            userImgUrl: user,
-            userName: 'Ruhel Chowdhury',
-            isonline: true,
-            isRead: false,
-            isSender: false,
-            time: '5:15 PM',
-          ),
-          const CustomMessageItem(
-            lastMessage: 'No rush,  ',
-            userImgUrl: user,
-            userName: 'Ruhel Chowdhury',
-            isonline: false,
-            isRead: false,
-            isSender: false,
-            time: '5:15 PM',
-          ),
-          const CustomMessageItem(
-            lastMessage:
-                'No rush, mate! Just let...No rush, mate! Just let...No rush, mate! Just let...',
-            userImgUrl: user,
-            userName: 'Ruhel Chowdhury',
-            isonline: true,
-            isRead: true,
-            isSender: false,
-            time: '5:15 PM',
-          ),
-          const CustomMessageItem(
-            lastMessage:
-                'No rush, mate! Just let...No rush, mate! Just let...No rush, mate! Just let...',
-            userImgUrl: user,
-            userName: 'Ruhel Chowdhury',
-            isonline: false,
-            isRead: true,
-            isSender: true,
-            time: '5:15 PM',
-          ),
-          Container(
-            color: isslide ? Palette.bgTextFeildColor : Palette.whiteColor,
-            child: SlidablePanel(
-              onSlideStart: () {
-                setState(() {
-                  isslide = true;
-                });
-              },
-              controller: _slideController,
-              maxSlideThreshold: 0.3,
-              axis: Axis.horizontal,
-              postActions: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Palette.whiteColor,
-                    child: Image.asset(
-                      reportIcon,
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5.w),
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Palette.whiteColor,
-                    child: Image.asset(
-                      deleteIcon,
-                      height: 24,
-                      width: 24,
-                    ),
-                  ),
-                ),
-              ],
-              child: CustomMessageItem(
-                onTap: () => Get.to(() => const Chat()),
-                lastMessage:
-                    'No rush, mate! Just let...No rush, mate! Just let...No rush, mate! Just let...',
-                userImgUrl: user,
-                userName: 'Ruhel Chowdhury',
-                isonline: false,
-                isRead: true,
-                isSender: true,
-                time: '5:15 PM',
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class CustomMessageItem extends StatelessWidget {
-  final String lastMessage;
-  final String userImgUrl;
-  final String userName;
-  final String time;
-  final bool isonline;
-  final bool isRead;
-  final bool isSender;
-  final VoidCallback? onTap;
-  const CustomMessageItem({
-    super.key,
-    required this.lastMessage,
-    required this.userImgUrl,
-    required this.userName,
-    required this.isonline,
-    required this.isRead,
-    required this.isSender,
-    required this.time,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
-      child: GestureDetector(
-        onTap: onTap,
-        child: Row(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: SizedBox(
-                height: 60,
-                width: 60,
-                child: Center(
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Center(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(50),
-                          child: Image.asset(
-                            userImgUrl,
-                            fit: BoxFit.fill,
-                            height: 60,
-                            width: 60,
-                          ),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.state.profiles.length,
+            itemBuilder: (context, index) {
+              return Container(
+                color: isSelect == index
+                    ? Palette.bgTextFeildColor
+                    : Palette.whiteColor,
+                child: SlidablePanel(
+                  onSlideStart: () {
+                    setState(() {
+                      isSelect = index;
+                    });
+                  },
+                  controller: controller.state.slideController[index],
+                  maxSlideThreshold: 0.3,
+                  axis: Axis.horizontal,
+                  postActions: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 12.w, right: 5.w),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Palette.whiteColor,
+                        child: Image.asset(
+                          reportIcon,
+                          height: 24,
+                          width: 24,
                         ),
                       ),
-                      isonline
-                          ? const Positioned(
-                              right: 0,
-                              child: CircleAvatar(
-                                backgroundColor: Palette.whiteColor,
-                                radius: 8,
-                                child: CircleAvatar(
-                                  backgroundColor: Palette.greenColor,
-                                  radius: 6,
-                                ),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ],
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 5.w, right: 12.w),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Palette.whiteColor,
+                        child: Image.asset(
+                          deleteIcon,
+                          height: 24,
+                          width: 24,
+                        ),
+                      ),
+                    ),
+                  ],
+                  child: CustomMessageItem(
+                    onTap: () {
+                      setState(() {
+                        isSelect = index;
+                      });
+                      Get.to(() => const Chat());
+                    },
+                    lastMessage: controller.state.profiles[index].message!,
+                    userImgUrl: controller.state.profiles[index].imgUrl!,
+                    userName: controller.state.profiles[index].name!,
+                    isonline: controller.state.profiles[index].isOnline!,
+                    isRead: controller.state.profiles[index].isRead!,
+                    isSender: controller.state.profiles[index].isSender!,
+                    time: controller.state.profiles[index].time!,
                   ),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.w, right: 32.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            userName,
-                            style: TextStyles.titleSmall,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 5.h),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            lastMessage,
-                            style: TextStyles.bodySmall,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Text(
-                          time,
-                          style: TextStyles.bodySmall,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            isSender
-                ? const CircleAvatar(
-                    radius: 8,
-                    backgroundColor: Colors.transparent,
-                  )
-                : isRead
-                    ? CircleAvatar(
-                        radius: 8,
-                        backgroundImage: AssetImage(userImgUrl),
-                      )
-                    : CircleAvatar(
-                        radius: 8,
-                        backgroundColor: Palette.bgTextFeildColor,
-                        child: Icon(
-                          Icons.check,
-                          size: 10,
-                          color: Palette.blackColor.withOpacity(0.7),
-                        ),
-                      )
-          ],
-        ),
+              );
+            },
+          )
+        ],
       ),
     );
   }
