@@ -1,5 +1,8 @@
+import 'dart:io';
+
+import 'package:notary_ping/LandingPage.dart';
 import 'package:notary_ping/index.dart';
-import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'src/services/Languages.dart';
 
@@ -7,10 +10,20 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
     statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
   ));
-  runApp(const NotaryPingApp());
+  if (Platform.isAndroid) {
+    WidgetsFlutterBinding.ensureInitialized();
+    [
+      Permission.location,
+    ].request().then((status) {
+      runApp(const NotaryPingApp());
+    });
+  } else {
+    runApp(const NotaryPingApp());
+  }
 }
 
 class NotaryPingApp extends StatelessWidget {
@@ -39,7 +52,7 @@ class NotaryPingApp extends StatelessWidget {
           highlightColor: Colors.transparent,
           focusColor: Colors.transparent,
         ),
-        home: const Dashboard(),
+        home: const LandingPage(),
       ),
     );
   }

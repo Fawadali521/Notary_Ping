@@ -85,6 +85,8 @@ class Languages extends Translations {
           'Privacy policy': 'Privacy policy',
           'Chat with support': 'Chat with support',
           'Our 24x7 customer service': 'Our 24x7 customer service',
+          'Report id': 'Report id',
+          'Delete': 'Delete',
           '': '',
         },
       };

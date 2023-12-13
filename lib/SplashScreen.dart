@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
         isLogoMoved = true;
       });
     });
+
     Future.delayed(initialDelay2).then((value) {
       setState(() {
         isTextMoved = true;

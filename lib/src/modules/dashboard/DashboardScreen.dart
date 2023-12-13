@@ -17,7 +17,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int currentIndex = 2;
+  int currentIndex = 0;
   late final PageController? pageController;
   @override
   void initState() {
@@ -46,9 +46,9 @@ class _DashboardState extends State<Dashboard> {
             });
           },
           children: [
-            const HomeScreen(),
+            Home(),
             const Bookings(),
-            Message(),
+            const Message(),
             Profile(),
           ],
         ),

@@ -6,4 +6,5 @@ export 'package:notary_ping/image_strings.dart';
 export 'package:notary_ping/src/utility/CustomAppBar.dart';
 export 'package:notary_ping/src/utility/CustomTextField.dart';
 export 'package:notary_ping/src/utility/LoadingState.dart';
+export 'package:notary_ping/src/utility/SnackBarToast.dart';
 export 'package:notary_ping/styles.dart';

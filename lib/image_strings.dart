@@ -33,6 +33,8 @@ const String supportIcon = "$icons/support.png";
 const String settingIcon = "$icons/setting.png";
 const String reportIcon = "$icons/report.png";
 const String deleteIcon = "$icons/delete.png";
+const String searchIcon = "$icons/search.png";
+const String mapsIcon = "$icons/maps.png";
 
 ///
 ///dynamic images

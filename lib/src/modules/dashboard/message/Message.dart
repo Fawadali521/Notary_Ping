@@ -30,7 +30,9 @@ class _MessageState extends State<Message> {
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             child: CustomTextField(
               hintText: "Search".tr,
-              prefixIcon: settingIcon,
+              prefixIcon: searchIcon,
+              prefixIconColor: Palette.greyTextColor,
+              borderRadius: BorderStyles.searchTextField,
             ),
           ),
           const CustomMessageItem(

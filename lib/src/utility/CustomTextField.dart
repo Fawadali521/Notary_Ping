@@ -22,6 +22,10 @@ class CustomTextField extends StatefulWidget {
     this.expands,
     this.hintMaxLines,
     this.isuffixIconPassword,
+    this.prefixIconColor,
+    this.borderRadius,
+    this.fillColor,
+    this.borderColor,
   }) : super(key: key);
 
   final String? Function(String?)? validator;
@@ -42,6 +46,10 @@ class CustomTextField extends StatefulWidget {
   final bool? expands;
   final int? hintMaxLines;
   final bool? isuffixIconPassword;
+  final Color? prefixIconColor;
+  final Color? fillColor;
+  final Color? borderColor;
+  final BorderRadius? borderRadius;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -89,7 +97,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   widget.prefixIcon!,
                   height: 24,
                   width: 24,
-                  color: Palette.primaryColor,
+                  color: widget.prefixIconColor ?? Palette.primaryColor,
                 ),
               ),
         suffixIcon: widget.isuffixIconPassword == true
@@ -111,32 +119,32 @@ class _CustomTextFieldState extends State<CustomTextField> {
               )
             : widget.suffixIcon,
         counterText: '',
-        fillColor: Palette.bgTextFeildColor,
+        fillColor: widget.fillColor ?? Palette.bgTextFeildColor,
         filled: true,
         hintText: widget.hintText,
         hintStyle: TextStyles.bodyMedium,
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderStyles.normal,
-          borderSide: const BorderSide(
-            color: Palette.bgTextFeildColor,
+          borderRadius: widget.borderRadius ?? BorderStyles.normal,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? Palette.bgTextFeildColor,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderStyles.normal,
-          borderSide: const BorderSide(
-            color: Palette.bgTextFeildColor,
+          borderRadius: widget.borderRadius ?? BorderStyles.normal,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? Palette.bgTextFeildColor,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderStyles.normal,
-          borderSide: const BorderSide(
-            color: Palette.bgTextFeildColor,
+          borderRadius: widget.borderRadius ?? BorderStyles.normal,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? Palette.bgTextFeildColor,
           ),
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderStyles.normal,
-          borderSide: const BorderSide(
-            color: Palette.bgTextFeildColor,
+          borderRadius: widget.borderRadius ?? BorderStyles.normal,
+          borderSide: BorderSide(
+            color: widget.borderColor ?? Palette.bgTextFeildColor,
           ),
         ),
       ),

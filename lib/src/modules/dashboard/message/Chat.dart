@@ -5,6 +5,7 @@ import "package:cached_network_image/cached_network_image.dart";
 import 'package:notary_ping/src/constant/time_formate.dart';
 import 'package:notary_ping/src/modules/dashboard/message/MessageBar.dart';
 import 'package:notary_ping/src/modules/dashboard/message/TextMessage.dart';
+import 'package:notary_ping/src/utility/CustomDivider.dart';
 
 import '../../../../index.dart';
 
@@ -112,12 +113,17 @@ class _ChatState extends State<Chat> {
         ),
       ),
       actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w),
-          child: Icon(
-            Icons.more_vert,
-            color: Palette.primaryColor,
-            size: 24.sp,
+        GestureDetector(
+          onTap: () {
+            setting();
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Icon(
+              Icons.more_vert,
+              color: Palette.primaryColor,
+              size: 24.sp,
+            ),
           ),
         ),
       ],
@@ -184,6 +190,75 @@ class _ChatState extends State<Chat> {
           ),
         ],
       ),
+    );
+  }
+
+  setting() {
+    return showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          height: 140.w,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          reportIcon,
+                          height: 28.w,
+                          width: 28.w,
+                        ),
+                        SizedBox(width: 16.w),
+                        Expanded(
+                          child: Text(
+                            "Report id".tr,
+                            style: TextStyles.titleSmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const CustomDivider(),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Center(
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          deleteIcon,
+                          height: 28.w,
+                          width: 28.w,
+                          color: Palette.redColor,
+                        ),
+                        SizedBox(width: 16.w),
+                        Expanded(
+                          child: Text(
+                            "Delete".tr,
+                            style: TextStyles.titleSmall.copyWith(
+                              color: Palette.redColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 

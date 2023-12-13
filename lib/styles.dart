@@ -193,6 +193,7 @@ class BorderStyles {
   static final thin = BorderRadius.circular(4);
   static final normal = BorderRadius.circular(8);
   static final medium = BorderRadius.circular(12);
+  static final searchTextField = BorderRadius.circular(30);
   static const textFieldBorderRadius = BorderRadius.all(Radius.circular(10));
   static const buttonRadius = BorderRadius.all(Radius.circular(15));
 }
@@ -214,4 +215,5 @@ class Palette {
   static const Color lightBlueColor = Color(0xFFE0F3FE);
   static const Color greenColor = Color(0xFF46C45D);
   static const Color reciveChatColor = Color(0xFFF2F7FB);
+  static const Color redColor = Color(0xFFEB5757);
 }
