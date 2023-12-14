@@ -90,6 +90,16 @@ class Languages extends Translations {
           'Report id': 'Report id',
           'Delete': 'Delete',
           'Phone number': 'Phone number',
+          'Only Push Notification will be disable!':
+              'Only Push Notification will be disable!',
+          'Notification': 'Notification',
+          'Update': 'Update ',
+          'Cancel booking': 'Cancel booking',
+          'Send message': 'Send message',
+          'Send booking request': 'Send booking request',
+          'Request confirmed': 'Request confirmed',
+          'Booking time': 'Booking time',
+          'Finished booking': 'Finished booking',
           '': '',
         },
       };

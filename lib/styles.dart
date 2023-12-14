@@ -89,4 +89,5 @@ class Palette {
   static const Color reciveChatColor = Color(0xFFF2F7FB);
   static const Color redColor = Color(0xFFEB5757);
   static const Color dotColor = Color(0xFFCFEFFC);
+  static const Color languageBorderColor = Color(0xFFE9F1FF);
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/states/message/MessageController.dart';
@@ -10,6 +12,7 @@ class MessageBar extends StatelessWidget {
   final void Function(String)? onSend;
   final void Function()? onTapCloseReply;
   final VoidCallback onTapVoice;
+  final VoidCallback onTapRefreshFile;
   final RecorderController recorderController;
 
   /// [MessageBar] constructor
@@ -23,6 +26,7 @@ class MessageBar extends StatelessWidget {
     this.onSend,
     this.onTapCloseReply,
     required this.onTapVoice,
+    required this.onTapRefreshFile,
     required this.recorderController,
   });
   final MessageController controller = Get.find();
@@ -33,6 +37,7 @@ class MessageBar extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20.w),
+        // color: Palette.whiteColor,
         child: Row(
           children: <Widget>[
             Expanded(
@@ -103,11 +108,13 @@ class MessageBar extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 10, right: 4),
+                          onTap: onTapRefreshFile,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 10, right: 4),
                             child: Icon(
-                              Icons.attach_file,
+                              controller.state.isRecording.value
+                                  ? Icons.refresh
+                                  : Icons.attach_file,
                               color: Palette.primaryColor,
                               size: 24,
                             ),

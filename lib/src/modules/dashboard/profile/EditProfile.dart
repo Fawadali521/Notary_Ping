@@ -73,12 +73,46 @@ class EditProfile extends StatelessWidget {
             prefixIcon: userIcon,
           ),
           SizedBox(height: 16.h),
-          CustomTextField(
-            hintText: 'Enter your address'.tr,
-            onChange: (value) {
-              // controller.state.name = value;
-            },
-            maxline: 3,
+          TextFormField(
+            textAlignVertical: TextAlignVertical.center,
+            maxLines: 3,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            style: TextStyles.bodyMedium.copyWith(
+              color: Palette.blackColor,
+            ),
+            cursorColor: Palette.blackColor,
+            decoration: InputDecoration(
+              contentPadding:
+                  EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
+              alignLabelWithHint: true,
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(
+                    left: 16.w, right: 16.w, top: 16, bottom: 50),
+                child: Image.asset(
+                  locationIcon,
+                  height: 20,
+                  width: 20,
+                  color: Palette.primaryColor,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              fillColor: Palette.bgTextFeildColor,
+              filled: true,
+              hintText: 'Enter your address'.tr,
+              hintStyle: TextStyles.bodyMedium,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderStyles.normal,
+                borderSide: const BorderSide(
+                  color: Palette.bgTextFeildColor,
+                ),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderStyles.normal,
+                borderSide: const BorderSide(
+                  color: Palette.bgTextFeildColor,
+                ),
+              ),
+            ),
           ),
           SizedBox(height: 16.h),
           LayoutBuilder(
@@ -144,6 +178,7 @@ class EditProfile extends StatelessWidget {
                   onChange: (value) {
                     // controller.state.categoryName = value;
                   },
+                  prefixIcon: cityIcon,
                   suffixIcon: const Icon(
                     Icons.keyboard_arrow_down_outlined,
                     color: Palette.primaryColor,
@@ -158,6 +193,7 @@ class EditProfile extends StatelessWidget {
             onChange: (value) {
               // controller.state.name = value;
             },
+            prefixIcon: stateIcon,
           ),
           SizedBox(height: 16.h),
           CustomTextField(
@@ -165,6 +201,7 @@ class EditProfile extends StatelessWidget {
             onChange: (value) {
               // controller.state.name = value;
             },
+            prefixIcon: zipcodeIcon,
           ),
           SizedBox(height: 80.h),
           SubmitButton(

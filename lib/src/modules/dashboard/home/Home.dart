@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_collection_literals
+// ignore_for_file: prefer_collection_literals, file_names
 
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -80,21 +80,29 @@ class HomeState extends State<Home> {
             )
           : Stack(
               children: [
-                GoogleMap(
-                  zoomGesturesEnabled: true, //enable Zoom in, out on map
-                  initialCameraPosition: CameraPosition(
-                    target: startLocation, //initial position
-                    zoom: 16.0, //initial zoom level
+                SafeArea(
+                  top: false,
+                  left: false,
+                  right: false,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    child: GoogleMap(
+                      zoomGesturesEnabled: true, //enable Zoom in, out on map
+                      initialCameraPosition: CameraPosition(
+                        target: startLocation, //initial position
+                        zoom: 16.0, //initial zoom level
+                      ),
+                      markers: markers, //markers to show on map
+                      polylines: Set<Polyline>.of(polylines.values), //polylines
+                      mapType: MapType.normal, //map type
+                      onMapCreated: (controller) {
+                        //method called when map is created
+                        setState(() {
+                          mapController = controller;
+                        });
+                      },
+                    ),
                   ),
-                  markers: markers, //markers to show on map
-                  polylines: Set<Polyline>.of(polylines.values), //polylines
-                  mapType: MapType.normal, //map type
-                  onMapCreated: (controller) {
-                    //method called when map is created
-                    setState(() {
-                      mapController = controller;
-                    });
-                  },
                 ),
                 _topBar(),
               ],

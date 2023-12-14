@@ -35,6 +35,14 @@ const String reportIcon = "$icons/report.png";
 const String deleteIcon = "$icons/delete.png";
 const String searchIcon = "$icons/search.png";
 const String mapsIcon = "$icons/maps.png";
+const String bellIcon = "$icons/Bell.png";
+const String zipcodeIcon = "$icons/zipcode.png";
+const String cityIcon = "$icons/cityIcon.png";
+const String stateIcon = "$icons/stateIcon.png";
+const String locationIcon = "$icons/location.png";
+const String engilshIcon = "$icons/english.png";
+const String conditionIcon = "$icons/condition.png";
+const String transactionIcon = "$icons/transaction.png";
 
 ///
 ///dynamic images

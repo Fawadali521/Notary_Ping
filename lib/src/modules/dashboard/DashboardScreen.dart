@@ -46,7 +46,7 @@ class _DashboardState extends State<Dashboard> {
             });
           },
           children: [
-            Home(),
+            const Home(),
             const Bookings(),
             const Message(),
             Profile(),

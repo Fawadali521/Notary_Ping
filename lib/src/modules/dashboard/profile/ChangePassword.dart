@@ -19,47 +19,57 @@ class ChangePassword extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: ListView(
-          shrinkWrap: true,
+        child: Stack(
           children: [
-            Text(
-              "Change password".tr,
-              style: TextStyles.titleLarge,
+            ListView(
+              shrinkWrap: true,
+              children: [
+                Text(
+                  "Change password".tr,
+                  style: TextStyles.titleLarge,
+                ),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  hintText: 'Enter current password'.tr,
+                  onChange: (value) {
+                    // controller.state.name = value;
+                  },
+                  prefixIcon: passwordIcon,
+                  isuffixIconPassword: true,
+                ),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  hintText: 'Enter new password'.tr,
+                  onChange: (value) {
+                    // controller.state.name = value;
+                  },
+                  prefixIcon: passwordIcon,
+                  isuffixIconPassword: true,
+                ),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  hintText: 'Confirm password'.tr,
+                  onChange: (value) {
+                    // controller.state.name = value;
+                  },
+                  prefixIcon: passwordIcon,
+                  isuffixIconPassword: true,
+                ),
+                SizedBox(height: 16.h),
+              ],
             ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'Enter current password'.tr,
-              onChange: (value) {
-                // controller.state.name = value;
-              },
-              prefixIcon: passwordIcon,
-              isuffixIconPassword: true,
-            ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'Enter new password'.tr,
-              onChange: (value) {
-                // controller.state.name = value;
-              },
-              prefixIcon: passwordIcon,
-              isuffixIconPassword: true,
-            ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              hintText: 'Confirm password'.tr,
-              onChange: (value) {
-                // controller.state.name = value;
-              },
-              prefixIcon: passwordIcon,
-              isuffixIconPassword: true,
-            ),
-            SizedBox(height: 16.h),
-            SizedBox(height: 80.h),
-            SubmitButton(
-              title: 'Change'.tr,
-              onTap: () {},
-            ),
-            SizedBox(height: 20.h),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 50.h),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SubmitButton(onTap: () {}, title: "Change".tr),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

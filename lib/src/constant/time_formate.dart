@@ -13,4 +13,5 @@ var onlyMonth = DateFormat("MMMM"); // March
 var monthYear = DateFormat("yMMM"); // Apr 2022
 var dayMonth = DateFormat('EEEE, dd MMMM'); // Sunday, 07 July
 var chatDate = DateFormat('dd/MM, h:mm a'); // 07/07, 10:10 AM
-
+var tackingDate =
+    DateFormat('hh:mm a dd MMM,yyyy'); //"10:12 AM  12 July,2023 ",

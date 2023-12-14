@@ -17,9 +17,9 @@ class _CustomerSupportState extends State<CustomerSupport> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.whiteColor,
+      backgroundColor: Palette.bgTextFeildColor,
       appBar: CustomAppBar(
-        color: Palette.whiteColor,
+        color: Palette.bgTextFeildColor,
         title: 'Customer support'.tr,
         isBack: true,
       ),
@@ -31,7 +31,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
             margin: EdgeInsets.only(bottom: 20.h),
             decoration: BoxDecoration(
               borderRadius: BorderStyles.normal,
-              color: Palette.bgTextFeildColor,
+              color: Palette.whiteColor,
             ),
             child: ListTile(
               minLeadingWidth: 0,
@@ -75,7 +75,7 @@ class _CustomerSupportState extends State<CustomerSupport> {
             margin: EdgeInsets.only(bottom: 20.h),
             decoration: BoxDecoration(
               borderRadius: BorderStyles.normal,
-              color: Palette.bgTextFeildColor,
+              color: Palette.whiteColor,
             ),
             child: ListTile(
               minLeadingWidth: 0,
@@ -133,9 +133,9 @@ class _CustomerSupportState extends State<CustomerSupport> {
                     setState(() {});
                   },
                   child: Card(
-                    elevation: 1,
-                    color: Palette.bgTextFeildColor,
-                    surfaceTintColor: Palette.bgTextFeildColor,
+                    elevation: 0,
+                    color: Palette.whiteColor,
+                    surfaceTintColor: Palette.whiteColor,
                     margin: EdgeInsets.zero,
                     child: Padding(
                       padding: EdgeInsets.all(18.sp),

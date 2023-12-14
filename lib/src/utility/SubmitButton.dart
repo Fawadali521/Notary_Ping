@@ -30,7 +30,7 @@ class SubmitButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 12.h),
         child: Center(
           child: Text(
-            title,
+            title.tr,
             style: TextStyles.titleSmall.copyWith(
               color: titleColor ?? Palette.whiteColor,
             ),

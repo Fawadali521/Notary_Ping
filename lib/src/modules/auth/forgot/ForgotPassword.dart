@@ -29,7 +29,7 @@ class ForgotPassword extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.centerLeft,
-                child: GestureDetector(
+                child: InkWell(
                   onTap: () => Get.back(),
                   child: Padding(
                     padding:
@@ -37,6 +37,7 @@ class ForgotPassword extends StatelessWidget {
                     child: const Icon(
                       Icons.arrow_back_ios_new_outlined,
                       color: Palette.blackColor,
+                      size: 16,
                     ),
                   ),
                 ),

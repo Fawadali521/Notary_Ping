@@ -16,13 +16,14 @@ PreferredSize CustomAppBar(
       ),
       elevation: 0,
       leading: isBack == true
-          ? GestureDetector(
+          ? InkWell(
               onTap: () => Get.back(),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-                child: Icon(
-                  Icons.arrow_back_ios,
-                  color: Palette.blackColor.withOpacity(0.7),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                child: const Icon(
+                  Icons.arrow_back_ios_new_outlined,
+                  color: Palette.blackColor,
+                  size: 16,
                 ),
               ),
             )
@@ -36,10 +37,12 @@ PreferredSize CustomAppBar(
                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
                   child: Stack(
                     children: [
-                      const Icon(
-                        Icons.notifications_none_outlined,
+                      Image.asset(
+                        bellIcon,
                         color: Palette.blackColor,
-                        size: 24,
+                        height: 24,
+                        width: 24,
+                        fit: BoxFit.contain,
                       ),
                       Positioned(
                         right: 0,

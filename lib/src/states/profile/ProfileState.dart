@@ -6,6 +6,13 @@ import '../../../index.dart';
 
 class ProfileState extends LoadingState {
   final RxString slectedCity = ''.obs;
+  final RxBool isNotification = true.obs;
+  final RxString groupValue = 'English'.obs;
+  final RxList<String> allLanguages = [
+    "English",
+    "Spanish",
+    "France",
+  ].obs;
 
   ///dummy data
   final RxList<String> selecteCity = [

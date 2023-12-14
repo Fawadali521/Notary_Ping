@@ -65,7 +65,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return 
+    TextFormField(
       textAlignVertical: TextAlignVertical.center,
       expands: widget.expands ?? false,
       onTap: widget.onTap,
@@ -87,8 +88,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       decoration: InputDecoration(
         helperMaxLines: widget.hintMaxLines ?? 1,
-        errorMaxLines: 3,
         contentPadding: EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
+        alignLabelWithHint: true,
         prefixIcon: widget.prefixIcon == null
             ? null
             : Padding(
