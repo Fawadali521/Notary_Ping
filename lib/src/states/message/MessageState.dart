@@ -6,6 +6,7 @@ import 'package:notary_ping/src/models/MessageModel.dart';
 import '../../../index.dart';
 
 class MessageState extends LoadingState {
+  final RxBool isRecording = false.obs;
   final RxList<MessageModel> profiles = [
     MessageModel(
       name: "Fawad Khan",

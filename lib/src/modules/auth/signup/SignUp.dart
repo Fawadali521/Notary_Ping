@@ -5,6 +5,7 @@ import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
 import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/states/signup/SignUpController.dart';
 import 'package:notary_ping/src/utility/CustomDivider.dart';
+import 'package:notary_ping/src/utility/CustomDropDown.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 
@@ -30,20 +31,20 @@ class SignUp extends StatelessWidget {
             height: 60.h,
           ),
           Padding(
-            padding: EdgeInsets.only(
-              top: 24.h,
+            padding: EdgeInsets.symmetric(
+              vertical: 24.h,
             ),
             child: Text(
               "Let's Sign You Up!".tr,
               style: TextStyles.headlineMedium,
             ),
           ),
-          SizedBox(height: 8.h),
-          Text(
-            "Create your account now".tr,
-            style: TextStyles.bodyMedium,
-          ),
-          SizedBox(height: 8.h),
+          // SizedBox(height: 8.h),
+          // Text(
+          //   "Create your account now".tr,
+          //   style: TextStyles.bodyMedium,
+          // ),
+
           CustomTextField(
             hintText: 'Enter your name'.tr,
             onChange: (value) {
@@ -63,79 +64,23 @@ class SignUp extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                flex: 2,
-                child: RawAutocomplete<String>(
-                  optionsViewBuilder: (BuildContext context,
-                      AutocompleteOnSelected<String> onSelected,
-                      Iterable<String> options) {
-                    return Align(
-                      alignment: Alignment.topLeft,
-                      child: Material(
-                        elevation: 4.0,
-                        child: SizedBox(
-                          height: 180.0,
-                          width: 100.w,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.all(8.0),
-                            itemCount: options.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              final String option = options.elementAt(index);
-                              return GestureDetector(
-                                onTap: () {
-                                  onSelected(option);
-                                },
-                                child: ListTile(
-                                  title: Text(option),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                  initialValue: const TextEditingValue(
-                    text: "+92",
+                flex: 3,
+                child: Obx(
+                  () => CustomDropDown(
+                    textStyle: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    items: controller.state.slectCountryCode,
+                    selectedVal: controller.state.countryCodee.value,
+                    onChanged: (val) {
+                      controller.changeSelectGender(val!);
+                    },
                   ),
-                  optionsBuilder: (textValue) {
-                    if (textValue.text.isEmpty) {
-                      return List.empty();
-                    } else {
-                      if (textValue.text.length == 1) {
-                        controller.state.countryCode.text = "";
-                        return controller.state.slectCountryCode.where(
-                            (element) => element
-                                .toLowerCase()
-                                .contains(textValue.text.toLowerCase()));
-                      } else {
-                        controller.state.countryCode.text = textValue.text;
-                        return controller.state.slectCountryCode.where(
-                            (element) => element
-                                .toLowerCase()
-                                .contains(textValue.text.toLowerCase()));
-                      }
-                    }
-                  },
-                  fieldViewBuilder: (context, textEditingController, focusNode,
-                      onFieldSubmitted) {
-                    if (textEditingController.text.isEmpty) {
-                      textEditingController.text = "+92";
-                    }
-                    return CustomTextField(
-                      focusnode: focusNode,
-                      onEditingComplete: onFieldSubmitted,
-                      controller: textEditingController,
-                      hintText: ''.tr,
-                      onChange: (value) {
-                        // controller.state.categoryName = value;
-                      },
-                    );
-                  },
                 ),
               ),
               SizedBox(width: 8.w),
               Expanded(
-                flex: 7,
+                flex: 8,
                 child: CustomTextField(
                   hintText: 'Phone number'.tr,
                   onChange: (value) {

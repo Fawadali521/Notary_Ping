@@ -6,4 +6,8 @@ import '../../../index.dart';
 
 class MessageController extends GetxController {
   final state = MessageState();
+
+  changwLodingStatus(bool value) {
+    state.isRecording.value = value;
+  }
 }

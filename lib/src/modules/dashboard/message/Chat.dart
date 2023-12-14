@@ -1,11 +1,16 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:audio_waveforms/audio_waveforms.dart';
 import "package:cached_network_image/cached_network_image.dart";
 import 'package:notary_ping/src/constant/time_formate.dart';
+import 'package:notary_ping/src/modules/dashboard/message/utility/AudioMessage.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/MessageBar.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/TextMessage.dart';
+import 'package:notary_ping/src/states/message/MessageController.dart';
 import 'package:notary_ping/src/utility/CustomDivider.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../index.dart';
 
@@ -17,8 +22,45 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  RecorderController controller = RecorderController(); // Initialise
-  // Dispose controller
+  final MessageController controller = Get.find();
+
+  late final RecorderController recorderController;
+
+  String? path;
+  String? musicFile;
+
+  bool isRecordingCompleted = false;
+  bool isLoading = true;
+  late Directory appDirectory;
+
+  @override
+  void initState() {
+    super.initState();
+    _getDir();
+    _initialiseControllers();
+  }
+
+  void _getDir() async {
+    appDirectory = await getApplicationDocumentsDirectory();
+    path = "${appDirectory.path}/recording.m4a";
+    isLoading = false;
+    setState(() {});
+  }
+
+  void _initialiseControllers() {
+    recorderController = RecorderController()
+      ..androidEncoder = AndroidEncoder.aac
+      ..androidOutputFormat = AndroidOutputFormat.mpeg4
+      ..iosEncoder = IosEncoder.kAudioFormatMPEG4AAC
+      ..sampleRate = 44100;
+  }
+
+  @override
+  void dispose() {
+    recorderController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
@@ -27,84 +69,240 @@ class _ChatState extends State<Chat> {
 
       appBar: _chatAppBar(),
 
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          user,
-                          fit: BoxFit.cover,
-                          height: 40,
-                          width: 40,
+      body: Obx(
+        () => Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  // Row(
+                  //   children: [
+                  //     AnimatedSwitcher(
+                  //       duration: const Duration(milliseconds: 200),
+                  //       child: controller.state.isRecording.value
+                  //           ? AudioWaveforms(
+                  //               enableGesture: true,
+                  //               size: Size(
+                  //                   MediaQuery.of(context).size.width / 2, 50),
+                  //               recorderController: recorderController,
+                  //               waveStyle: const WaveStyle(
+                  //                 waveColor: Colors.white,
+                  //                 extendWaveform: true,
+                  //                 showMiddleLine: false,
+                  //               ),
+                  //               decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(12.0),
+                  //                 color: const Color(0xFF1E1B26),
+                  //               ),
+                  //               padding: const EdgeInsets.only(left: 18),
+                  //               margin:
+                  //                   const EdgeInsets.symmetric(horizontal: 15),
+                  //             )
+                  //           : Container(
+                  //               width: MediaQuery.of(context).size.width / 1.7,
+                  //               height: 50,
+                  //               decoration: BoxDecoration(
+                  //                 color: const Color(0xFF1E1B26),
+                  //                 borderRadius: BorderRadius.circular(12.0),
+                  //               ),
+                  //               padding: const EdgeInsets.only(left: 18),
+                  //               margin:
+                  //                   const EdgeInsets.symmetric(horizontal: 15),
+                  //               child: const TextField(
+                  //                 readOnly: true,
+                  //                 decoration: InputDecoration(
+                  //                   hintText: "Type Something...",
+                  //                   hintStyle: TextStyle(color: Colors.white54),
+                  //                   contentPadding: EdgeInsets.only(top: 16),
+                  //                   border: InputBorder.none,
+                  //                   // suffixIcon: IconButton(
+                  //                   //   onPressed: _pickFile,
+                  //                   //   icon: Icon(Icons.adaptive.share),
+                  //                   //   color: Colors.white54,
+                  //                   // ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //     ),
+                  //     IconButton(
+                  //       onPressed: _refreshWave,
+                  //       icon: Icon(
+                  //         controller.state.isRecording.value
+                  //             ? Icons.refresh
+                  //             : Icons.send,
+                  //         color: Colors.black,
+                  //       ),
+                  //     ),
+                  //     const SizedBox(width: 16),
+                  //     IconButton(
+                  //       onPressed: _startOrStopRecording,
+                  //       icon: Icon(controller.state.isRecording.value
+                  //           ? Icons.stop
+                  //           : Icons.mic),
+                  //       color: Colors.black,
+                  //       iconSize: 28,
+                  //     ),
+                  //   ],
+                  // ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            user,
+                            fit: BoxFit.cover,
+                            height: 40,
+                            width: 40,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Fawad",
-                              style: TextStyles.bodyLarge,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextMessage(
-                                text: 'bubble noal with normal with with tail',
-                                isSender: false,
-                                tail: true,
-                                textStyle: TextStyles.bodyMedium.copyWith(
-                                  color: Palette.blackColor,
-                                ),
-                                timeStyle: TextStyles.bodySmall,
-                                // time: onlyTime.format(now),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Fawad",
+                                style: TextStyles.bodyLarge,
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: TextMessage(
+                                  text:
+                                      'bubble noal with normal with with tail',
+                                  isSender: false,
+                                  tail: true,
+                                  textStyle: TextStyles.bodyMedium.copyWith(
+                                    color: Palette.blackColor,
+                                  ),
+                                  timeStyle: TextStyles.bodySmall,
+                                  // time: onlyTime.format(now),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 72),
+                    child: TextMessage(
+                      text: 'bubble noal with normal with with tail',
+                      isSender: false,
+                      tail: true,
+                      textStyle: TextStyles.bodyMedium.copyWith(
+                        color: Palette.blackColor,
                       ),
-                    ],
+                      timeStyle: TextStyles.bodySmall,
+                      // time: onlyTime.format(now),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 72),
-                  child: TextMessage(
-                    text: 'bubble noal with normal with with tail',
-                    isSender: false,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 72),
+                    child: TextMessage(
+                      text: 'bubble noal',
+                      isSender: false,
+                      tail: true,
+                      textStyle: TextStyles.bodyMedium.copyWith(
+                        color: Palette.blackColor,
+                      ),
+                      timeStyle: TextStyles.bodySmall,
+                      time: onlyTime.format(now),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16.h),
+                    child: TextMessage(
+                      text:
+                          'bubble normal with normal with normal with normal with normal with tail',
+                      isSender: true,
+                      tail: true,
+                      time: onlyTime.format(now),
+                      timeStyle: TextStyles.bodySmall,
+                      textStyle: TextStyles.bodyMedium.copyWith(
+                        color: Palette.whiteColor,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            user,
+                            fit: BoxFit.cover,
+                            height: 40,
+                            width: 40,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Fawad",
+                                style: TextStyles.bodyLarge,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: TextMessage(
+                                  text:
+                                      'bubble normal with normal with normal with normal with normal with tail',
+                                  isSender: false,
+                                  tail: true,
+                                  time: onlyTime.format(now),
+                                  timeStyle: TextStyles.bodySmall,
+                                  textStyle: TextStyles.bodyMedium.copyWith(
+                                    color: Palette.blackColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 16.h),
+                    child: TextMessage(
+                      text:
+                          'bubble normal with normal with normal with normal with normal with tail',
+                      isSender: true,
+                      tail: true,
+                      time: onlyTime.format(now),
+                      timeStyle: TextStyles.bodySmall,
+                      textStyle: TextStyles.bodyMedium.copyWith(
+                        color: Palette.whiteColor,
+                      ),
+                    ),
+                  ),
+                  TextMessage(
+                    text: 'bubble normal with normalh normal with tail',
+                    isSender: true,
                     tail: true,
                     textStyle: TextStyles.bodyMedium.copyWith(
-                      color: Palette.blackColor,
+                      color: Palette.whiteColor,
                     ),
-                    timeStyle: TextStyles.bodySmall,
-                    // time: onlyTime.format(now),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 72),
-                  child: TextMessage(
-                    text: 'bubble noal',
-                    isSender: false,
+                  TextMessage(
+                    text: 'bubble normal with nor',
+                    isSender: true,
                     tail: true,
                     textStyle: TextStyles.bodyMedium.copyWith(
-                      color: Palette.blackColor,
+                      color: Palette.whiteColor,
                     ),
-                    timeStyle: TextStyles.bodySmall,
-                    time: onlyTime.format(now),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16.h),
-                  child: TextMessage(
-                    text:
-                        'bubble normal with normal with normal with normal with normal with tail',
+                  TextMessage(
+                    text: ' with tail',
                     isSender: true,
                     tail: true,
                     time: onlyTime.format(now),
@@ -113,103 +311,58 @@ class _ChatState extends State<Chat> {
                       color: Palette.whiteColor,
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20, top: 16),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          user,
-                          fit: BoxFit.cover,
-                          height: 40,
-                          width: 40,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Fawad",
-                              style: TextStyles.bodyLarge,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: TextMessage(
-                                text:
-                                    'bubble normal with normal with normal with normal with normal with tail',
-                                isSender: false,
-                                tail: true,
-                                time: onlyTime.format(now),
-                                timeStyle: TextStyles.bodySmall,
-                                textStyle: TextStyles.bodyMedium.copyWith(
-                                  color: Palette.blackColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 16.h),
-                  child: TextMessage(
-                    text:
-                        'bubble normal with normal with normal with normal with normal with tail',
-                    isSender: true,
-                    tail: true,
-                    time: onlyTime.format(now),
-                    timeStyle: TextStyles.bodySmall,
-                    textStyle: TextStyles.bodyMedium.copyWith(
-                      color: Palette.whiteColor,
+                  if (isRecordingCompleted)
+                    AudioMessage(
+                      path: path,
+                      isSender: true,
+                      appDirectory: appDirectory,
+                      time: onlyTime.format(now),
                     ),
-                  ),
-                ),
-                TextMessage(
-                  text: 'bubble normal with normalh normal with tail',
-                  isSender: true,
-                  tail: true,
-                  textStyle: TextStyles.bodyMedium.copyWith(
-                    color: Palette.whiteColor,
-                  ),
-                ),
-                TextMessage(
-                  text: 'bubble normal with nor',
-                  isSender: true,
-                  tail: true,
-                  textStyle: TextStyles.bodyMedium.copyWith(
-                    color: Palette.whiteColor,
-                  ),
-                ),
-                TextMessage(
-                  text: ' with tail',
-                  isSender: true,
-                  tail: true,
-                  time: onlyTime.format(now),
-                  timeStyle: TextStyles.bodySmall,
-                  textStyle: TextStyles.bodyMedium.copyWith(
-                    color: Palette.whiteColor,
-                  ),
-                ),
-                SizedBox(height: 90.h),
-              ],
+                  SizedBox(height: 90.h),
+                ],
+              ),
             ),
-          ),
-          MessageBar(
-            messageBarHitText: "Enter your message",
-            messageBarHintStyle: TextStyles.bodyMedium,
-            onSend: (_) => print(_),
-          ),
-        ],
+            MessageBar(
+              recorderController: recorderController,
+              onTapVoice: _startOrStopRecording,
+              messageBarHitText: "Enter your message",
+              messageBarHintStyle: TextStyles.bodyMedium,
+              onSend: (_) => print(_),
+            ),
+          ],
+        ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  void _startOrStopRecording() async {
+    try {
+      if (controller.state.isRecording.value) {
+        recorderController.reset();
+
+        final path = await recorderController.stop(false);
+
+        if (path != null) {
+          isRecordingCompleted = true;
+          debugPrint(path);
+          debugPrint("Recorded file size: ${File(path).lengthSync()}");
+        }
+      } else {
+        await recorderController.record(path: path!);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    } finally {
+      setState(() {
+        controller.state.isRecording.value =
+            !controller.state.isRecording.value;
+      });
+    }
+  }
+
+  void _refreshWave() {
+    if (controller.state.isRecording.value) recorderController.refresh();
   }
 
   AppBar _chatAppBar() {

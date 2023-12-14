@@ -1,4 +1,6 @@
+import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:notary_ping/index.dart';
+import 'package:notary_ping/src/states/message/MessageController.dart';
 
 class MessageBar extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();
@@ -7,6 +9,8 @@ class MessageBar extends StatelessWidget {
   final void Function(String)? onTextChanged;
   final void Function(String)? onSend;
   final void Function()? onTapCloseReply;
+  final VoidCallback onTapVoice;
+  final RecorderController recorderController;
 
   /// [MessageBar] constructor
   ///
@@ -18,7 +22,10 @@ class MessageBar extends StatelessWidget {
     this.onTextChanged,
     this.onSend,
     this.onTapCloseReply,
+    required this.onTapVoice,
+    required this.recorderController,
   });
+  final MessageController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,63 +36,99 @@ class MessageBar extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Expanded(
-              child: TextFormField(
-                controller: _textController,
-                keyboardType: TextInputType.multiline,
-                textCapitalization: TextCapitalization.sentences,
-                minLines: 1,
-                maxLines: 3,
-                onChanged: onTextChanged,
-                decoration: InputDecoration(
-                  hintText: messageBarHitText,
-                  hintMaxLines: 1,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  hintStyle: messageBarHintStyle,
-                  fillColor: Palette.bgTextFeildColor,
-                  filled: true,
-                  alignLabelWithHint: true,
-                  prefixIcon: IconButton(
-                    icon: const Icon(
-                      Icons.emoji_emotions_outlined,
-                      color: Palette.primaryColor,
-                      size: 24,
-                    ),
-                    onPressed: () {},
-                  ),
-                  suffixIcon: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 10, right: 4),
-                        child: Icon(
-                          Icons.attach_file,
-                          color: Palette.primaryColor,
-                          size: 24,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28.0),
+                  color: Palette.bgTextFeildColor,
+                ),
+                child: Row(
+                  children: [
+                    controller.state.isRecording.value
+                        ? Expanded(
+                            child: AudioWaveforms(
+                              enableGesture: true,
+                              size: const Size(double.minPositive, 50),
+                              recorderController: recorderController,
+                              waveStyle: const WaveStyle(
+                                waveColor: Colors.black54,
+                                extendWaveform: true,
+                                showMiddleLine: false,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                color: Palette.bgTextFeildColor,
+                              ),
+                              padding: EdgeInsets.zero,
+                              margin: EdgeInsets.zero,
+                            ),
+                          )
+                        : Expanded(
+                            child: Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.emoji_emotions_outlined,
+                                    color: Palette.primaryColor,
+                                    size: 24,
+                                  ),
+                                  onPressed: () {},
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: _textController,
+                                    keyboardType: TextInputType.multiline,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                    minLines: 1,
+                                    maxLines: 3,
+                                    onChanged: onTextChanged,
+                                    decoration: InputDecoration(
+                                      hintText: messageBarHitText,
+                                      hintMaxLines: 1,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                              horizontal: 16, vertical: 14),
+                                      hintStyle: messageBarHintStyle,
+                                      fillColor: Colors
+                                          .transparent, // Palette.bgTextFeildColor,
+                                      filled: true,
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        InkWell(
+                          onTap: () {},
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 10, right: 4),
+                            child: Icon(
+                              Icons.attach_file,
+                              color: Palette.primaryColor,
+                              size: 24,
+                            ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 4, right: 10),
-                        child: Icon(
-                          Icons.keyboard_voice,
-                          color: Palette.primaryColor,
-                          size: 24,
-                        ),
-                      )
-                    ],
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28.0),
-                    borderSide: const BorderSide(
-                      color: Palette.bgTextFeildColor,
+                        InkWell(
+                          onTap: onTapVoice,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 4, right: 10),
+                            child: Icon(
+                              controller.state.isRecording.value
+                                  ? Icons.stop
+                                  : Icons.keyboard_voice,
+                              color: Palette.primaryColor,
+                              size: 24,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(28.0),
-                    borderSide: const BorderSide(
-                      color: Palette.bgTextFeildColor,
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ),
