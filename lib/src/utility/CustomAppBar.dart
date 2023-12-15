@@ -40,8 +40,8 @@ PreferredSize CustomAppBar(
                       Image.asset(
                         bellIcon,
                         color: Palette.blackColor,
-                        height: 24,
-                        width: 24,
+                        height: 28,
+                        width: 28,
                         fit: BoxFit.contain,
                       ),
                       Positioned(

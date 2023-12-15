@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_collection_literals, file_names
 
+import 'dart:io';
+
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -10,6 +12,7 @@ import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.d
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Tracking extends StatefulWidget {
   const Tracking({super.key});
@@ -34,7 +37,11 @@ class TrackingState extends State<Tracking> {
     setState(() {
       isLoding = true;
     });
-    checkLocationStatus();
+    if (Platform.isAndroid) {
+      checkLocationStatus();
+    } else {
+      getCurrentLocation();
+    }
     super.initState();
   }
 
@@ -75,224 +82,216 @@ class TrackingState extends State<Tracking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: isLoding
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Palette.primaryColor,
-              ),
-            )
-          : Stack(
-              children: [
-                GoogleMap(
-                  zoomGesturesEnabled: true, //enable Zoom in, out on map
-                  initialCameraPosition: CameraPosition(
-                    target: startLocation, //initial position
-                    zoom: 16.0, //initial zoom level
+      backgroundColor: Palette.bgColor,
+      body: Stack(
+        children: [
+          isLoding
+              ? Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 1.sh,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
                   ),
-                  markers: markers, //markers to show on map
-                  polylines: Set<Polyline>.of(polylines.values), //polylines
-                  mapType: MapType.normal, //map type
-                  onMapCreated: (controller) {
-                    //method called when map is created
-                    setState(() {
-                      mapController = controller;
-                    });
-                  },
+                )
+              : Padding(
+                  padding: EdgeInsets.only(bottom: 0.07.sh),
+                  child: GoogleMap(
+                    zoomGesturesEnabled: true, //enable Zoom in, out on map
+                    initialCameraPosition: CameraPosition(
+                      target: startLocation, //initial position
+                      zoom: 16.0, //initial zoom level
+                    ),
+                    markers: markers, //markers to show on map
+                    polylines: Set<Polyline>.of(polylines.values), //polylines
+                    mapType: MapType.normal, //map type
+                    onMapCreated: (controller) {
+                      //method called when map is created
+                      setState(() {
+                        mapController = controller;
+                      });
+                    },
+                  ),
                 ),
-                _topBar(),
-                Positioned(
-                  bottom: 0,
-                  child: SizedBox(
-                    width: 1.sw,
-                    height: 0.6.sh,
-                    child: DraggableScrollableSheet(
-                      initialChildSize: 0.4,
-                      builder: (BuildContext context,
-                          ScrollController scrollController) {
-                        return Container(
-                          decoration: const BoxDecoration(
-                            color: Palette.bgTextFeildColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
+          _topBar(),
+          Positioned(
+            bottom: 0,
+            child: SizedBox(
+              width: 1.sw,
+              height: 0.5.sh,
+              child: DraggableScrollableSheet(
+                initialChildSize: 1,
+                minChildSize: 0.15,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Palette.whiteColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                    ),
+                    child: ListView.builder(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 16.h,
+                      ),
+                      controller: scrollController,
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Divider(
+                              height: 0,
+                              color: Palette.dotColor,
+                              thickness: 3,
+                              endIndent: .34.sw,
+                              indent: .34.sw,
                             ),
-                          ),
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 20.w),
-                                    child: MaterialButton(
-                                      onPressed: () {},
-                                      elevation: 0,
-                                      color: Palette.whiteColor,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderStyles.normal,
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 12.h),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              transactionIcon,
-                                              fit: BoxFit.contain,
-                                              height: 24,
-                                              width: 24,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 5),
-                                              child: Text(
-                                                "Transaction history".tr,
-                                                style: TextStyles.bodyMedium
-                                                    .copyWith(
-                                                  color: Palette.blackColor,
-                                                ),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                            const Spacer(),
-                                            const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              size: 16,
-                                              color: Palette.greyTextColor,
-                                            )
-                                          ],
-                                        ),
-                                      ),
+                            SizedBox(height: 12.h),
+                            // Padding(
+                            //   padding:
+                            //       EdgeInsets.symmetric(horizontal: 20.w),
+                            //   child: MaterialButton(
+                            //     onPressed: () {},
+                            //     elevation: 0,
+                            //     color: Palette.whiteColor,
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderStyles.normal,
+                            //     ),
+                            //     child: Padding(
+                            //       padding: EdgeInsets.symmetric(
+                            //           vertical: 12.h),
+                            //       child: Row(
+                            //         children: [
+                            //           Image.asset(
+                            //             transactionIcon,
+                            //             fit: BoxFit.contain,
+                            //             height: 24,
+                            //             width: 24,
+                            //           ),
+                            //           Padding(
+                            //             padding:
+                            //                 const EdgeInsets.symmetric(
+                            //                     horizontal: 5),
+                            //             child: Text(
+                            //               "Transaction history".tr,
+                            //               style: TextStyles.bodyMedium
+                            //                   .copyWith(
+                            //                 color: Palette.blackColor,
+                            //               ),
+                            //               textAlign: TextAlign.center,
+                            //             ),
+                            //           ),
+                            //           const Spacer(),
+                            //           const Icon(
+                            //             Icons.arrow_forward_ios_rounded,
+                            //             size: 16,
+                            //             color: Palette.greyTextColor,
+                            //           )
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                "Booking details".tr,
+                                style: TextStyles.titleLarge,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Column(
+                                  children: [
+                                    SizedBox(height: 13),
+                                    CustomRadio(color: Palette.primaryColor),
+                                    Dash(
+                                      direction: Axis.vertical,
+                                      length: 45,
+                                      dashLength: 8,
+                                      dashThickness: 2,
+                                      dashColor: Palette.primaryColor,
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w,
-                                      vertical: 16.h,
+                                    CustomRadio(color: Palette.primaryColor),
+                                    Dash(
+                                      direction: Axis.vertical,
+                                      length: 45,
+                                      dashLength: 8,
+                                      dashThickness: 2,
+                                      dashColor: Palette.greyTextColor,
                                     ),
-                                    child: SubmitButton(
-                                      onTap: () {},
-                                      title: "Send message".tr,
+                                    CustomRadio(color: Palette.greyTextColor),
+                                    Dash(
+                                      direction: Axis.vertical,
+                                      length: 45,
+                                      dashLength: 8,
+                                      dashThickness: 2,
+                                      dashColor: Palette.greyTextColor,
                                     ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 20.w,
-                                      vertical: 20.h,
+                                    CustomRadio(color: Palette.greyTextColor),
+                                  ],
+                                ),
+                                const SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TrackingItem(
+                                      time: tackingDate.format(DateTime.now()),
+                                      title: "Send booking request",
                                     ),
-                                    decoration: const BoxDecoration(
-                                      color: Palette.whiteColor,
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(30),
-                                        topRight: Radius.circular(30),
-                                      ),
+                                    TrackingItem(
+                                      time: tackingDate.format(DateTime.now()),
+                                      title: "Request confirmed",
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Booking details".tr,
-                                          style: TextStyles.titleLarge,
-                                        ),
-                                        const SizedBox(height: 12),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Column(
-                                              children: [
-                                                SizedBox(height: 13),
-                                                CustomRadio(
-                                                    color:
-                                                        Palette.primaryColor),
-                                                Dash(
-                                                  direction: Axis.vertical,
-                                                  length: 45,
-                                                  dashLength: 8,
-                                                  dashThickness: 2,
-                                                  dashColor:
-                                                      Palette.primaryColor,
-                                                ),
-                                                CustomRadio(
-                                                    color:
-                                                        Palette.primaryColor),
-                                                Dash(
-                                                  direction: Axis.vertical,
-                                                  length: 45,
-                                                  dashLength: 8,
-                                                  dashThickness: 2,
-                                                  dashColor:
-                                                      Palette.greyTextColor,
-                                                ),
-                                                CustomRadio(
-                                                    color:
-                                                        Palette.greyTextColor),
-                                                Dash(
-                                                  direction: Axis.vertical,
-                                                  length: 45,
-                                                  dashLength: 8,
-                                                  dashThickness: 2,
-                                                  dashColor:
-                                                      Palette.greyTextColor,
-                                                ),
-                                                CustomRadio(
-                                                    color:
-                                                        Palette.greyTextColor),
-                                              ],
-                                            ),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                TrackingItem(
-                                                  time: tackingDate
-                                                      .format(DateTime.now()),
-                                                  title: "Send booking request",
-                                                ),
-                                                TrackingItem(
-                                                  time: tackingDate
-                                                      .format(DateTime.now()),
-                                                  title: "Request confirmed",
-                                                ),
-                                                TrackingItem(
-                                                  time: tackingDate
-                                                      .format(DateTime.now()),
-                                                  title: "Booking time",
-                                                ),
-                                                TrackingItem(
-                                                  time: tackingDate
-                                                      .format(DateTime.now()),
-                                                  title: "Finished booking",
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SubmitButton(
-                                          onTap: () {
-                                            showCancelBookingAlert(context);
-                                          },
-                                          title: "Cancel booking".tr,
-                                        ),
-                                      ],
+                                    TrackingItem(
+                                      time: tackingDate.format(DateTime.now()),
+                                      title: "Booking time",
                                     ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
+                                    TrackingItem(
+                                      time: tackingDate.format(DateTime.now()),
+                                      title: "Finished booking",
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                SubmitButton(
+                                  onTap: () {
+                                    showCancelBookingAlert(context);
+                                  },
+                                  title: "Cancel booking".tr,
+                                ),
+                                SizedBox(width: 12.w),
+                                const Spacer(),
+                                SubmitButton(
+                                  onTap: () {},
+                                  title: "Send message".tr,
+                                ),
+                              ],
+                            ),
+                          ],
                         );
                       },
                     ),
-                  ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
+          ),
+        ],
+      ),
     );
   }
 

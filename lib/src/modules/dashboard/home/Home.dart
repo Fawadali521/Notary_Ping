@@ -1,11 +1,15 @@
 // ignore_for_file: prefer_collection_literals, file_names
 
+import 'dart:io';
+
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notary_ping/index.dart';
+import 'package:notary_ping/src/modules/dashboard/home/utility/CustomNotaryItem.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shimmer/shimmer.dart';
 
 // import 'package:label_marker/label_marker.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,13 +30,17 @@ class HomeState extends State<Home> {
   Set<Marker> markers = Set(); //markers for google map
   Map<PolylineId, Polyline> polylines = {}; //polylines to show direction
   late LatLng startLocation; //= const LatLng(34.003040, 71.485524);
-  // LatLng endLocation = const LatLng(33.996438, 71.461848);
   @override
   void initState() {
     setState(() {
       isLoding = true;
     });
-    checkLocationStatus();
+    if (Platform.isAndroid) {
+      checkLocationStatus();
+    } else {
+      getCurrentLocation();
+    }
+
     super.initState();
   }
 
@@ -76,20 +84,26 @@ class HomeState extends State<Home> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      body: isLoding
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: Palette.primaryColor,
-              ),
-            )
-          : Stack(
-              children: [
-                SafeArea(
+      body: Stack(
+        children: [
+          isLoding
+              ? Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 1.sh,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                  ),
+                )
+              : SafeArea(
                   top: false,
                   left: false,
                   right: false,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 0),
+                    padding: EdgeInsets.only(bottom: 0.019.sh),
                     child: GoogleMap(
                       zoomGesturesEnabled: true, //enable Zoom in, out on map
                       initialCameraPosition: CameraPosition(
@@ -108,107 +122,106 @@ class HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                _topBar(),
-                Positioned(
-                  bottom: 0,
-                  child: SizedBox(
+          _topBar(),
+          Positioned(
+            bottom: 0,
+            child: SizedBox(
+              width: 1.sw,
+              height: 1.sh,
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.45,
+                minChildSize: 0.11,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  print("print contrlooer ==${scrollController.offset}");
+                  return Container(
                     width: 1.sw,
-                    height: 0.45.sh,
-                    child: DraggableScrollableSheet(
-                      initialChildSize: 0.65,
-                      builder: (BuildContext context,
-                          ScrollController scrollController) {
-                        return Container(
-                          decoration: const BoxDecoration(
-                            color: Palette.whiteColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          child: ListView.builder(
-                            controller: scrollController,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20, vertical: 16),
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  Divider(
-                                    height: 0,
-                                    color: Palette.dotColor,
-                                    thickness: 3,
-                                    endIndent: .34.sw,
-                                    indent: .34.sw,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Available notaries".tr,
-                                          style: TextStyles.titleLarge,
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5),
-                                                child: Text(
-                                                  "See all".tr,
-                                                  style: TextStyles.bodySmall,
-                                                ),
-                                              ),
-                                              const Icon(
-                                                Icons.arrow_forward_ios_rounded,
-                                                size: 14,
-                                                color: Palette.greyTextColor,
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  GridView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4,
-                                      childAspectRatio: width / (height / 1.7),
-                                    ),
-
-                                    padding: EdgeInsets.zero,
-                                    itemCount: 8, // total number of items
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Get.to(() => NotaryProfile());
-                                        },
-                                        child: CustomNotaryItem(
-                                          isOnline: index.isOdd,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(height: 30.h),
-                                ],
-                              );
-                            },
-                          ),
-                        );
-                      },
+                    height: 1.sh,
+                    decoration: const BoxDecoration(
+                      color: Palette.whiteColor,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                    child: ListView(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      controller: scrollController,
+                      children: [
+                        Divider(
+                          height: 1,
+                          color: Palette.dotColor,
+                          thickness: 3,
+                          endIndent: .34.sw,
+                          indent: .34.sw,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 20),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Available notaries".tr,
+                                style: TextStyles.titleLarge,
+                              ),
+                              const Spacer(),
+                              // InkWell(
+                              //   child: Row(
+                              //     children: [
+                              //       Padding(
+                              //         padding: const EdgeInsets.symmetric(
+                              //             horizontal: 5),
+                              //         child: Text(
+                              //           "See all".tr,
+                              //           style: TextStyles.bodySmall,
+                              //         ),
+                              //       ),
+                              //       const Icon(
+                              //         Icons.arrow_forward_ios_rounded,
+                              //         size: 14,
+                              //         color: Palette.greyTextColor,
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        ),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 4,
+                            childAspectRatio: width / (height / 1.7),
+                          ),
+
+                          padding: EdgeInsets.zero,
+                          itemCount: 40, // total number of items
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Get.to(() => NotaryProfile());
+                              },
+                              child: CustomNotaryItem(
+                                isOnline: index.isOdd,
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: 30.h),
+                      ],
+                      // );
+                      // },
+                    ),
+                  );
+                },
+              ),
             ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -300,68 +313,48 @@ class HomeState extends State<Home> {
       ),
     );
   }
-}
 
-class CustomNotaryItem extends StatelessWidget {
-  const CustomNotaryItem({
-    super.key,
-    this.isOnline,
-  });
-
-  final bool? isOnline;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget _topBarNotary() {
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        Align(
-          alignment: Alignment.topCenter,
-          child: SizedBox(
-            height: .18.sw,
-            width: .18.sw,
-            child: Center(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.asset(
-                        user,
-                        fit: BoxFit.cover,
-                        height: .18.sw,
-                        width: .18.sw,
-                      ),
+        const SafeArea(bottom: false, child: SizedBox()),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          width: Get.width,
+          child: Row(
+            children: [
+              Expanded(
+                child: CustomTextField(
+                  hintText: "Search".tr,
+                  prefixIcon: searchIcon,
+                  prefixIconColor: Palette.greyTextColor,
+                  borderRadius: BorderStyles.searchTextField,
+                  fillColor: Palette.whiteColor,
+                  borderColor: Palette.greyTextColor.withOpacity(0.5),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Palette.whiteColor,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Palette.greyTextColor.withOpacity(0.5),
                     ),
                   ),
-                  isOnline == true
-                      ? const Positioned(
-                          right: 6,
-                          child: CircleAvatar(
-                            backgroundColor: Palette.greenColor,
-                            radius: 6,
-                          ),
-                        )
-                      : isOnline == false
-                          ? const Positioned(
-                              right: 6,
-                              child: CircleAvatar(
-                                backgroundColor: Palette.greyShadeTextColor,
-                                radius: 6,
-                              ),
-                            )
-                          : const SizedBox(),
-                ],
+                  child: Center(
+                    child: Image.asset(
+                      adjustIcon,
+                      height: 24,
+                      width: 24,
+                      color: Palette.blackColor,
+                    ),
+                  ),
+                ),
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Text(
-            "Mickle".length > 10 ? "${"Mickle".substring(0, 7)}..." : "Mickle",
-            style: TextStyles.bodyMedium,
+            ],
           ),
         ),
       ],
