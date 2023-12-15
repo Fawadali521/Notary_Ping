@@ -100,6 +100,11 @@ class Languages extends Translations {
           'Request confirmed': 'Request confirmed',
           'Booking time': 'Booking time',
           'Finished booking': 'Finished booking',
+          'Available notaries': 'Available notaries',
+          'Are you sure do you want to cancel this booking':
+              'Are you sure do you want to cancel this booking',
+          'See all': 'See all',
+          'Book appointment': 'Book appointment',
           '': '',
         },
       };

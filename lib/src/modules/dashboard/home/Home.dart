@@ -4,6 +4,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notary_ping/index.dart';
+import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:label_marker/label_marker.dart';
@@ -68,9 +69,12 @@ class HomeState extends State<Home> {
     }
   }
 
-  @override
+  bool isOnline = true;
+
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: isLoding
           ? const Center(
@@ -105,6 +109,104 @@ class HomeState extends State<Home> {
                   ),
                 ),
                 _topBar(),
+                Positioned(
+                  bottom: 0,
+                  child: SizedBox(
+                    width: 1.sw,
+                    height: 0.45.sh,
+                    child: DraggableScrollableSheet(
+                      initialChildSize: 0.65,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            color: Palette.whiteColor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                          ),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 16),
+                            itemCount: 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  Divider(
+                                    height: 0,
+                                    color: Palette.dotColor,
+                                    thickness: 3,
+                                    endIndent: .34.sw,
+                                    indent: .34.sw,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "Available notaries".tr,
+                                          style: TextStyles.titleLarge,
+                                        ),
+                                        const Spacer(),
+                                        InkWell(
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5),
+                                                child: Text(
+                                                  "See all".tr,
+                                                  style: TextStyles.bodySmall,
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                size: 14,
+                                                color: Palette.greyTextColor,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  GridView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 4,
+                                      childAspectRatio: width / (height / 1.7),
+                                    ),
+
+                                    padding: EdgeInsets.zero,
+                                    itemCount: 8, // total number of items
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          Get.to(() => NotaryProfile());
+                                        },
+                                        child: CustomNotaryItem(
+                                          isOnline: index.isOdd,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(height: 30.h),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
     );
@@ -144,21 +246,24 @@ class HomeState extends State<Home> {
                   child: Center(
                     child: Stack(
                       children: [
-                        const Icon(
-                          Icons.notifications_none_outlined,
+                        Image.asset(
+                          bellIcon,
                           color: Palette.blackColor,
-                          size: 24,
+                          height: 24,
+                          width: 24,
+                          fit: BoxFit.contain,
                         ),
                         Positioned(
                           right: 0,
-                          top: 0,
+                          top: 2,
                           child: CircleAvatar(
-                            radius: 8,
+                            radius: 7,
                             backgroundColor: Palette.primaryColor,
                             child: Text(
                               "5",
-                              style: TextStyles.bodySmall.copyWith(
+                              style: TextStyles.bodyLarge.copyWith(
                                 color: Palette.whiteColor,
+                                fontSize: 10,
                               ),
                             ),
                           ),
@@ -193,6 +298,73 @@ class HomeState extends State<Home> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class CustomNotaryItem extends StatelessWidget {
+  const CustomNotaryItem({
+    super.key,
+    this.isOnline,
+  });
+
+  final bool? isOnline;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Align(
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            height: .18.sw,
+            width: .18.sw,
+            child: Center(
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.asset(
+                        user,
+                        fit: BoxFit.cover,
+                        height: .18.sw,
+                        width: .18.sw,
+                      ),
+                    ),
+                  ),
+                  isOnline == true
+                      ? const Positioned(
+                          right: 6,
+                          child: CircleAvatar(
+                            backgroundColor: Palette.greenColor,
+                            radius: 6,
+                          ),
+                        )
+                      : isOnline == false
+                          ? const Positioned(
+                              right: 6,
+                              child: CircleAvatar(
+                                backgroundColor: Palette.greyShadeTextColor,
+                                radius: 6,
+                              ),
+                            )
+                          : const SizedBox(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(
+            "Mickle".length > 10 ? "${"Mickle".substring(0, 7)}..." : "Mickle",
+            style: TextStyles.bodyMedium,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -43,6 +43,8 @@ const String locationIcon = "$icons/location.png";
 const String engilshIcon = "$icons/english.png";
 const String conditionIcon = "$icons/condition.png";
 const String transactionIcon = "$icons/transaction.png";
+const String locationProfileIcon = "$icons/location_p.png";
+const String historyIcon = "$icons/history.png";
 
 ///
 ///dynamic images

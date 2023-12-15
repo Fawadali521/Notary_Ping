@@ -81,6 +81,7 @@ class Palette {
   static const Color blue3 = Color(0xFF00aeef);
   static const Color bgOnboardingColor = Color(0xFFF9FDFF);
   static const Color greyTextColor = Color(0xFF767676);
+  static const Color greyShadeTextColor = Color(0xFFA1A1A1);
   static const Color whiteColor = Color(0xFFFFFFFF);
   static const Color blackColor = Color(0xFF000000);
   static const Color orangColor = Color(0xFFF78100);
@@ -88,6 +89,7 @@ class Palette {
   static const Color greenColor = Color(0xFF46C45D);
   static const Color reciveChatColor = Color(0xFFF2F7FB);
   static const Color redColor = Color(0xFFEB5757);
+  static const Color lightRedColor = Color(0xFFF7BCBC);
   static const Color dotColor = Color(0xFFCFEFFC);
   static const Color languageBorderColor = Color(0xFFE9F1FF);
 }

@@ -67,7 +67,7 @@ class _BookingsState extends State<Bookings> {
                       setState(() {});
                     },
                     title: 'History'.tr,
-                    icon: bookingsIcon,
+                    icon: historyIcon,
                     isSlected: currentIndex == 1 ? true : false,
                   ),
                 ),

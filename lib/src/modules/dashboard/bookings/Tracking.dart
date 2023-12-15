@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_collection_literals, file_names
 
+import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/constant/time_formate.dart';
+import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -197,28 +199,84 @@ class TrackingState extends State<Tracking> {
                                           style: TextStyles.titleLarge,
                                         ),
                                         const SizedBox(height: 12),
-                                        TrackingItem(
-                                          time: tackingDate
-                                              .format(DateTime.now()),
-                                          title: "Send booking request",
-                                        ),
-                                        TrackingItem(
-                                          time: tackingDate
-                                              .format(DateTime.now()),
-                                          title: "Request confirmed",
-                                        ),
-                                        TrackingItem(
-                                          time: tackingDate
-                                              .format(DateTime.now()),
-                                          title: "Booking time",
-                                        ),
-                                        TrackingItem(
-                                          time: tackingDate
-                                              .format(DateTime.now()),
-                                          title: "Finished booking",
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Column(
+                                              children: [
+                                                SizedBox(height: 13),
+                                                CustomRadio(
+                                                    color:
+                                                        Palette.primaryColor),
+                                                Dash(
+                                                  direction: Axis.vertical,
+                                                  length: 45,
+                                                  dashLength: 8,
+                                                  dashThickness: 2,
+                                                  dashColor:
+                                                      Palette.primaryColor,
+                                                ),
+                                                CustomRadio(
+                                                    color:
+                                                        Palette.primaryColor),
+                                                Dash(
+                                                  direction: Axis.vertical,
+                                                  length: 45,
+                                                  dashLength: 8,
+                                                  dashThickness: 2,
+                                                  dashColor:
+                                                      Palette.greyTextColor,
+                                                ),
+                                                CustomRadio(
+                                                    color:
+                                                        Palette.greyTextColor),
+                                                Dash(
+                                                  direction: Axis.vertical,
+                                                  length: 45,
+                                                  dashLength: 8,
+                                                  dashThickness: 2,
+                                                  dashColor:
+                                                      Palette.greyTextColor,
+                                                ),
+                                                CustomRadio(
+                                                    color:
+                                                        Palette.greyTextColor),
+                                              ],
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                TrackingItem(
+                                                  time: tackingDate
+                                                      .format(DateTime.now()),
+                                                  title: "Send booking request",
+                                                ),
+                                                TrackingItem(
+                                                  time: tackingDate
+                                                      .format(DateTime.now()),
+                                                  title: "Request confirmed",
+                                                ),
+                                                TrackingItem(
+                                                  time: tackingDate
+                                                      .format(DateTime.now()),
+                                                  title: "Booking time",
+                                                ),
+                                                TrackingItem(
+                                                  time: tackingDate
+                                                      .format(DateTime.now()),
+                                                  title: "Finished booking",
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                         SubmitButton(
-                                          onTap: () {},
+                                          onTap: () {
+                                            showCancelBookingAlert(context);
+                                          },
                                           title: "Cancel booking".tr,
                                         ),
                                       ],
@@ -238,7 +296,7 @@ class TrackingState extends State<Tracking> {
     );
   }
 
-  Positioned _topBar() {
+  Widget _topBar() {
     return Positioned(
       top: 0,
       child: Column(
@@ -277,4 +335,72 @@ class TrackingState extends State<Tracking> {
       ),
     );
   }
+}
+
+showCancelBookingAlert(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Palette.whiteColor,
+          surfaceTintColor: Palette.whiteColor,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          contentPadding: const EdgeInsets.all(0),
+          insetPadding: const EdgeInsets.symmetric(horizontal: 14),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              InkWell(
+                onTap: () => Navigator.of(context).pop(),
+                child: const Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: 20, right: 20, left: 20, bottom: 5),
+                    child: Icon(Icons.close),
+                  ),
+                ),
+              ),
+              const CircleAvatar(
+                radius: 45,
+                backgroundColor: Palette.lightRedColor,
+                child: CircleAvatar(
+                  radius: 38,
+                  backgroundColor: Palette.redColor,
+                  child: Icon(
+                    Icons.close,
+                    color: Palette.whiteColor,
+                    size: 30,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "Cancel booking".tr,
+                style: TextStyles.headlineLarge,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 5, bottom: 30, left: 20, right: 20),
+                child: Text(
+                  "Are you sure do you want to cancel this booking".tr,
+                  style: TextStyles.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                child: SubmitButton(
+                  onTap: () {},
+                  title: "Cancel booking".tr,
+                ),
+              ),
+            ],
+          ),
+        );
+      });
 }

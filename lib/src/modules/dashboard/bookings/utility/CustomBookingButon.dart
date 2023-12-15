@@ -32,7 +32,7 @@ class CustomBookingButon extends StatelessWidget {
               backgroundColor:
                   isSlected ? Palette.whiteColor : Palette.orangColor,
               child: Image.asset(
-                bookingsIcon,
+                icon,
                 height: 20.sp,
                 color: isSlected ? Palette.primaryColor : Palette.whiteColor,
                 fit: BoxFit.contain,
