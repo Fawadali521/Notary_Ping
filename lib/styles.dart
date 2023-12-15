@@ -92,4 +92,5 @@ class Palette {
   static const Color lightRedColor = Color(0xFFF7BCBC);
   static const Color dotColor = Color(0xFFCFEFFC);
   static const Color languageBorderColor = Color(0xFFE9F1FF);
+  static const Color rportNotryProfileColor = Color(0xFFE7F7FD);
 }

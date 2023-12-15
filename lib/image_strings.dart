@@ -45,6 +45,9 @@ const String conditionIcon = "$icons/condition.png";
 const String transactionIcon = "$icons/transaction.png";
 const String locationProfileIcon = "$icons/location_p.png";
 const String historyIcon = "$icons/history.png";
+const String reportNotaryPIcon = "$icons/report-p.png";
+const String arrowForwardIosIcon = "$icons/arrow_f.png";
+const String reviewsIcon = "$icons/reviews.png";
 
 ///
 ///dynamic images
