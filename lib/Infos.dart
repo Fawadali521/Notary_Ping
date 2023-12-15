@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 class Infos {
+  static const String mapKey = 'AIzaSyDG2zq9-F7tw-lS1mr2i9fhoCagnZXMneo';
   final List<String> cityDropdownItems = ['Select City', '+Delhi ', 'Mumbai'];
   final List<String> stateDropdownItems = [
     'Select State',
