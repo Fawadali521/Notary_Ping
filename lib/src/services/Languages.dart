@@ -105,6 +105,10 @@ class Languages extends Translations {
               'Are you sure do you want to cancel this booking',
           'See all': 'See all',
           'Book appointment': 'Book appointment',
+          'About': 'About',
+          'Report this Notary': 'Report this Notary',
+          'Services': 'Services',
+          'Reviews': 'Reviews',
           '': '',
         },
       };

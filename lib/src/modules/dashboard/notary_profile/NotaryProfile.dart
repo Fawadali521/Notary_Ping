@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomBookingButon.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/utility/CustomProfileItem.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
 
 import '../../../../index.dart';
@@ -84,9 +85,8 @@ class NotaryProfile extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 12.h),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             child: Row(
               children: [
                 Expanded(
@@ -118,6 +118,234 @@ class NotaryProfile extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderStyles.normal,
+              color: Palette.whiteColor,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "About".tr,
+                  style: TextStyles.titleLarge,
+                ),
+                SizedBox(height: 8.h),
+                Text(
+                  "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, to Sed ut perspiciatis unde omnis iste natus "
+                      .tr,
+                  style: TextStyles.bodySmall,
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 8.h),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderStyles.normal,
+                      color: Palette.whiteColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "July 13.2023".tr,
+                          style: TextStyles.titleMedium,
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          "Commission expiration date".tr,
+                          style: TextStyles.bodySmall.copyWith(
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderStyles.normal,
+                      color: Palette.whiteColor,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "05+".tr,
+                          style: TextStyles.titleMedium,
+                        ),
+                        SizedBox(height: 4.h),
+                        Text(
+                          "Years experience".tr,
+                          style: TextStyles.bodySmall.copyWith(
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          CustomProfileItem(
+            icon: reportNotaryPIcon,
+            title: 'Report this Notary'.tr,
+            iconColor: Palette.primaryColor,
+            backgroundColor: Palette.rportNotryProfileColor,
+            onTap: () {},
+          ),
+          SizedBox(height: 8.h),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: Row(
+              children: [
+                Expanded(
+                  // flex: 3,
+                  child: CustomBookingButon(
+                      onTap: () {
+                        // currentIndex = 0;
+                        // pageController?.jumpToPage(0);
+                        // setState(() {});
+                      },
+                      title: 'Services'.tr,
+                      icon: supportIcon,
+                      isSlected: true //currentIndex == 0 ? true : false,
+                      ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  // flex: 2,
+                  child: CustomBookingButon(
+                      onTap: () {
+                        // currentIndex = 1;
+                        // pageController?.jumpToPage(1);
+                        // setState(() {});
+                      },
+                      title: 'Reviews'.tr,
+                      icon: reviewsIcon,
+                      isSlected: false //currentIndex == 1 ? true : false,
+                      ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 20.h),
+          Wrap(
+            children: [
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Palette.whiteColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      supportIcon,
+                      height: 20,
+                      width: 20,
+                      color: Palette.greyTextColor,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: 8.w),
+                    const Text(
+                      "Translation certification",
+                      style: TextStyles.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Palette.whiteColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      supportIcon,
+                      height: 20,
+                      width: 20,
+                      color: Palette.greyTextColor,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: 8.w),
+                    const Text(
+                      "Translation certification",
+                      style: TextStyles.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Palette.whiteColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      supportIcon,
+                      height: 20,
+                      width: 20,
+                      color: Palette.greyTextColor,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: 8.w),
+                    const Text(
+                      "Translation certification",
+                      style: TextStyles.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                decoration: BoxDecoration(
+                  color: Palette.whiteColor,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      supportIcon,
+                      height: 20,
+                      width: 20,
+                      color: Palette.greyTextColor,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(width: 8.w),
+                    const Text(
+                      "Translation cen",
+                      style: TextStyles.bodyMedium,
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
