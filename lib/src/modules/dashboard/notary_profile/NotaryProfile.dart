@@ -251,102 +251,104 @@ class NotaryProfile extends StatelessWidget {
             ),
           ),
           SizedBox(height: 20.h),
-          Wrap(
-            children: [
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: Palette.whiteColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      supportIcon,
-                      height: 20,
-                      width: 20,
-                      color: Palette.greyTextColor,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(width: 8.w),
-                    const Text(
-                      "Translation certification",
-                      style: TextStyles.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: Palette.whiteColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      supportIcon,
-                      height: 20,
-                      width: 20,
-                      color: Palette.greyTextColor,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(width: 8.w),
-                    const Text(
-                      "Translation certification",
-                      style: TextStyles.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: Palette.whiteColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      supportIcon,
-                      height: 20,
-                      width: 20,
-                      color: Palette.greyTextColor,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(width: 8.w),
-                    const Text(
-                      "Translation certification",
-                      style: TextStyles.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                decoration: BoxDecoration(
-                  color: Palette.whiteColor,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Row(
-                  children: [
-                    Image.asset(
-                      supportIcon,
-                      height: 20,
-                      width: 20,
-                      color: Palette.greyTextColor,
-                      fit: BoxFit.contain,
-                    ),
-                    SizedBox(width: 8.w),
-                    const Text(
-                      "Translation cen",
-                      style: TextStyles.bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+          // Wrap(
+          //   children: [
+          //     Container(
+          //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          //       decoration: BoxDecoration(
+          //         color: Palette.whiteColor,
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Image.asset(
+          //             supportIcon,
+          //             height: 20,
+          //             width: 20,
+          //             color: Palette.greyTextColor,
+          //             fit: BoxFit.contain,
+          //           ),
+          //           SizedBox(width: 8.w),
+          //           const Text(
+          //             "Translation certification",
+          //             style: TextStyles.bodyMedium,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          //       decoration: BoxDecoration(
+          //         color: Palette.whiteColor,
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Image.asset(
+          //             supportIcon,
+          //             height: 20,
+          //             width: 20,
+          //             color: Palette.greyTextColor,
+          //             fit: BoxFit.contain,
+          //           ),
+          //           SizedBox(width: 8.w),
+          //           const Text(
+          //             "Translation certification",
+          //             style: TextStyles.bodyMedium,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          //       decoration: BoxDecoration(
+          //         color: Palette.whiteColor,
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Image.asset(
+          //             supportIcon,
+          //             height: 20,
+          //             width: 20,
+          //             color: Palette.greyTextColor,
+          //             fit: BoxFit.contain,
+          //           ),
+          //           SizedBox(width: 8.w),
+          //           const Text(
+          //             "Translation certification",
+          //             style: TextStyles.bodyMedium,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //     Container(
+          //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          //       decoration: BoxDecoration(
+          //         color: Palette.whiteColor,
+          //         borderRadius: BorderRadius.circular(30),
+          //       ),
+          //       child: Row(
+          //         children: [
+          //           Image.asset(
+          //             supportIcon,
+          //             height: 20,
+          //             width: 20,
+          //             color: Palette.greyTextColor,
+          //             fit: BoxFit.contain,
+          //           ),
+          //           SizedBox(width: 8.w),
+          //           const Text(
+          //             "Translation cen",
+          //             style: TextStyles.bodyMedium,
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+        
+        
         ],
       ),
     );
