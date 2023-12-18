@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:math';
+
 import '../../../../../index.dart';
 
 class CustomNotaryItem extends StatelessWidget {
@@ -12,6 +14,8 @@ class CustomNotaryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int randomIndex = Random().nextInt(userNamesList.length);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -28,7 +32,7 @@ class CustomNotaryItem extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
                       child: Image.asset(
-                        user,
+                        userImages[randomIndex],
                         fit: BoxFit.cover,
                         height: .18.sw,
                         width: .18.sw,
@@ -60,7 +64,7 @@ class CustomNotaryItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 4),
           child: Text(
-            "Mickle".length > 10 ? "${"Mickle".substring(0, 7)}..." : "Mickle",
+            userNamesList[randomIndex],
             style: TextStyles.bodyMedium,
           ),
         ),

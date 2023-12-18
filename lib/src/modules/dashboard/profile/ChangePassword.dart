@@ -24,11 +24,12 @@ class ChangePassword extends StatelessWidget {
             ListView(
               shrinkWrap: true,
               children: [
-                Text(
-                  "Change password".tr,
-                  style: TextStyles.titleLarge,
-                ),
-                SizedBox(height: 16.h),
+                const SafeArea(bottom: false, child: SizedBox()),
+                // Text(
+                //   "Change password".tr,
+                //   style: TextStyles.titleLarge,
+                // ),
+                // SizedBox(height: 16.h),
                 CustomTextField(
                   hintText: 'Enter current password'.tr,
                   onChange: (value) {
@@ -46,15 +47,15 @@ class ChangePassword extends StatelessWidget {
                   prefixIcon: passwordIcon,
                   isuffixIconPassword: true,
                 ),
-                SizedBox(height: 16.h),
-                CustomTextField(
-                  hintText: 'Confirm password'.tr,
-                  onChange: (value) {
-                    // controller.state.name = value;
-                  },
-                  prefixIcon: passwordIcon,
-                  isuffixIconPassword: true,
-                ),
+                // SizedBox(height: 16.h),
+                // CustomTextField(
+                //   hintText: 'Confirm password'.tr,
+                //   onChange: (value) {
+                //     // controller.state.name = value;
+                //   },
+                //   prefixIcon: passwordIcon,
+                //   isuffixIconPassword: true,
+                // ),
                 SizedBox(height: 16.h),
               ],
             ),

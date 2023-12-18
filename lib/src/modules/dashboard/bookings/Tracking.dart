@@ -1,18 +1,17 @@
 // ignore_for_file: prefer_collection_literals, file_names
 
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_dash/flutter_dash.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/constant/time_formate.dart';
+import 'package:notary_ping/src/modules/dashboard/bookings/Marker.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shimmer/shimmer.dart';
 
 class Tracking extends StatefulWidget {
   const Tracking({super.key});
@@ -28,12 +27,14 @@ class TrackingState extends State<Tracking> {
   List<double> latitude = [];
   List<double> longitude = [];
   List<LatLng> latlang = [];
-  Set<Marker> markers = Set(); //markers for google map
+  List<Marker> markers = []; //markers for google map
   Map<PolylineId, Polyline> polylines = {}; //polylines to show direction
-  late LatLng startLocation; //= const LatLng(34.003040, 71.485524);
-  // LatLng endLocation = const LatLng(33.996438, 71.461848);
+  late LatLng startLocation; //= const LatLng(34.611139, 72.4623079);
+  LatLng endLocation = const LatLng(34.60205, 72.454015);
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   @override
   void initState() {
+    latlang.add(endLocation);
     setState(() {
       isLoding = true;
     });
@@ -45,20 +46,104 @@ class TrackingState extends State<Tracking> {
     super.initState();
   }
 
+  addCustomIcon() {
+    BitmapDescriptor.fromAssetImage(const ImageConfiguration(), supportIcon)
+        .then(
+      (icon) {
+        setState(() {
+          markerIcon = icon;
+        });
+      },
+    );
+  }
+
+  // add markers
+  addMarker(List<LatLng> latLng) async {
+    await addCustomIcon();
+    for (int i = 0; i < latLng.length; i++) {
+      markers.add(Marker(
+        consumeTapEvents: true,
+        markerId: MarkerId(latLng[i].toString()),
+        position: latLng[i],
+        icon: markerIcon,
+      ));
+    }
+    if (markers.length > 1) {
+      getDirections(markers);
+    }
+  }
+
+  // This functions gets real road polyline routes
+  getDirections(List<Marker> markers) async {
+    List<LatLng> polylineCoordinates = [];
+    List<PolylineWayPoint> polylineWayPoints = [];
+    for (var i = 0; i < markers.length; i++) {
+      polylineWayPoints.add(PolylineWayPoint(
+        location:
+            "${markers[i].position.latitude.toString()},${markers[i].position.longitude.toString()}",
+        stopOver: true,
+      ));
+    }
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      Constants.googleMapsApiKey, //GoogleMap ApiKey
+      PointLatLng(markers.first.position.latitude,
+          markers.first.position.longitude), //first added marker
+      PointLatLng(markers.last.position.latitude,
+          markers.last.position.longitude), //last added marker
+      travelMode: TravelMode.driving,
+    );
+    if (result.points.isNotEmpty) {
+      for (var point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+    } else {
+      log("${result.errorMessage}");
+    }
+    setState(() {});
+    addPolyLine(polylineCoordinates);
+  }
+
+  addPolyLine(List<LatLng> polylineCoordinates) {
+    PolylineId id = const PolylineId("poly");
+    Polyline polyline = Polyline(
+      polylineId: id,
+      color: Colors.blue,
+      points: polylineCoordinates,
+      width: 4,
+    );
+    polylines[id] = polyline;
+    setState(() {
+      isLoding = false;
+    });
+  }
+
   Future<void> getCurrentLocation() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    log("start geting location");
     try {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
+      log("location get ==> $position");
       setState(() {
         startLocation = LatLng(position.latitude, position.longitude);
+        latlang.add(startLocation);
         isLoding = false;
       });
+      log("location get ==> $startLocation");
+      addMarker(latlang);
     } catch (e) {
+      log("Error in location get ==> $e");
+      startLocation = const LatLng(34.611139, 72.4623079);
       // checkLocationStatus();
     }
   }
 
+  //check location permission status
   Future<void> checkLocationStatus() async {
     var status = await Permission.location.status;
     if (status.isGranted) {
@@ -87,7 +172,7 @@ class TrackingState extends State<Tracking> {
         children: [
           isLoding
               ? Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
+                  baseColor: Colors.grey[400]!,
                   highlightColor: Colors.grey[100]!,
                   child: Container(
                     height: 1.sh,
@@ -97,26 +182,28 @@ class TrackingState extends State<Tracking> {
                     ),
                   ),
                 )
-              : Padding(
-                  padding: EdgeInsets.only(bottom: 0.07.sh),
-                  child: GoogleMap(
-                    zoomGesturesEnabled: true, //enable Zoom in, out on map
-                    initialCameraPosition: CameraPosition(
-                      target: startLocation, //initial position
-                      zoom: 16.0, //initial zoom level
-                    ),
-                    markers: markers, //markers to show on map
-                    polylines: Set<Polyline>.of(polylines.values), //polylines
-                    mapType: MapType.normal, //map type
-                    onMapCreated: (controller) {
-                      //method called when map is created
-                      setState(() {
-                        mapController = controller;
-                      });
-                    },
+              : GoogleMap(
+                  padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.07.sh),
+                  myLocationEnabled: true, //set your location enable
+                  myLocationButtonEnabled: true,
+                  compassEnabled: true,
+                  zoomGesturesEnabled: true, //enable Zoom in, out on map
+                  initialCameraPosition: CameraPosition(
+                    target: startLocation, //initial position
+                    zoom: 14.0, //initial zoom level
                   ),
+                  polylines: Set<Polyline>.of(
+                      polylines.values), //polylines to show directions
+                  markers: markers.toSet(), //markers to show on map
+                  // mapType: MapType.normal, //map type
+                  onMapCreated: (controller) {
+                    //method called when map is created
+                    setState(() {
+                      mapController = controller;
+                    });
+                  },
                 ),
-          _topBar(),
+          topBar(),
           Positioned(
             bottom: 0,
             child: SizedBox(
@@ -146,6 +233,22 @@ class TrackingState extends State<Tracking> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            CustomPaint(
+                              painter: MarkerProfile(color: Colors.blue),
+                              child: Container(
+                                width: 10, // Set the desired width
+                                height: 10, // Set the desired height
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      user,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
                             Divider(
                               height: 0,
                               color: Palette.dotColor,
@@ -295,39 +398,46 @@ class TrackingState extends State<Tracking> {
     );
   }
 
-  Widget _topBar() {
+  Widget topBar() {
     return Positioned(
       top: 0,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const SafeArea(bottom: false, child: SizedBox()),
-          Stack(
+          Row(
             children: [
-              Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: .4.sw, vertical: 16.h),
-                child: const Text(
-                  "Tracking",
-                  style: TextStyles.headlineLarge,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: InkWell(
-                  onTap: () => Get.back(),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Palette.blackColor,
-                      size: 16,
+              Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InkWell(
+                      onTap: () => Get.back(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.w, vertical: 16.h),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_outlined,
+                          color: Palette.blackColor,
+                          size: 16,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              )
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: .4.sw, vertical: 8.h),
+                      child: const Text(
+                        "Tracking",
+                        style: TextStyles.headlineLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ],

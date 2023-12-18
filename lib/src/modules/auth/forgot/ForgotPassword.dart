@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:notary_ping/src/modules/auth/forgot/OtpVerification.dart';
+import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
+import 'package:notary_ping/src/modules/auth/signup/SignUp.dart';
 import 'package:notary_ping/src/states/forgot/ForgotController.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 
@@ -65,12 +67,37 @@ class ForgotPassword extends StatelessWidget {
             },
             prefixIcon: emailIcon,
           ),
+          Row(
+            children: [
+              InkWell(
+                onTap: () => Get.offAll(() => SignUp()),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  child: Text(
+                    "Sign Up".tr,
+                    style: TextStyles.bodyLarge,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              InkWell(
+                onTap: () => Get.offAll(() => SignIn()),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12.h),
+                  child: Text(
+                    'Try Sign In'.tr,
+                    style: TextStyles.bodyLarge,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 48.h),
             child: SubmitButton(
               backGroundColor: Palette.primaryColor,
               onTap: () {
-                Get.to(() => OtpVerification());
+                Get.off(() => OtpVerification());
               },
               title: "send".tr,
             ),

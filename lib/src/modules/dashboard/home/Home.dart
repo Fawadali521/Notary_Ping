@@ -2,14 +2,11 @@
 
 import 'dart:io';
 
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/modules/dashboard/home/utility/CustomNotaryItem.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shimmer/shimmer.dart';
 
 // import 'package:label_marker/label_marker.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,7 +26,8 @@ class HomeState extends State<Home> {
   List<LatLng> latlang = [];
   Set<Marker> markers = Set(); //markers for google map
   Map<PolylineId, Polyline> polylines = {}; //polylines to show direction
-  late LatLng startLocation; //= const LatLng(34.003040, 71.485524);
+  late LatLng startLocation; //= const LatLng(34.611139, 72.4623079);
+  LatLng endLocation = const LatLng(34.60205, 72.454015);
   @override
   void initState() {
     setState(() {
@@ -45,6 +43,11 @@ class HomeState extends State<Home> {
   }
 
   Future<void> getCurrentLocation() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
     try {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
@@ -54,6 +57,10 @@ class HomeState extends State<Home> {
         isLoding = false;
       });
     } catch (e) {
+      setState(() {
+        startLocation = const LatLng(34.003040, 71.485524);
+        isLoding = false;
+      });
       // checkLocationStatus();
     }
   }
@@ -129,14 +136,11 @@ class HomeState extends State<Home> {
               width: 1.sw,
               height: 1.sh,
               child: DraggableScrollableSheet(
-                initialChildSize: 0.45,
+                initialChildSize: .43,
                 minChildSize: 0.11,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
-                  print("print contrlooer ==${scrollController.offset}");
                   return Container(
-                    width: 1.sw,
-                    height: 1.sh,
                     decoration: const BoxDecoration(
                       color: Palette.whiteColor,
                       borderRadius: BorderRadius.only(
@@ -144,76 +148,85 @@ class HomeState extends State<Home> {
                         topRight: Radius.circular(30),
                       ),
                     ),
-                    child: ListView(
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 20),
+                    child: ListView.builder(
                       controller: scrollController,
-                      children: [
-                        Divider(
-                          height: 1,
-                          color: Palette.dotColor,
-                          thickness: 3,
-                          endIndent: .34.sw,
-                          indent: .34.sw,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Row(
-                            children: [
-                              Text(
-                                "Available notaries".tr,
-                                style: TextStyles.titleLarge,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 16.h,
+                      ),
+                      // controller: scrollController,
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          // shrinkWrap: true,
+                          // padding: const EdgeInsets.symmetric(
+                          //     horizontal: 20, vertical: 20),
+                          // controller: scrollController,
+                          children: [
+                            Divider(
+                              height: 1,
+                              color: Palette.dotColor,
+                              thickness: 3,
+                              endIndent: .34.sw,
+                              indent: .34.sw,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Available notaries".tr,
+                                    style: TextStyles.titleLarge,
+                                  ),
+                                  const Spacer(),
+                                  // InkWell(
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Padding(
+                                  //         padding: const EdgeInsets.symmetric(
+                                  //             horizontal: 5),
+                                  //         child: Text(
+                                  //           "See all".tr,
+                                  //           style: TextStyles.bodySmall,
+                                  //         ),
+                                  //       ),
+                                  //       const Icon(
+                                  //         Icons.arrow_forward_ios_rounded,
+                                  //         size: 14,
+                                  //         color: Palette.greyTextColor,
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
                               ),
-                              const Spacer(),
-                              // InkWell(
-                              //   child: Row(
-                              //     children: [
-                              //       Padding(
-                              //         padding: const EdgeInsets.symmetric(
-                              //             horizontal: 5),
-                              //         child: Text(
-                              //           "See all".tr,
-                              //           style: TextStyles.bodySmall,
-                              //         ),
-                              //       ),
-                              //       const Icon(
-                              //         Icons.arrow_forward_ios_rounded,
-                              //         size: 14,
-                              //         color: Palette.greyTextColor,
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                            ],
-                          ),
-                        ),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 4,
-                            childAspectRatio: width / (height / 1.7),
-                          ),
+                            ),
+                            GridView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                childAspectRatio: width / (height / 1.7),
+                              ),
 
-                          padding: EdgeInsets.zero,
-                          itemCount: 40, // total number of items
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Get.to(() => NotaryProfile());
+                              padding: EdgeInsets.zero,
+                              itemCount: 25, // total number of items
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.to(() => NotaryProfile());
+                                  },
+                                  child: CustomNotaryItem(
+                                    isOnline: index.isOdd,
+                                  ),
+                                );
                               },
-                              child: CustomNotaryItem(
-                                isOnline: index.isOdd,
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 30.h),
-                      ],
-                      // );
-                      // },
+                            ),
+                            SizedBox(height: 30.h),
+                          ],
+                        );
+                      },
                     ),
                   );
                 },

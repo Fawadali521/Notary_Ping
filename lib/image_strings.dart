@@ -54,4 +54,22 @@ const String adjustIcon = "$icons/adjust.png";
 ///dynamic images
 ///
 const String user = "$images/profileImage.png";
+const String user1 = "$images/user1.png";
+const String user2 = "$images/user2.png";
+const String user3 = "$images/user3.png";
+const String user4 = "$images/user4.png";
 const String electronic = "$images/khasab.png";
+
+const String userName = "Mickle";
+const String userName1 = "Elin";
+const String userName2 = "Jack";
+const String userName3 = "Fawad";
+const String userName4 = "Smith";
+List<String> userImages = [user, user1, user2, user3, user4];
+List<String> userNamesList = [
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4
+];

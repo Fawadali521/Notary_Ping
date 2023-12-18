@@ -1,14 +1,13 @@
 // ignore_for_file: file_names
 
 import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
-import 'package:notary_ping/src/states/forgot/ForgotController.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 
 class ResetPassword extends StatelessWidget {
-  ResetPassword({Key? key}) : super(key: key);
-  final ForgotController controller = Get.find();
+  const ResetPassword({Key? key}) : super(key: key);
+  // final ForgotController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +27,21 @@ class ResetPassword extends StatelessWidget {
                 fit: BoxFit.contain,
                 height: 60.h,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: GestureDetector(
-                  onTap: () => Get.back(),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Palette.blackColor,
-                      size: 16,
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: GestureDetector(
+              //     onTap: () => Get.back(),
+              //     child: Padding(
+              //       padding:
+              //           EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
+              //       child: const Icon(
+              //         Icons.arrow_back_ios_new_outlined,
+              //         color: Palette.blackColor,
+              //         size: 16,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           Padding(
@@ -62,9 +61,8 @@ class ResetPassword extends StatelessWidget {
           CustomTextField(
             hintText: 'Enter new password'.tr,
             onChange: (value) {
-              controller.state.newPassword = value;
+              // controller.state.newPassword = value;
             },
-            validator: controller.validatePassword,
             prefixIcon: passwordIcon,
             isuffixIconPassword: true,
           ),
@@ -72,9 +70,8 @@ class ResetPassword extends StatelessWidget {
           CustomTextField(
             hintText: 'confirmPassword'.tr,
             onChange: (value) {
-              controller.state.confirmPassword = value;
+              // controller.state.confirmPassword = value;
             },
-            validator: controller.validateConfirmPassword,
             prefixIcon: passwordIcon,
             isuffixIconPassword: true,
           ),
