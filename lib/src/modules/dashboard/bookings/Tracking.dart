@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_collection_literals, file_names
 
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -7,9 +8,10 @@ import 'package:flutter_dash/flutter_dash.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/constant/time_formate.dart';
-import 'package:notary_ping/src/modules/dashboard/bookings/Marker.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
+import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
+import 'package:notary_ping/src/utility/MarkerImage.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -32,12 +34,14 @@ class TrackingState extends State<Tracking> {
   late LatLng startLocation; //= const LatLng(34.611139, 72.4623079);
   LatLng endLocation = const LatLng(34.60205, 72.454015);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+
   @override
   void initState() {
     latlang.add(endLocation);
     setState(() {
       isLoding = true;
     });
+    // widgetToImage();
     if (Platform.isAndroid) {
       checkLocationStatus();
     } else {
@@ -46,32 +50,40 @@ class TrackingState extends State<Tracking> {
     super.initState();
   }
 
-  addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(const ImageConfiguration(), supportIcon)
-        .then(
-      (icon) {
-        setState(() {
-          markerIcon = icon;
-        });
-      },
-    );
-  }
-
   // add markers
   addMarker(List<LatLng> latLng) async {
-    await addCustomIcon();
+    log("list of latlong ==>${latlang.length}");
     for (int i = 0; i < latLng.length; i++) {
-      markers.add(Marker(
-        consumeTapEvents: true,
-        markerId: MarkerId(latLng[i].toString()),
-        position: latLng[i],
-        icon: markerIcon,
-      ));
+      markers.add(
+        Marker(
+          consumeTapEvents: true,
+          markerId: MarkerId(latLng[i].toString()),
+          position: latLng[i],
+          icon: i == 0
+              ? await const MarkerImage(
+                  borderColor: Palette.primaryColor,
+                  imgUrl: user,
+                ).toBitmapDescriptor()
+              : await Image.asset(
+                  startMakerIcon,
+                  fit: BoxFit.contain,
+                  height: 45,
+                  width: 45,
+                ).toBitmapDescriptor(),
+        ),
+      );
     }
     if (markers.length > 1) {
       getDirections(markers);
     }
   }
+
+  // Future<BitmapDescriptor> getCustomIcon() async {
+  //   return const MarkerImage(
+  //     borderColor: Colors.red,
+  //     imgUrl: user,
+  //   ).toBitmapDescriptor();
+  // }
 
   // This functions gets real road polyline routes
   getDirections(List<Marker> markers) async {
@@ -139,6 +151,7 @@ class TrackingState extends State<Tracking> {
     } catch (e) {
       log("Error in location get ==> $e");
       startLocation = const LatLng(34.611139, 72.4623079);
+      addMarker(latlang);
       // checkLocationStatus();
     }
   }
@@ -172,7 +185,7 @@ class TrackingState extends State<Tracking> {
         children: [
           isLoding
               ? Shimmer.fromColors(
-                  baseColor: Colors.grey[400]!,
+                  baseColor: Colors.grey[300]!,
                   highlightColor: Colors.grey[100]!,
                   child: Container(
                     height: 1.sh,
@@ -184,9 +197,9 @@ class TrackingState extends State<Tracking> {
                 )
               : GoogleMap(
                   padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.07.sh),
-                  myLocationEnabled: true, //set your location enable
+                  // myLocationEnabled: true, //set your location enable
                   myLocationButtonEnabled: true,
-                  compassEnabled: true,
+                  // compassEnabled: true,
                   zoomGesturesEnabled: true, //enable Zoom in, out on map
                   initialCameraPosition: CameraPosition(
                     target: startLocation, //initial position
@@ -233,22 +246,6 @@ class TrackingState extends State<Tracking> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CustomPaint(
-                              painter: MarkerProfile(color: Colors.blue),
-                              child: Container(
-                                width: 10, // Set the desired width
-                                height: 10, // Set the desired height
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      user,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
                             Divider(
                               height: 0,
                               color: Palette.dotColor,
@@ -302,7 +299,6 @@ class TrackingState extends State<Tracking> {
                             //     ),
                             //   ),
                             // ),
-
                             Align(
                               alignment: Alignment.topCenter,
                               child: Text(
@@ -398,6 +394,7 @@ class TrackingState extends State<Tracking> {
     );
   }
 
+  Widget buildImage(Uint8List bytes) => Image.memory(bytes);
   Widget topBar() {
     return Positioned(
       top: 0,
