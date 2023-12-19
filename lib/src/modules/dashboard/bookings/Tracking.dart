@@ -11,6 +11,7 @@ import 'package:notary_ping/src/constant/time_formate.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
+import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
 import 'package:notary_ping/src/utility/MarkerImage.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -197,8 +198,8 @@ class TrackingState extends State<Tracking> {
                 )
               : GoogleMap(
                   padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.07.sh),
-                  // myLocationEnabled: true, //set your location enable
-                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true, //set your location enable
+                  // myLocationButtonEnabled: true,
                   // compassEnabled: true,
                   zoomGesturesEnabled: true, //enable Zoom in, out on map
                   initialCameraPosition: CameraPosition(
@@ -375,7 +376,7 @@ class TrackingState extends State<Tracking> {
                                 SizedBox(width: 12.w),
                                 const Spacer(),
                                 SubmitButton(
-                                  onTap: () {},
+                                  onTap: () => Get.to(() => const Chat()),
                                   title: "Send message".tr,
                                 ),
                               ],

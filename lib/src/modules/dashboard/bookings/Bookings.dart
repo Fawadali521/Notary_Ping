@@ -105,7 +105,6 @@ class _BookingsState extends State<Bookings> {
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     int randomIndex = Random().nextInt(userNamesList.length);
-
                     return CustomBookingItem(
                       imgUrl: userImages[randomIndex],
                       name: userNamesList[randomIndex],

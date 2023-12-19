@@ -21,7 +21,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  final MessageController controller = Get.find();
+  final MessageController controller = Get.put(MessageController());
 
   late final RecorderController recorderController;
 

@@ -75,7 +75,6 @@ class _MessageState extends State<Message> {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: controller.state.profiles.length,
             itemBuilder: (context, index) {
-              print("user name ${controller.state.profiles.length}");
               return Container(
                 color: isSelect == index
                     ? Palette.bgTextFeildColor

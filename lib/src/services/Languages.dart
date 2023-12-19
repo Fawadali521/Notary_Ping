@@ -109,6 +109,10 @@ class Languages extends Translations {
           'Report this Notary': 'Report this Notary',
           'Services': 'Services',
           'Reviews': 'Reviews',
+          'Report this notary': 'Report this notary',
+          'Report type': 'Report type',
+          'Description': 'Description',
+          'Submit report': 'Submit report',
           '': '',
         },
       };

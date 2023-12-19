@@ -29,21 +29,21 @@ class ForgotPassword extends StatelessWidget {
                 fit: BoxFit.contain,
                 height: 60.h,
               ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: InkWell(
-                  onTap: () => Get.back(),
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      color: Palette.blackColor,
-                      size: 16,
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerLeft,
+              //   child: InkWell(
+              //     onTap: () => Get.back(),
+              //     child: Padding(
+              //       padding:
+              //           EdgeInsets.symmetric(horizontal: 0.w, vertical: 14.h),
+              //       child: const Icon(
+              //         Icons.arrow_back_ios_new_outlined,
+              //         color: Palette.blackColor,
+              //         size: 16,
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           Padding(

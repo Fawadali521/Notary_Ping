@@ -25,6 +25,7 @@ class SubmitButton extends StatelessWidget {
       color: backGroundColor ?? Palette.primaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderStyles.normal,
+        side: BorderSide(color: titleColor ?? Palette.primaryColor),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),

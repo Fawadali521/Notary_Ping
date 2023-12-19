@@ -76,20 +76,20 @@ class HomeState extends State<Home> {
     }
   ];
   buildComplete() async {
-    print("clll");
+    // print("clll");
     RenderRepaintBoundary boundary = markersData[0]['key']
         .currentContext!
         .findRenderObject() as RenderRepaintBoundary;
     ui.Image image = await boundary.toImage();
     ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     bytes = byteData!.buffer.asUint8List();
-    print("byttttttt==$bytes");
+    // print("byttttttt==$bytes");
     setState(() {});
   }
 
   // add markers
   addMarker(List<LatLng> latLng) async {
-    print("list of latlong ==>${latlang.length}");
+    // print("list of latlong ==>${latlang.length}");
     // bytes = await controller.capture();
     // print("buuuuuu==$bytes");
     for (int i = 0; i < latLng.length; i++) {
@@ -176,21 +176,21 @@ class HomeState extends State<Home> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
     }
-    print("start geting location");
+    // print("start geting location");
     try {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      print("location get ==> $position");
+      // print("location get ==> $position");
       setState(() {
         startLocation = LatLng(position.latitude, position.longitude);
         latlang.add(startLocation);
         isLoding = false;
       });
-      print("location get ==> $startLocation");
+      // print("location get ==> $startLocation");
       addMarker(latlang);
     } catch (e) {
-      print("Error in location get ==> $e");
+      // print("Error in location get ==> $e");
       startLocation = const LatLng(34.611139, 72.4623079);
       latlang.add(startLocation);
       isLoding = false;
@@ -313,7 +313,7 @@ class HomeState extends State<Home> {
                   bottom: 0,
                   child: SizedBox(
                     width: 1.sw,
-                    height: 1.sh,
+                    height: 0.95.sh,
                     child: DraggableScrollableSheet(
                       initialChildSize: .43,
                       minChildSize: 0.11,
@@ -407,7 +407,7 @@ class HomeState extends State<Home> {
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
-                                          Get.to(() => NotaryProfile());
+                                          Get.to(() => const NotaryProfile());
                                         },
                                         child: CustomNotaryItem(
                                           isOnline: index.isOdd,

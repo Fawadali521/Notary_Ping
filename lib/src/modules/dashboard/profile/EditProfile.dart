@@ -190,17 +190,13 @@ class EditProfile extends StatelessWidget {
           SizedBox(height: 16.h),
           CustomTextField(
             hintText: 'State'.tr,
-            onChange: (value) {
-              // controller.state.name = value;
-            },
+            onChange: (value) {},
             prefixIcon: stateIcon,
           ),
           SizedBox(height: 16.h),
           CustomTextField(
             hintText: 'Zip code'.tr,
-            onChange: (value) {
-              // controller.state.name = value;
-            },
+            onChange: (value) {},
             prefixIcon: zipcodeIcon,
           ),
           SizedBox(height: 80.h),

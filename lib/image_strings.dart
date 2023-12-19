@@ -49,6 +49,7 @@ const String reportNotaryPIcon = "$icons/report-p.png";
 const String arrowForwardIosIcon = "$icons/arrow_f.png";
 const String reviewsIcon = "$icons/reviews.png";
 const String adjustIcon = "$icons/adjust.png";
+const String confirmIcon = "$icons/confirm.png";
 const String imgMIcon = "$images/img_m.png";
 const String nameMIcon = "$images/name_m.png";
 const String startMakerIcon = "$images/startM.png";
