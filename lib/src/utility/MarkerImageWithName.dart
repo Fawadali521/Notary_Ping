@@ -16,7 +16,7 @@ class MarkerImageWithName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 110,
+      width: 200,
       child: Stack(
         children: [
           Container(

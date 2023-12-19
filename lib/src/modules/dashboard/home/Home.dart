@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_collection_literals, file_names
-
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -14,8 +12,6 @@ import 'package:notary_ping/src/utility/MarkerImageWithName.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
-// import 'package:label_marker/label_marker.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -228,6 +224,7 @@ class HomeState extends State<Home> {
   }
 
   bool isOnline = true;
+  bool? sheetCollapsed;
 
   @override
   Widget build(BuildContext context) {
@@ -308,24 +305,45 @@ class HomeState extends State<Home> {
                           },
                         ),
                       ),
-                _topBar(),
-                Positioned(
-                  bottom: 0,
-                  child: SizedBox(
-                    width: 1.sw,
-                    height: 0.95.sh,
+                SizedBox(
+                  child: NotificationListener<DraggableScrollableNotification>(
+                    onNotification:
+                        (DraggableScrollableNotification DSNotification) {
+                      // Check if the sheet is fully expanded
+                      if (DSNotification.extent >= 0.87) {
+                        setState(() {
+                          sheetCollapsed = true;
+                        });
+                      }
+                      // Check if the sheet is collapsed or not fully expanded
+                      else if (DSNotification.extent < 1.0) {
+                        // Update the variable for not fully expanded state
+                        setState(() {
+                          sheetCollapsed = null;
+                        });
+                      }
+                      if (DSNotification.extent == 0.13) {
+                        setState(() {
+                          sheetCollapsed = false;
+                        });
+                      }
+                      return true; // Return true to indicate the notification is handled
+                    },
                     child: DraggableScrollableSheet(
-                      initialChildSize: .43,
-                      minChildSize: 0.11,
+                      initialChildSize: 0.4, // Set the initial size to 0.4
+                      maxChildSize: 0.87, // Maximum size when fully expanded
+                      minChildSize: 0.13,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
                         return Container(
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Palette.whiteColor,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
+                            borderRadius: (sheetCollapsed == true)
+                                ? null
+                                : const BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
+                                  ),
                           ),
                           child: ListView.builder(
                             controller: scrollController,
@@ -333,33 +351,18 @@ class HomeState extends State<Home> {
                               horizontal: 20.w,
                               vertical: 16.h,
                             ),
-                            // controller: scrollController,
                             itemCount: 1,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
-                                // shrinkWrap: true,
-                                // padding: const EdgeInsets.symmetric(
-                                //     horizontal: 20, vertical: 20),
-                                // controller: scrollController,
                                 children: [
-                                  Divider(
-                                    height: 1,
-                                    color: Palette.dotColor,
-                                    thickness: 3,
-                                    endIndent: .34.sw,
-                                    indent: .34.sw,
-                                  ),
-                                  // WidgetsToImageController to access widget
-
-                                  // WidgetsToImage(
-                                  //   controller: controller,
-                                  //   child: const MarkerImageWithName(
-                                  //     borderColor: Palette.greenColor,
-                                  //     imgUrl: user1,
-                                  //     name: "Mickle",
-                                  //   ),
-                                  // ),
-
+                                  if (sheetCollapsed != true)
+                                    Divider(
+                                      height: 1,
+                                      color: Palette.dotColor,
+                                      thickness: 3,
+                                      endIndent: .34.sw,
+                                      indent: .34.sw,
+                                    ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 20),
@@ -425,99 +428,106 @@ class HomeState extends State<Home> {
                     ),
                   ),
                 ),
+                _topBar(isSticky: sheetCollapsed ?? false),
               ],
             ),
     );
   }
 
-  Positioned _topBar() {
+  _topBar({bool isSticky = false}) {
     return Positioned(
       top: 0,
-      child: Column(
-        children: [
-          const SafeArea(bottom: false, child: SizedBox()),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            width: Get.width,
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    hintText: "Search".tr,
-                    prefixIcon: searchIcon,
-                    prefixIconColor: Palette.greyTextColor,
-                    borderRadius: BorderStyles.searchTextField,
-                    fillColor: Palette.whiteColor,
-                    borderColor: Palette.greyTextColor.withOpacity(0.5),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 8, right: 8),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Palette.whiteColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Palette.greyTextColor.withOpacity(0.5),
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark, // or .dark
+        child: Container(
+          color: isSticky ? Palette.whiteColor : Colors.transparent,
+          child: Column(
+            children: [
+              const SafeArea(bottom: false, child: SizedBox()),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+                width: Get.width,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        hintText: "Search".tr,
+                        prefixIcon: searchIcon,
+                        prefixIconColor: Palette.greyTextColor,
+                        borderRadius: BorderStyles.searchTextField,
+                        fillColor: Palette.whiteColor,
+                        borderColor: Palette.greyTextColor.withOpacity(0.5),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          bellIcon,
-                          color: Palette.blackColor,
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.contain,
+                    Container(
+                      margin: const EdgeInsets.only(left: 8, right: 8),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Palette.whiteColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Palette.greyTextColor.withOpacity(0.5),
                         ),
-                        Positioned(
-                          right: 0,
-                          top: 2,
-                          child: CircleAvatar(
-                            radius: 7,
-                            backgroundColor: Palette.primaryColor,
-                            child: Text(
-                              "5",
-                              style: TextStyles.bodyLarge.copyWith(
-                                color: Palette.whiteColor,
-                                fontSize: 10,
-                              ),
+                      ),
+                      child: Center(
+                        child: Stack(
+                          children: [
+                            Image.asset(
+                              bellIcon,
+                              color: Palette.blackColor,
+                              height: 24,
+                              width: 24,
+                              fit: BoxFit.contain,
                             ),
+                            Positioned(
+                              right: 0,
+                              top: 2,
+                              child: CircleAvatar(
+                                radius: 7,
+                                backgroundColor: Palette.primaryColor,
+                                child: Text(
+                                  "5",
+                                  style: TextStyles.bodyLarge.copyWith(
+                                    color: Palette.whiteColor,
+                                    fontSize: 10,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        await getCurrentLocation();
+                        animateToMyLocation();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Palette.whiteColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Palette.greyTextColor.withOpacity(0.5),
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    await getCurrentLocation();
-                    animateToMyLocation();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Palette.whiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Palette.greyTextColor.withOpacity(0.5),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            mapsIcon,
+                            height: 24,
+                            width: 24,
+                            color: Palette.blackColor,
+                          ),
+                        ),
                       ),
                     ),
-                    child: Center(
-                      child: Image.asset(
-                        mapsIcon,
-                        height: 24,
-                        width: 24,
-                        color: Palette.blackColor,
-                      ),
-                    ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

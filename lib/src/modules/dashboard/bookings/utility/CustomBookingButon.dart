@@ -20,28 +20,30 @@ class CustomBookingButon extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(8.sp),
+        height: 35.h,
+        padding: EdgeInsets.only(left: 4, right: 15, top: 7, bottom: 7),
         decoration: BoxDecoration(
           color: isSlected ? Palette.primaryColor : Palette.whiteColor,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
-              radius: 16.sp,
+              radius: 15.sp,
               backgroundColor:
                   isSlected ? Palette.whiteColor : Palette.orangColor,
               child: Image.asset(
                 icon,
-                height: 20.sp,
+                height: 14.sp,
                 color: isSlected ? Palette.primaryColor : Palette.whiteColor,
                 fit: BoxFit.contain,
               ),
             ),
-            SizedBox(width: 8.w),
+            SizedBox(width: 5),
             Text(
               title,
-              style: TextStyles.titleMedium.copyWith(
+              style: TextStyles.titleLarge.copyWith(
                 color: isSlected ? Palette.whiteColor : Palette.blackColor,
               ),
             ),

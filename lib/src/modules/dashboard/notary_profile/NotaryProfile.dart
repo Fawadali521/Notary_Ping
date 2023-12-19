@@ -1,6 +1,7 @@
 // ignore_for_file: file_names,
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:notary_ping/Infos.dart';
 import 'package:notary_ping/src/constant/time_formate.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomBookingButon.dart';
 import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
@@ -33,6 +34,7 @@ class _NotaryProfileState extends State<NotaryProfile> {
       ),
       body: ListView(
         shrinkWrap: true,
+        padding: EdgeInsets.only(bottom: 100.h),
         children: [
           Align(
             alignment: Alignment.topCenter,
@@ -228,34 +230,28 @@ class _NotaryProfileState extends State<NotaryProfile> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
               children: [
-                Expanded(
-                  // flex: 3,
-                  child: CustomBookingButon(
-                    onTap: () {
-                      // pageController?.jumpToPage(0);
-                      setState(() {
-                        isServices = true;
-                      });
-                    },
-                    title: 'Services'.tr,
-                    icon: supportIcon,
-                    isSlected: isServices ? true : false,
-                  ),
+                CustomBookingButon(
+                  onTap: () {
+                    // pageController?.jumpToPage(0);
+                    setState(() {
+                      isServices = true;
+                    });
+                  },
+                  title: 'Services'.tr,
+                  icon: supportIcon,
+                  isSlected: isServices ? true : false,
                 ),
                 SizedBox(width: 16.w),
-                Expanded(
-                  // flex: 2,
-                  child: CustomBookingButon(
-                    onTap: () {
-                      // pageController?.jumpToPage(1);
-                      setState(() {
-                        isServices = false;
-                      });
-                    },
-                    title: 'Reviews'.tr,
-                    icon: reviewsIcon,
-                    isSlected: !isServices ? true : false,
-                  ),
+                CustomBookingButon(
+                  onTap: () {
+                    // pageController?.jumpToPage(1);
+                    setState(() {
+                      isServices = false;
+                    });
+                  },
+                  title: 'Reviews'.tr,
+                  icon: reviewsIcon,
+                  isSlected: !isServices ? true : false,
                 ),
               ],
             ),
@@ -264,96 +260,43 @@ class _NotaryProfileState extends State<NotaryProfile> {
           isServices
 
               /// Services List
-              ? ListView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  children: [
-                    UnconstrainedBox(
-                      // alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12.w, vertical: 8.h),
-                            decoration: BoxDecoration(
-                              color: Palette.whiteColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  supportIcon,
-                                  height: 20,
-                                  width: 20,
-                                  color: Palette.greyTextColor,
-                                  fit: BoxFit.contain,
-                                ),
-                                SizedBox(width: 8.w),
-                                const Text(
-                                  "Translation",
-                                  style: TextStyles.bodyMedium,
-                                ),
-                              ],
-                            ),
+              ? Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Wrap(
+                      spacing: 5.w,
+                      runSpacing: 5.h,
+                      children: List.generate(
+                        Infos().notaryServices.length,
+                        (index) => Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 12.w, vertical: 8.h),
+                          decoration: BoxDecoration(
+                            color: Palette.whiteColor,
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                          SizedBox(width: 8.w),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12.w, vertical: 8.h),
-                            decoration: BoxDecoration(
-                              color: Palette.whiteColor,
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset(
-                                  supportIcon,
-                                  height: 20,
-                                  width: 20,
-                                  color: Palette.greyTextColor,
-                                  fit: BoxFit.contain,
-                                ),
-                                SizedBox(width: 8.w),
-                                const Text(
-                                  "Translation certification",
-                                  style: TextStyles.bodyMedium,
-                                ),
-                              ],
-                            ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image.asset(
+                                supportIcon,
+                                height: 20,
+                                width: 20,
+                                color: Palette.greyTextColor,
+                                fit: BoxFit.contain,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                Infos().notaryServices[index],
+                                style: TextStyles.bodyMedium,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    UnconstrainedBox(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 12.w, vertical: 8.h),
-                        decoration: BoxDecoration(
-                          color: Palette.whiteColor,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              supportIcon,
-                              height: 20,
-                              width: 20,
-                              color: Palette.greyTextColor,
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(width: 8.w),
-                            const Text(
-                              "Translation certification",
-                              style: TextStyles.bodyMedium,
-                            ),
-                          ],
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 )
 
               /// Reviews List
