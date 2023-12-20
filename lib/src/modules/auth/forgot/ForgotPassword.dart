@@ -92,15 +92,12 @@ class ForgotPassword extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 48.h),
-            child: SubmitButton(
-              backGroundColor: Palette.primaryColor,
-              onTap: () {
-                Get.off(() => OtpVerification());
-              },
-              title: "send".tr,
-            ),
+          SubmitButton(
+            backGroundColor: Palette.primaryColor,
+            onTap: () {
+              Get.off(() => const OtpVerification());
+            },
+            title: "send".tr,
           ),
           SizedBox(height: 12.h)
         ],

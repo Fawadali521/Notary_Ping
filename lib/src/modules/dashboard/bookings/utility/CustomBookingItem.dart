@@ -82,7 +82,7 @@ class CustomBookingItem extends StatelessWidget {
                   child: Text(
                     "Signature for property documents".tr,
                     style: TextStyles.bodyLarge.copyWith(
-                      fontSize: 10,
+                      fontSize: 12,
                     ),
                   ),
                 )
@@ -92,7 +92,7 @@ class CustomBookingItem extends StatelessWidget {
           InkWell(
             onTap: onTap,
             child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+              padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
               decoration: BoxDecoration(
                 color: Palette.lightBlueColor.withOpacity(0.7),
                 borderRadius: BorderStyles.thin,
@@ -100,7 +100,6 @@ class CustomBookingItem extends StatelessWidget {
               child: Text(
                 isHistory ? "View".tr : "Tracking".tr,
                 style: TextStyles.bodyLarge.copyWith(
-                  fontSize: 10,
                   color: Palette.primaryColor,
                 ),
               ),

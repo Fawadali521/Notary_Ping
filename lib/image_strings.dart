@@ -53,6 +53,7 @@ const String confirmIcon = "$icons/confirm.png";
 const String imgMIcon = "$images/img_m.png";
 const String nameMIcon = "$images/name_m.png";
 const String startMakerIcon = "$images/startM.png";
+const String filterIcon = "$icons/filter.png";
 
 ///
 ///dynamic images
@@ -69,11 +70,67 @@ const String userName1 = "Elin";
 const String userName2 = "Jack";
 const String userName3 = "Fawad";
 const String userName4 = "Smith";
-List<String> userImages = [user, user1, user2, user3, user4];
+List<String> userImages = [
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+  user,
+  user1,
+  user2,
+  user3,
+  user4,
+];
 List<String> userNamesList = [
   userName,
   userName1,
   userName2,
   userName3,
-  userName4
+  userName4,
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4,
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4,
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4,
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4,
+  userName,
+  userName1,
+  userName2,
+  userName3,
+  userName4,
 ];

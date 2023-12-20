@@ -109,16 +109,14 @@ class _BookAppointmentState extends State<BookAppointment> {
                 } else {
                   if (textValue.text.length == 1) {
                     controller.state.slectedCity.value = "";
-                    return controller.state.selecteCity.where((element) =>
-                        element
-                            .toLowerCase()
-                            .contains(textValue.text.toLowerCase()));
+                    return Infos().notaryServices.where((element) => element
+                        .toLowerCase()
+                        .contains(textValue.text.toLowerCase()));
                   } else {
                     controller.state.slectedCity.value = textValue.text;
-                    return controller.state.selecteCity.where((element) =>
-                        element
-                            .toLowerCase()
-                            .contains(textValue.text.toLowerCase()));
+                    return Infos().notaryServices.where((element) => element
+                        .toLowerCase()
+                        .contains(textValue.text.toLowerCase()));
                   }
                 }
               },

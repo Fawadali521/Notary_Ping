@@ -76,7 +76,7 @@ class ResetPassword extends StatelessWidget {
             isuffixIconPassword: true,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 38.h),
+            padding: EdgeInsets.symmetric(vertical: 24.h),
             child: SubmitButton(
               backGroundColor: Palette.primaryColor,
               onTap: () {

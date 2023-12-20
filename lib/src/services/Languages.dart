@@ -24,6 +24,7 @@ class Languages extends Translations {
               'Unlock trust with certified notaries: seamless, secure notarization on Notaryping.confidence in every seal connect instantly, anytime, anywhere.',
           'Enter your email': 'Enter your email',
           'Enter your password': 'Enter your password',
+          'Enter your email or number': 'Enter your email or number',
           "Let's Sign You In!": "Let's\nSign You In!",
           "Let's Sign You Up!": "Let's\nSign You Up!",
           'Sign Up!': 'Sign Up!',

@@ -31,6 +31,8 @@ class CustomDropDown extends StatelessWidget {
         child: DropdownButton<String>(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           borderRadius: BorderStyles.normal,
+          underline: Container(),
+          icon: const SizedBox.shrink(),
           dropdownColor: dropdownColor ?? Palette.bgTextFeildColor,
           style: textStyle ?? TextStyles.titleSmall,
           value: selectedVal,

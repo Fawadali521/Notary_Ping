@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import '../../index.dart';
+import '../../../index.dart';
 
 class MarkerImageWithName extends StatelessWidget {
   final String imgUrl;
@@ -17,12 +17,13 @@ class MarkerImageWithName extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 200,
+      // height: 190,
       child: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(top: 50),
-            width: 110,
-            height: 35,
+            margin: const EdgeInsets.only(top: 85),
+            width: 200,
+            height: 100,
             decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(
@@ -32,11 +33,11 @@ class MarkerImageWithName extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 12),
               child: Center(
                 child: Text(
                   name,
-                  style: TextStyles.bodySmall.copyWith(
+                  style: TextStyles.titleSmall.copyWith(
                     color: Palette.whiteColor,
                   ),
                 ),
@@ -46,8 +47,8 @@ class MarkerImageWithName extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              width: 45,
-              height: 50,
+              width: 90,
+              height: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   colorFilter: ColorFilter.mode(
@@ -61,8 +62,8 @@ class MarkerImageWithName extends StatelessWidget {
                 ),
               ),
               child: Padding(
-                padding:
-                    const EdgeInsets.only(left: 3, right: 3, top: 2, bottom: 8),
+                padding: const EdgeInsets.only(
+                    left: 5, right: 5, top: 3, bottom: 15),
                 child: ClipOval(
                   child: Image.asset(
                     imgUrl,

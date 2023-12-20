@@ -18,18 +18,18 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int currentIndex = 0;
-  late final PageController? pageController;
-  @override
-  void initState() {
-    pageController = PageController(
-      initialPage: currentIndex,
-    );
-    super.initState();
-  }
+  final PageController pageController = PageController(initialPage: 0);
+  // @override
+  // void initState() {
+  //   pageController = PageController(
+  //     initialPage: currentIndex,
+  //   );
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
-    pageController?.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -56,7 +56,7 @@ class _DashboardState extends State<Dashboard> {
           currentIndex: currentIndex,
           onTap: (index) {
             currentIndex = index;
-            pageController?.jumpToPage(index);
+            pageController.jumpToPage(index);
             setState(() {});
           },
           backgroundColor: Palette.whiteColor,

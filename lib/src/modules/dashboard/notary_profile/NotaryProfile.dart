@@ -1,7 +1,6 @@
 // ignore_for_file: file_names,
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:notary_ping/Infos.dart';
 import 'package:notary_ping/src/constant/time_formate.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomBookingButon.dart';
 import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
@@ -105,27 +104,21 @@ class _NotaryProfileState extends State<NotaryProfile> {
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
             child: Row(
               children: [
-                Expanded(
-                  flex: 3,
-                  child: CustomBookingButon(
-                      onTap: () => Get.to(() => const BookAppointment()),
-                      title: 'Book appointment'.tr,
-                      icon: bookingsIcon,
-                      isSlected: true //currentIndex == 0 ? true : false,
-                      ),
-                ),
+                CustomBookingButon(
+                    onTap: () => Get.to(() => const BookAppointment()),
+                    title: 'Book appointment'.tr,
+                    icon: bookingsIcon,
+                    isSlected: true //currentIndex == 0 ? true : false,
+                    ),
                 SizedBox(width: 16.w),
-                Expanded(
-                  flex: 2,
-                  child: CustomBookingButon(
-                      onTap: () {
-                        Get.to(() => const Chat());
-                      },
-                      title: 'Message'.tr,
-                      icon: messageIcon,
-                      isSlected: true //currentIndex == 1 ? true : false,
-                      ),
-                ),
+                CustomBookingButon(
+                    onTap: () {
+                      Get.to(() => const Chat());
+                    },
+                    title: 'Message'.tr,
+                    icon: messageIcon,
+                    isSlected: true //currentIndex == 1 ? true : false,
+                    ),
               ],
             ),
           ),
@@ -263,7 +256,7 @@ class _NotaryProfileState extends State<NotaryProfile> {
               ? Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Wrap(
                       spacing: 5.w,
                       runSpacing: 5.h,

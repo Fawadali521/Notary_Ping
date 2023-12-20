@@ -16,20 +16,14 @@ class SignUpState extends LoadingState {
   set newPassword(value) => _newPassword.value = value;
   set confirmPassword(value) => _confirmPassword.value = value;
   TextEditingController countryCode = TextEditingController();
-  final RxString countryCodee = '+90'.obs;
+  final RxString countryCodee = '+33'.obs;
 
   ///dummy data
 
   final RxList<String> slectCountryCode = {
-    '+90',
+    '+33',
     '+91',
     '+92',
-    '+93',
-    '+94',
-    '+95',
-    '+96',
-    '+97',
-    '+98',
-    '+99',
+    '+241',
   }.toList().obs;
 }

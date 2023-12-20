@@ -63,24 +63,21 @@ class SignUp extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              Expanded(
-                flex: 3,
-                child: Obx(
-                  () => CustomDropDown(
-                    textStyle: TextStyles.bodyMedium.copyWith(
-                      color: Palette.blackColor,
-                    ),
-                    items: controller.state.slectCountryCode,
-                    selectedVal: controller.state.countryCodee.value,
-                    onChanged: (val) {
-                      controller.changeSelectGender(val!);
-                    },
+              Obx(
+                () => CustomDropDown(
+                  textStyle: TextStyles.bodyMedium.copyWith(
+                    color: Palette.blackColor,
                   ),
+                  items: controller.state.slectCountryCode,
+                  selectedVal: controller.state.countryCodee.value,
+                  onChanged: (val) {
+                    controller.changeSelectGender(val!);
+                  },
                 ),
               ),
               SizedBox(width: 8.w),
               Expanded(
-                flex: 8,
+                flex: 5,
                 child: CustomTextField(
                   hintText: 'Phone number'.tr,
                   onChange: (value) {

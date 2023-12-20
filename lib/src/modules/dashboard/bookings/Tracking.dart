@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:notary_ping/index.dart';
@@ -12,8 +13,8 @@ import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.d
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
 import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
-import 'package:notary_ping/src/utility/MarkerImage.dart';
 import 'package:notary_ping/src/utility/SubmitButton.dart';
+import 'package:notary_ping/src/utility/maps_utility/MarkerImage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class Tracking extends StatefulWidget {
@@ -35,7 +36,7 @@ class TrackingState extends State<Tracking> {
   late LatLng startLocation; //= const LatLng(34.611139, 72.4623079);
   LatLng endLocation = const LatLng(34.60205, 72.454015);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-
+  double paddingBottom = 0.45;
   @override
   void initState() {
     latlang.add(endLocation);
@@ -196,36 +197,41 @@ class TrackingState extends State<Tracking> {
                     ),
                   ),
                 )
-              : GoogleMap(
-                  padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.07.sh),
-                  myLocationEnabled: true, //set your location enable
-                  // myLocationButtonEnabled: true,
-                  // compassEnabled: true,
-                  zoomGesturesEnabled: true, //enable Zoom in, out on map
-                  initialCameraPosition: CameraPosition(
-                    target: startLocation, //initial position
-                    zoom: 14.0, //initial zoom level
+              : Padding(
+                  padding: EdgeInsets.only(bottom: paddingBottom.sh),
+                  child: GoogleMap(
+                    padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.03.sh),
+                    myLocationEnabled: true, //set your location enable
+                    // myLocationButtonEnabled: true,
+                    // compassEnabled: true,
+                    zoomGesturesEnabled: true, //enable Zoom in, out on map
+                    initialCameraPosition: CameraPosition(
+                      target: startLocation, //initial position
+                      zoom: 14.0, //initial zoom level
+                    ),
+                    polylines: Set<Polyline>.of(
+                        polylines.values), //polylines to show directions
+                    markers: markers.toSet(), //markers to show on map
+                    // mapType: MapType.normal, //map type
+                    onMapCreated: (controller) {
+                      //method called when map is created
+                      setState(() {
+                        mapController = controller;
+                      });
+                    },
                   ),
-                  polylines: Set<Polyline>.of(
-                      polylines.values), //polylines to show directions
-                  markers: markers.toSet(), //markers to show on map
-                  // mapType: MapType.normal, //map type
-                  onMapCreated: (controller) {
-                    //method called when map is created
-                    setState(() {
-                      mapController = controller;
-                    });
-                  },
                 ),
-          topBar(),
-          Positioned(
-            bottom: 0,
-            child: SizedBox(
-              width: 1.sw,
-              height: 0.5.sh,
+          SizedBox(
+            child: NotificationListener<DraggableScrollableNotification>(
+              onNotification: (DraggableScrollableNotification dSNotification) {
+                paddingBottom = dSNotification.extent - 0.03;
+                setState(() {});
+                return true; // Return true to indicate the notification is handled
+              },
               child: DraggableScrollableSheet(
-                initialChildSize: 1,
-                minChildSize: 0.15,
+                maxChildSize: .5,
+                initialChildSize: .5,
+                minChildSize: 0.07,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return Container(
@@ -311,34 +317,53 @@ class TrackingState extends State<Tracking> {
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Column(
+                                Column(
                                   children: [
-                                    SizedBox(height: 13),
-                                    CustomRadio(color: Palette.primaryColor),
-                                    Dash(
+                                    const SizedBox(height: 13),
+                                    const CustomRadio(
+                                        color: Palette.primaryColor),
+                                    const Dash(
                                       direction: Axis.vertical,
                                       length: 45,
                                       dashLength: 8,
                                       dashThickness: 2,
                                       dashColor: Palette.primaryColor,
                                     ),
-                                    CustomRadio(color: Palette.primaryColor),
-                                    Dash(
+                                    AvatarGlow(
+                                      startDelay:
+                                          const Duration(milliseconds: 1000),
+                                      glowColor: Palette.primaryColor,
+                                      glowShape: BoxShape.circle,
+                                      animate: true,
+                                      curve: Curves.fastOutSlowIn,
+                                      child: const CustomRadio(
+                                          color: Palette.primaryColor),
+                                    ),
+                                    const Dash(
                                       direction: Axis.vertical,
                                       length: 45,
                                       dashLength: 8,
                                       dashThickness: 2,
                                       dashColor: Palette.greyTextColor,
                                     ),
-                                    CustomRadio(color: Palette.greyTextColor),
-                                    Dash(
+                                    AvatarGlow(
+                                        startDelay:
+                                            const Duration(milliseconds: 1000),
+                                        glowColor: Palette.primaryColor,
+                                        glowShape: BoxShape.circle,
+                                        animate: false,
+                                        curve: Curves.fastOutSlowIn,
+                                        child: const CustomRadio(
+                                            color: Palette.greyTextColor)),
+                                    const Dash(
                                       direction: Axis.vertical,
                                       length: 45,
                                       dashLength: 8,
                                       dashThickness: 2,
                                       dashColor: Palette.greyTextColor,
                                     ),
-                                    CustomRadio(color: Palette.greyTextColor),
+                                    const CustomRadio(
+                                        color: Palette.greyTextColor),
                                   ],
                                 ),
                                 const SizedBox(width: 10),
@@ -390,6 +415,7 @@ class TrackingState extends State<Tracking> {
               ),
             ),
           ),
+          topBar(),
         ],
       ),
     );
@@ -466,9 +492,12 @@ showCancelBookingAlert(BuildContext context) {
                 child: const Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 20, right: 20, left: 20, bottom: 5),
-                    child: Icon(Icons.close),
+                    padding:
+                        EdgeInsets.only(bottom: 5, left: 5, top: 8, right: 8),
+                    child: Icon(
+                      Icons.close,
+                      color: Palette.redColor,
+                    ),
                   ),
                 ),
               ),

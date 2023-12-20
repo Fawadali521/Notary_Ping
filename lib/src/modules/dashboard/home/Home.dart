@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -7,8 +9,8 @@ import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
 import 'package:notary_ping/src/modules/dashboard/home/utility/CustomNotaryItem.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
-import 'package:notary_ping/src/utility/MarkerImage.dart';
-import 'package:notary_ping/src/utility/MarkerImageWithName.dart';
+import 'package:notary_ping/src/utility/maps_utility/MarkerImage.dart';
+import 'package:notary_ping/src/utility/maps_utility/MarkerImageWithName.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:widgets_to_image/widgets_to_image.dart';
 
@@ -34,21 +36,23 @@ class HomeState extends State<Home> {
   WidgetsToImageController controller = WidgetsToImageController();
 // to save image bytes of widget
   Uint8List? bytes;
+  double paddingBottom = 0.31;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => buildComplete());
-    latlang.add(endLocation);
     setState(() {
       isLoding = true;
     });
+    // print("calll one 2");
+    // WidgetsBinding.instance.addPostFrameCallback((_) => buildComplete());
+    // print("calll one 3");
     if (Platform.isAndroid) {
       checkLocationStatus();
     } else {
       getCurrentLocation();
     }
-
     super.initState();
+    // print("calll one 4");
   }
 
   List<Map<String, dynamic>> markersData = [
@@ -72,6 +76,7 @@ class HomeState extends State<Home> {
     }
   ];
   buildComplete() async {
+    Future.delayed(const Duration(seconds: 2), () {});
     // print("clll");
     RenderRepaintBoundary boundary = markersData[0]['key']
         .currentContext!
@@ -85,28 +90,27 @@ class HomeState extends State<Home> {
 
   // add markers
   addMarker(List<LatLng> latLng) async {
+    await buildComplete();
+    // Future.delayed(const Duration(seconds: 2), () {});
     // print("list of latlong ==>${latlang.length}");
     // bytes = await controller.capture();
     // print("buuuuuu==$bytes");
     for (int i = 0; i < latLng.length; i++) {
       markers.add(
         Marker(
-            consumeTapEvents: true,
-            markerId: MarkerId(latLng[i].toString()),
-            position: latLng[i],
-            icon: i == 0
-                ? await const MarkerImage(
-                    borderColor: Palette.redColor,
-                    imgUrl: user3,
-                    // name: "Smith",
-                  ).toBitmapDescriptor()
-                : BitmapDescriptor.fromBytes(bytes!, size: const Size(110, 120))
-            // await const MarkerImageWithName(
-            //     borderColor: Palette.greenColor,
-            //     imgUrl: user1,
-            //     name: "Mickle",
-            //   ).toBitmapDescriptor(),
-            ),
+          consumeTapEvents: true,
+          markerId: MarkerId(latLng[i].toString()),
+          position: latLng[i],
+          icon: i == 0
+              ? await const MarkerImage(
+                  borderColor: Palette.redColor,
+                  imgUrl: user3,
+                ).toBitmapDescriptor()
+              : BitmapDescriptor.fromBytes(
+                  bytes!,
+                  size: const Size(200, 190),
+                ),
+        ),
       );
     }
     setState(() {});
@@ -146,7 +150,7 @@ class HomeState extends State<Home> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
     } else {
-      print("${result.errorMessage}");
+      print("error in points ==> ${result.errorMessage}");
     }
     setState(() {});
     addPolyLine(polylineCoordinates);
@@ -178,19 +182,20 @@ class HomeState extends State<Home> {
         desiredAccuracy: LocationAccuracy.high,
       );
       // print("location get ==> $position");
-      setState(() {
-        startLocation = LatLng(position.latitude, position.longitude);
-        latlang.add(startLocation);
-        isLoding = false;
-      });
+      latlang.clear();
+      latlang.add(endLocation);
+      startLocation = LatLng(position.latitude, position.longitude);
+      latlang.add(startLocation);
+      // setState(() {});
       // print("location get ==> $startLocation");
       addMarker(latlang);
     } catch (e) {
       // print("Error in location get ==> $e");
+      latlang.clear();
+      latlang.add(endLocation);
       startLocation = const LatLng(34.611139, 72.4623079);
       latlang.add(startLocation);
-      isLoding = false;
-      setState(() {});
+      // setState(() {});
       addMarker(latlang);
       // checkLocationStatus();
     }
@@ -224,7 +229,7 @@ class HomeState extends State<Home> {
   }
 
   bool isOnline = true;
-  bool? sheetCollapsed;
+  bool sheetCollapsed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -248,14 +253,16 @@ class HomeState extends State<Home> {
                     ),
                   ),
                   SizedBox(
-                    width: 110,
+                    width: 200,
+                    height: 190,
                     child: RepaintBoundary(
                       key: markersData[0]['key'],
                       child: markersData[0]['widget'],
                     ),
                   ),
                   SizedBox(
-                    width: 110,
+                    width: 200,
+                    height: 190,
                     child: RepaintBoundary(
                       key: markersData[1]['key'],
                       child: markersData[1]['widget'],
@@ -266,73 +273,64 @@ class HomeState extends State<Home> {
             )
           : Stack(
               children: [
-                isLoding
-                    ? Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          height: 1.sh,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(24.0),
-                          ),
-                        ),
-                      )
-                    : SafeArea(
-                        top: false,
-                        left: false,
-                        right: false,
-                        child: GoogleMap(
-                          padding:
-                              EdgeInsets.only(top: 0.04.sh, bottom: 0.03.sh),
-                          myLocationEnabled: true, //set your location enable
-                          zoomGesturesEnabled:
-                              true, //enable Zoom in, out on map
-                          // compassEnabled: true,
-                          initialCameraPosition: CameraPosition(
-                            target: startLocation, //initial position
-                            zoom: 14.0, //initial zoom level
-                          ),
-                          polylines: Set<Polyline>.of(
-                              polylines.values), //polylines to show directions
-                          markers: markers.toSet(), //markers to show on map
-                          // mapType: MapType.normal, //map type
-                          onMapCreated: (controller) {
-                            //method called when map is created
-                            setState(() {
-                              mapController = controller;
-                            });
-                          },
-                        ),
+                SafeArea(
+                  top: false,
+                  left: false,
+                  right: false,
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: paddingBottom.sh),
+                    child: GoogleMap(
+                      padding: EdgeInsets.only(top: 0.04.sh, bottom: 0.03.sh),
+                      myLocationEnabled: true, //set your location enable
+                      myLocationButtonEnabled:
+                          false, //enable your location button on map
+                      zoomGesturesEnabled: true, //enable Zoom in, out on map
+                      // compassEnabled: true,
+                      initialCameraPosition: CameraPosition(
+                        target: startLocation, //initial position
+                        zoom: 14.0, //initial zoom level
                       ),
+                      polylines: Set<Polyline>.of(
+                          polylines.values), //polylines to show directions
+                      markers: markers.toSet(), //markers to show on map
+                      // mapType: MapType.normal, //map type
+                      onMapCreated: (controller) {
+                        //method called when map is created
+
+                        setState(() {
+                          mapController = controller;
+                        });
+                      },
+                    ),
+                  ),
+                ),
                 SizedBox(
                   child: NotificationListener<DraggableScrollableNotification>(
                     onNotification:
-                        (DraggableScrollableNotification DSNotification) {
+                        (DraggableScrollableNotification dSNotification) {
                       // Check if the sheet is fully expanded
-                      if (DSNotification.extent >= 0.87) {
+                      if (dSNotification.extent >= 0.87) {
                         setState(() {
                           sheetCollapsed = true;
                         });
                       }
                       // Check if the sheet is collapsed or not fully expanded
-                      else if (DSNotification.extent < 1.0) {
+                      else if (dSNotification.extent < .87) {
+                        if (dSNotification.extent < .6) {
+                          paddingBottom = dSNotification.extent - 0.10;
+                        }
                         // Update the variable for not fully expanded state
-                        setState(() {
-                          sheetCollapsed = null;
-                        });
-                      }
-                      if (DSNotification.extent == 0.13) {
                         setState(() {
                           sheetCollapsed = false;
                         });
                       }
+
                       return true; // Return true to indicate the notification is handled
                     },
                     child: DraggableScrollableSheet(
-                      initialChildSize: 0.4, // Set the initial size to 0.4
+                      initialChildSize: 0.43, // Set the initial size to 0.4
                       maxChildSize: 0.87, // Maximum size when fully expanded
-                      minChildSize: 0.13,
+                      minChildSize: 0.11,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
                         return Container(
@@ -363,6 +361,11 @@ class HomeState extends State<Home> {
                                       endIndent: .34.sw,
                                       indent: .34.sw,
                                     ),
+                                  // const MarkerImageWithName(
+                                  //   borderColor: Palette.greenColor,
+                                  //   imgUrl: user1,
+                                  //   name: "Mickle",
+                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 20),
@@ -406,7 +409,8 @@ class HomeState extends State<Home> {
                                     ),
 
                                     padding: EdgeInsets.zero,
-                                    itemCount: 25, // total number of items
+                                    itemCount: userImages
+                                        .length, // total number of items
                                     itemBuilder: (context, index) {
                                       return InkWell(
                                         onTap: () {
@@ -414,6 +418,8 @@ class HomeState extends State<Home> {
                                         },
                                         child: CustomNotaryItem(
                                           isOnline: index.isOdd,
+                                          imgUrl: userImages[index],
+                                          name: userNamesList[index],
                                         ),
                                       );
                                     },
@@ -428,13 +434,13 @@ class HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                _topBar(isSticky: sheetCollapsed ?? false),
+                _topBar(isSticky: sheetCollapsed),
               ],
             ),
     );
   }
 
-  _topBar({bool isSticky = false}) {
+  _topBar({required bool isSticky}) {
     return Positioned(
       top: 0,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -459,69 +465,97 @@ class HomeState extends State<Home> {
                         borderColor: Palette.greyTextColor.withOpacity(0.5),
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 8, right: 8),
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Palette.whiteColor,
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Palette.greyTextColor.withOpacity(0.5),
-                        ),
-                      ),
-                      child: Center(
-                        child: Stack(
-                          children: [
-                            Image.asset(
-                              bellIcon,
-                              color: Palette.blackColor,
-                              height: 24,
-                              width: 24,
-                              fit: BoxFit.contain,
+                    !isSticky
+                        ? Container(
+                            margin: const EdgeInsets.only(left: 8, right: 8),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: Palette.whiteColor,
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Palette.greyTextColor.withOpacity(0.5),
+                              ),
                             ),
-                            Positioned(
-                              right: 0,
-                              top: 2,
-                              child: CircleAvatar(
-                                radius: 7,
-                                backgroundColor: Palette.primaryColor,
-                                child: Text(
-                                  "5",
-                                  style: TextStyles.bodyLarge.copyWith(
-                                    color: Palette.whiteColor,
-                                    fontSize: 10,
+                            child: Center(
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    bellIcon,
+                                    color: Palette.blackColor,
+                                    height: 24,
+                                    width: 24,
+                                    fit: BoxFit.contain,
                                   ),
+                                  Positioned(
+                                    right: 0,
+                                    top: 2,
+                                    child: CircleAvatar(
+                                      radius: 7,
+                                      backgroundColor: Palette.primaryColor,
+                                      child: Text(
+                                        "5",
+                                        style: TextStyles.bodyLarge.copyWith(
+                                          color: Palette.whiteColor,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        : const SizedBox(),
+                    isSticky
+                        ? GestureDetector(
+                            onTap: () async {
+                              await getCurrentLocation();
+                              animateToMyLocation();
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 8),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Palette.whiteColor,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Palette.greyTextColor.withOpacity(0.5),
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await getCurrentLocation();
-                        animateToMyLocation();
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Palette.whiteColor,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Palette.greyTextColor.withOpacity(0.5),
+                              child: Center(
+                                child: Image.asset(
+                                  filterIcon,
+                                  height: 24,
+                                  width: 24,
+                                  color: Palette.blackColor,
+                                ),
+                              ),
+                            ),
+                          )
+                        : GestureDetector(
+                            onTap: () async {
+                              await getCurrentLocation();
+                              animateToMyLocation();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Palette.whiteColor,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Palette.greyTextColor.withOpacity(0.5),
+                                ),
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  mapsIcon,
+                                  height: 24,
+                                  width: 24,
+                                  color: Palette.blackColor,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            mapsIcon,
-                            height: 24,
-                            width: 24,
-                            color: Palette.blackColor,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -529,53 +563,6 @@ class HomeState extends State<Home> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _topBarNotary() {
-    return Column(
-      children: [
-        const SafeArea(bottom: false, child: SizedBox()),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          width: Get.width,
-          child: Row(
-            children: [
-              Expanded(
-                child: CustomTextField(
-                  hintText: "Search".tr,
-                  prefixIcon: searchIcon,
-                  prefixIconColor: Palette.greyTextColor,
-                  borderRadius: BorderStyles.searchTextField,
-                  fillColor: Palette.whiteColor,
-                  borderColor: Palette.greyTextColor.withOpacity(0.5),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Palette.whiteColor,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Palette.greyTextColor.withOpacity(0.5),
-                    ),
-                  ),
-                  child: Center(
-                    child: Image.asset(
-                      adjustIcon,
-                      height: 24,
-                      width: 24,
-                      color: Palette.blackColor,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

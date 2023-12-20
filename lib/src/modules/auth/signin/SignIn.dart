@@ -39,7 +39,7 @@ class SignIn extends StatelessWidget {
             ),
           ),
           CustomTextField(
-            hintText: 'Enter your email'.tr,
+            hintText: 'Enter your email or number'.tr,
             onChange: (value) {
               controller.state.email = value;
             },

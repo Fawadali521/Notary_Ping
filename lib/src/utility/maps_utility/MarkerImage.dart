@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 
-import '../../index.dart';
+import '../../../index.dart';
 
 class MarkerImage extends StatelessWidget {
   final String imgUrl;

@@ -8,9 +8,38 @@ import 'package:pinput/pinput.dart';
 
 import '../../../../index.dart';
 
-class OtpVerification extends StatelessWidget {
-  OtpVerification({Key? key}) : super(key: key);
+class OtpVerification extends StatefulWidget {
+  const OtpVerification({Key? key}) : super(key: key);
+
+  @override
+  State<OtpVerification> createState() => _OtpVerificationState();
+}
+
+class _OtpVerificationState extends State<OtpVerification>
+    with TickerProviderStateMixin {
   // final ForgotController controller = Get.find();
+  late AnimationController controller;
+  int levelClock = 180;
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+        vsync: this,
+        duration: Duration(
+          seconds: levelClock,
+        ));
+
+    controller.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,14 +103,23 @@ class OtpVerification extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Center(
-              child: Text(
-                "Resend OTP".tr,
-                style: TextStyles.bodyMedium.copyWith(
-                  fontSize: 16,
-                  color: Palette.primaryColor,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Resend OTP".tr,
+                  style: TextStyles.bodyMedium.copyWith(
+                    fontSize: 16,
+                    color: Palette.primaryColor,
+                  ),
                 ),
-              ),
+                Countdown(
+                  animation: StepTween(
+                    begin: levelClock, // THIS IS A USER ENTERED NUMBER
+                    end: 0,
+                  ).animate(controller),
+                ),
+              ],
             ),
           ),
           Row(
@@ -109,15 +147,12 @@ class OtpVerification extends StatelessWidget {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 12.h),
-            child: SubmitButton(
-              backGroundColor: Palette.primaryColor,
-              onTap: () {
-                Get.off(() => const ResetPassword());
-              },
-              title: "Verify".tr,
-            ),
+          SubmitButton(
+            backGroundColor: Palette.primaryColor,
+            onTap: () {
+              Get.off(() => const ResetPassword());
+            },
+            title: "Verify".tr,
           ),
           SizedBox(height: 12.h)
         ],
@@ -134,4 +169,32 @@ class OtpVerification extends StatelessWidget {
       color: Palette.bgTextFeildColor,
     ),
   );
+}
+
+// ignore: must_be_immutable
+class Countdown extends AnimatedWidget {
+  Animation<int> animation;
+
+  Countdown({super.key, required this.animation})
+      : super(listenable: animation);
+
+  @override
+  build(BuildContext context) {
+    Duration clockTimer = Duration(seconds: animation.value);
+    String timerText =
+        '${clockTimer.inMinutes.remainder(60).toString()}:${clockTimer.inSeconds.remainder(60).toString().padLeft(2, '0')}';
+    // print('animation.value  ${animation.value} ');
+    // print('inMinutes ${clockTimer.inMinutes.toString()}');
+    // print('inSeconds ${clockTimer.inSeconds.toString()}');
+    // print(
+    //     'inSeconds.remainder ${clockTimer.inSeconds.remainder(60).toString()}');
+
+    return Text(
+      timerText,
+      style: TextStyles.bodyMedium.copyWith(
+        fontSize: 16,
+        color: Palette.primaryColor,
+      ),
+    );
+  }
 }

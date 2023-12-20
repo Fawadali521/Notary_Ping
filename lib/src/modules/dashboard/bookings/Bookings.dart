@@ -1,7 +1,5 @@
 // ignore_for_file: file_names
 
-import 'dart:math';
-
 import 'package:notary_ping/src/modules/dashboard/bookings/Tracking.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomBookingButon.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomBookingItem.dart';
@@ -46,32 +44,26 @@ class _BookingsState extends State<Bookings> {
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Row(
               children: [
-                Expanded(
-                  flex: 3,
-                  child: CustomBookingButon(
-                    onTap: () {
-                      currentIndex = 0;
-                      pageController?.jumpToPage(0);
-                      setState(() {});
-                    },
-                    title: 'Currents booking'.tr,
-                    icon: bookingsIcon,
-                    isSlected: currentIndex == 0 ? true : false,
-                  ),
+                CustomBookingButon(
+                  onTap: () {
+                    currentIndex = 0;
+                    pageController?.jumpToPage(0);
+                    setState(() {});
+                  },
+                  title: 'Currents booking'.tr,
+                  icon: bookingsIcon,
+                  isSlected: currentIndex == 0 ? true : false,
                 ),
                 SizedBox(width: 16.w),
-                Expanded(
-                  flex: 2,
-                  child: CustomBookingButon(
-                    onTap: () {
-                      currentIndex = 1;
-                      pageController?.jumpToPage(1);
-                      setState(() {});
-                    },
-                    title: 'History'.tr,
-                    icon: historyIcon,
-                    isSlected: currentIndex == 1 ? true : false,
-                  ),
+                CustomBookingButon(
+                  onTap: () {
+                    currentIndex = 1;
+                    pageController?.jumpToPage(1);
+                    setState(() {});
+                  },
+                  title: 'History'.tr,
+                  icon: historyIcon,
+                  isSlected: currentIndex == 1 ? true : false,
                 ),
               ],
             ),
@@ -88,13 +80,11 @@ class _BookingsState extends State<Bookings> {
               },
               children: [
                 ListView.builder(
-                  itemCount: 5,
+                  itemCount: userNamesList.length,
                   itemBuilder: (context, index) {
-                    int randomIndex = Random().nextInt(userNamesList.length);
-
                     return CustomBookingItem(
-                      imgUrl: userImages[randomIndex],
-                      name: userNamesList[randomIndex],
+                      imgUrl: userImages[index],
+                      name: userNamesList[index],
                       date: 'June 10,2023',
                       time: '10:30 AM',
                       onTap: () => Get.to(() => const Tracking()),
@@ -102,12 +92,11 @@ class _BookingsState extends State<Bookings> {
                   },
                 ),
                 ListView.builder(
-                  itemCount: 5,
+                  itemCount: userNamesList.length,
                   itemBuilder: (context, index) {
-                    int randomIndex = Random().nextInt(userNamesList.length);
                     return CustomBookingItem(
-                      imgUrl: userImages[randomIndex],
-                      name: userNamesList[randomIndex],
+                      imgUrl: userImages[index],
+                      name: userNamesList[index],
                       date: 'June 10,2023',
                       time: '10:30 AM',
                       isHistory: true,
@@ -120,14 +109,6 @@ class _BookingsState extends State<Bookings> {
               ],
             ),
           ),
-          //
-          // SizedBox(height: 20.h),
-          // const CustomBookingItem(
-          //   imgUrl: user,
-          //   name: 'John Doe',
-          //   date: 'June 10,2023',
-          //   time: '10:30 AM',
-          // ),
         ],
       ),
     );
@@ -159,9 +140,12 @@ showHistoryViewAlert(BuildContext context) {
                 child: const Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                        top: 20, right: 20, left: 20, bottom: 5),
-                    child: Icon(Icons.close),
+                    padding:
+                        EdgeInsets.only(bottom: 5, left: 5, top: 8, right: 8),
+                    child: Icon(
+                      Icons.close,
+                      color: Palette.redColor,
+                    ),
                   ),
                 ),
               ),
