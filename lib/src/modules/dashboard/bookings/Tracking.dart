@@ -13,7 +13,6 @@ import 'package:notary_ping/src/modules/dashboard/bookings/utility/CustomRadio.d
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/TrackingItem.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
 import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 import 'package:notary_ping/src/utility/maps_utility/MarkerImage.dart';
 import 'package:permission_handler/permission_handler.dart';
 

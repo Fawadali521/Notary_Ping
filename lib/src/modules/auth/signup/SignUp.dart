@@ -4,10 +4,8 @@ import 'package:flutter/gestures.dart';
 import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
 import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/states/signup/SignUpController.dart';
-import 'package:notary_ping/src/utility/CustomDivider.dart';
 import 'package:notary_ping/src/utility/CustomDropDown.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 

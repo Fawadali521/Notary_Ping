@@ -4,7 +4,6 @@ import 'package:notary_ping/src/modules/auth/forgot/OtpVerification.dart';
 import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
 import 'package:notary_ping/src/modules/auth/signup/SignUp.dart';
 import 'package:notary_ping/src/states/forgot/ForgotController.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 

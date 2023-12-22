@@ -1,7 +1,6 @@
 // ignore_for_file: file_names
 
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 

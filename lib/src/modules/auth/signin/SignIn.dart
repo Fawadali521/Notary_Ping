@@ -5,9 +5,7 @@ import 'package:notary_ping/src/modules/auth/forgot/ForgotPassword.dart';
 import 'package:notary_ping/src/modules/auth/signup/SignUp.dart';
 import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/states/signin/LoginController.dart';
-import 'package:notary_ping/src/utility/CustomDivider.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 

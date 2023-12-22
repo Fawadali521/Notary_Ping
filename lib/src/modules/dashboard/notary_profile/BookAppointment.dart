@@ -4,7 +4,6 @@ import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/Tracking.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/utility/CustomDateTime.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
-import 'package:notary_ping/src/utility/SubmitButton.dart';
 
 import '../../../../index.dart';
 
