@@ -1,5 +1,6 @@
 // ignore_for_file: file_names
 
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -150,7 +151,7 @@ class HomeState extends State<Home> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
     } else {
-      print("error in points ==> ${result.errorMessage}");
+      log("error in points ==> ${result.errorMessage}");
     }
     setState(() {});
     addPolyLine(polylineCoordinates);
@@ -181,13 +182,14 @@ class HomeState extends State<Home> {
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
-      // print("location get ==> $position");
+      log("location get ==> $position");
       latlang.clear();
       latlang.add(endLocation);
-      startLocation = LatLng(position.latitude, position.longitude);
+      startLocation = const LatLng(34.611139, 72.4623079);
+      // startLocation = LatLng(position.latitude, position.longitude);
       latlang.add(startLocation);
       // setState(() {});
-      // print("location get ==> $startLocation");
+      log("location get ==> $startLocation");
       addMarker(latlang);
     } catch (e) {
       // print("Error in location get ==> $e");
