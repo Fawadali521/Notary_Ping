@@ -8,6 +8,10 @@ class ProfileController extends GetxController {
   final state = ProfileState();
   changeIsShowAnswer(int index) {
     state.filteredFAQS[index].isShowAnswer =
+      
         !state.filteredFAQS[index].isShowAnswer!;
+  }
+   changeSelectCountryCode(String value) {
+    state.countryCodee.value = value;
   }
 }

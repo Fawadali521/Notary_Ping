@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
-import 'package:notary_ping/src/constant/time_formate.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/AudioMessage.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/MessageBar.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/TextMessage.dart';
@@ -11,6 +10,7 @@ import 'package:notary_ping/src/states/message/MessageController.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../../../index.dart';
+import '../../../constant/time_formate.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -31,13 +31,18 @@ class _ChatState extends State<Chat> {
   bool isLoading = true;
   late Directory appDirectory;
   final ScrollController _scrollController = ScrollController();
-
+  final FocusNode focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
 
     _getDir();
     _initialiseControllers();
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        moveUpper();
+      }
+    });
   }
 
   void _getDir() async {
@@ -59,6 +64,17 @@ class _ChatState extends State<Chat> {
   void dispose() {
     recorderController.dispose();
     super.dispose();
+  }
+
+  moveUpper() async {
+    await Future.delayed(const Duration(milliseconds: 500), () {});
+    Future.delayed(const Duration(milliseconds: 100), () {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   @override
@@ -253,6 +269,7 @@ class _ChatState extends State<Chat> {
                 );
               }),
           MessageBar(
+            focusNode: focusNode,
             onTapRefreshFile: controller.state.isRecording.value
                 ? () {
                     _refreshWave();
@@ -487,30 +504,14 @@ class _ChatState extends State<Chat> {
               ),
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
-                child: MaterialButton(
-                  onPressed: () => Get.back(),
-                  elevation: 0,
-                  color: Palette.whiteColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderStyles.normal,
-                    side: const BorderSide(
-                      color: Palette.whiteColor,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.h),
-                    child: Center(
-                      child: Text(
-                        "Cancel".tr,
-                        style: TextStyles.titleSmall.copyWith(
-                          color: Palette.primaryColor,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                ))
+              padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+              child: SubmitButton(
+                onTap: () => Get.back(),
+                title: "Cancel",
+                backGroundColor: Palette.whiteColor,
+                titleColor: Palette.primaryColor,
+              ),
+            )
           ],
         );
       },

@@ -7,6 +7,7 @@ import 'package:notary_ping/src/modules/dashboard/profile/CustomerSupport.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/EditProfile.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/PrivacyPolicy.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/TermAndCondition.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/address_managment/SelectLocation.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/utility/CustomProfileItem.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
 
@@ -78,6 +79,11 @@ class Profile extends StatelessWidget {
             title: "Edit profile",
             icon: editIcon,
             onTap: () => Get.to(() => EditProfile()),
+          ),
+          CustomProfileItem(
+            title: "Address book",
+            icon: locationIcon,
+            onTap: () => Get.to(() => const SelectLocation()),
           ),
           CustomProfileItem(
             title: "App setting",
