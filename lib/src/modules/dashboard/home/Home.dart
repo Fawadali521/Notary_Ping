@@ -79,14 +79,19 @@ class HomeState extends State<Home> {
   buildComplete() async {
     Future.delayed(const Duration(seconds: 2), () {});
     // print("clll");
-    RenderRepaintBoundary boundary = markersData[0]['key']
-        .currentContext!
-        .findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage();
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-    bytes = byteData!.buffer.asUint8List();
-    // print("byttttttt==$bytes");
-    setState(() {});
+    try {
+      RenderRepaintBoundary boundary = markersData[0]['key']
+          .currentContext!
+          .findRenderObject() as RenderRepaintBoundary;
+      ui.Image image = await boundary.toImage();
+      ByteData? byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      bytes = byteData!.buffer.asUint8List();
+      // print("byttttttt==$bytes");
+      setState(() {});
+    } catch (e) {
+      log("Error in build ==>$e");
+    }
   }
 
   // add markers
@@ -434,13 +439,13 @@ class HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                _topBar(isSticky: sheetCollapsed),
+                topBar(isSticky: sheetCollapsed),
               ],
             ),
     );
   }
 
-  _topBar({required bool isSticky}) {
+  topBar({required bool isSticky}) {
     return Positioned(
       top: 0,
       child: AnnotatedRegion<SystemUiOverlayStyle>(
