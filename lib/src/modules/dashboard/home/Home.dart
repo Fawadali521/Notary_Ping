@@ -237,39 +237,37 @@ class HomeState extends State<Home> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: isLoding
-          ? SingleChildScrollView(
-              child: Column(
-                // shrinkWrap: true,
-                children: [
-                  Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      height: 1.sh,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
+          ? Stack(
+              // shrinkWrap: true,
+              children: [
+                SizedBox(
+                  width: 200,
+                  height: 190,
+                  child: RepaintBoundary(
+                    key: markersData[0]['key'],
+                    child: markersData[0]['widget'],
+                  ),
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 190,
+                  child: RepaintBoundary(
+                    key: markersData[1]['key'],
+                    child: markersData[1]['widget'],
+                  ),
+                ),
+                Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    height: 1.sh,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0),
                     ),
                   ),
-                  SizedBox(
-                    width: 200,
-                    height: 190,
-                    child: RepaintBoundary(
-                      key: markersData[0]['key'],
-                      child: markersData[0]['widget'],
-                    ),
-                  ),
-                  SizedBox(
-                    width: 200,
-                    height: 190,
-                    child: RepaintBoundary(
-                      key: markersData[1]['key'],
-                      child: markersData[1]['widget'],
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             )
           : Stack(
               children: [
