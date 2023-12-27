@@ -1,18 +1,19 @@
 // ignore_for_file: file_names, non_constant_identifier_names
 
+import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
+
 import '../../index.dart';
 
 PreferredSize CustomAppBar(
     {required String title, bool? isBack, bool? isNotification, Color? color}) {
-  return 
-  PreferredSize(
+  return PreferredSize(
     preferredSize: const Size.fromHeight(60),
     child: AppBar(
       backgroundColor: color ?? Palette.bgColor,
       surfaceTintColor: Colors.transparent,
       centerTitle: true,
       title: Text(
-        title,
+        title.tr,
         style: TextStyles.headlineLarge,
       ),
       elevation: 0,
@@ -32,7 +33,7 @@ PreferredSize CustomAppBar(
       actions: [
         isNotification == true
             ? GestureDetector(
-                // onTap: () => Get.to(() => const Notification()),
+                onTap: () => Get.to(() => NotificationPage()),
                 child: Padding(
                   padding:
                       EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),

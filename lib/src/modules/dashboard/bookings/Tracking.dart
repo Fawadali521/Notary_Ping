@@ -74,7 +74,9 @@ class TrackingState extends State<Tracking> {
         ),
       );
     }
+    setState(() {});
     if (markers.length > 1) {
+      log("call get direction");
       getDirections(markers);
     }
   }
@@ -110,9 +112,10 @@ class TrackingState extends State<Tracking> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
     } else {
-      log("${result.errorMessage}");
+      log("erros get dierction ==> ${result.errorMessage}");
     }
-    setState(() {});
+    // setState(() {});
+    log("call polylines");
     addPolyLine(polylineCoordinates);
   }
 
@@ -125,9 +128,10 @@ class TrackingState extends State<Tracking> {
       width: 4,
     );
     polylines[id] = polyline;
-    setState(() {
-      isLoding = false;
-    });
+    log("end polylines");
+
+    isLoding = false;
+    setState(() {});
   }
 
   Future<void> getCurrentLocation() async {
@@ -177,7 +181,6 @@ class TrackingState extends State<Tracking> {
     }
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Scaffold(

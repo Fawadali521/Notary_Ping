@@ -10,6 +10,7 @@ import 'package:notary_ping/index.dart';
 import 'package:notary_ping/src/modules/dashboard/bookings/utility/WdigetToMarker.dart';
 import 'package:notary_ping/src/modules/dashboard/home/utility/CustomNotaryItem.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
+import 'package:notary_ping/src/modules/dashboard/notification/Notification.dart';
 import 'package:notary_ping/src/utility/maps_utility/MarkerImage.dart';
 import 'package:notary_ping/src/utility/maps_utility/MarkerImageWithName.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -201,6 +202,7 @@ class HomeState extends State<Home> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: isLoding
           ? Stack(
               // shrinkWrap: true,
@@ -429,42 +431,45 @@ class HomeState extends State<Home> {
                       ),
                     ),
                     !isSticky
-                        ? Container(
-                            margin: const EdgeInsets.only(left: 8, right: 8),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Palette.whiteColor,
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Palette.greyTextColor.withOpacity(0.5),
+                        ? GestureDetector(
+                            onTap: () => Get.to(() => NotificationPage()),
+                            child: Container(
+                              margin: const EdgeInsets.only(left: 8, right: 8),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Palette.whiteColor,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Palette.greyTextColor.withOpacity(0.5),
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: Stack(
-                                children: [
-                                  Image.asset(
-                                    bellIcon,
-                                    color: Palette.blackColor,
-                                    height: 24,
-                                    width: 24,
-                                    fit: BoxFit.contain,
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    top: 2,
-                                    child: CircleAvatar(
-                                      radius: 7,
-                                      backgroundColor: Palette.primaryColor,
-                                      child: Text(
-                                        "5",
-                                        style: TextStyles.bodyLarge.copyWith(
-                                          color: Palette.whiteColor,
-                                          fontSize: 10,
+                              child: Center(
+                                child: Stack(
+                                  children: [
+                                    Image.asset(
+                                      bellIcon,
+                                      color: Palette.blackColor,
+                                      height: 24,
+                                      width: 24,
+                                      fit: BoxFit.contain,
+                                    ),
+                                    Positioned(
+                                      right: 0,
+                                      top: 2,
+                                      child: CircleAvatar(
+                                        radius: 7,
+                                        backgroundColor: Palette.primaryColor,
+                                        child: Text(
+                                          "5",
+                                          style: TextStyles.bodyLarge.copyWith(
+                                            color: Palette.whiteColor,
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           )

@@ -3,8 +3,8 @@
 import 'dart:io';
 
 import 'package:audio_waveforms/audio_waveforms.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/AudioMessage.dart';
-import 'package:notary_ping/src/modules/dashboard/message/utility/MessageBar.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/TextMessage.dart';
 import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
 import 'package:notary_ping/src/states/message/MessageController.dart';
@@ -33,6 +33,10 @@ class _ChatState extends State<Chat> {
   late Directory appDirectory;
   final ScrollController _scrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
+  final TextEditingController _textController = TextEditingController();
+
+  bool emojiShowing = false;
+
   @override
   void initState() {
     super.initState();
@@ -41,9 +45,30 @@ class _ChatState extends State<Chat> {
     _initialiseControllers();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
+        if (emojiShowing) {
+          emojiShowing = false;
+        }
+        setState(() {});
         moveUpper();
       }
     });
+  }
+
+  _onEmojiSelected(Emoji emoji) {
+    _textController
+      ..text += emoji.emoji
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: _textController.text.length));
+    setState(() {
+      // _send = true;
+    });
+  }
+
+  _onBackspacePressed() {
+    _textController
+      ..text = _textController.text.characters.skipLast(1).toString()
+      ..selection = TextSelection.fromPosition(
+          TextPosition(offset: _textController.text.length));
   }
 
   void _getDir() async {
@@ -64,6 +89,7 @@ class _ChatState extends State<Chat> {
   @override
   void dispose() {
     recorderController.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -265,22 +291,227 @@ class _ChatState extends State<Chat> {
                         appDirectory: appDirectory,
                         time: onlyTime.format(now),
                       ),
-                    SizedBox(height: 90.h),
+                    SizedBox(height: !emojiShowing ? 90.h : 340.h),
                   ],
                 );
               }),
-          MessageBar(
-            focusNode: focusNode,
-            onTapRefreshFile: controller.state.isRecording.value
-                ? () {
-                    _refreshWave();
-                  }
-                : () {},
-            recorderController: recorderController,
-            onTapVoice: _startOrStopRecording,
-            messageBarHitText: "Enter your message",
-            messageBarHintStyle: TextStyles.bodyMedium,
-            onSend: (_) {},
+
+          /// message bar code
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              color: Palette.whiteColor,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 14, horizontal: 20.w),
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28.0),
+                              color: Palette.bgTextFeildColor,
+                            ),
+                            child: Row(
+                              children: [
+                                controller.state.isRecording.value
+                                    ? Expanded(
+                                        child: AudioWaveforms(
+                                          enableGesture: true,
+                                          size: const Size(
+                                            double.minPositive,
+                                            50,
+                                          ),
+                                          recorderController:
+                                              recorderController,
+                                          waveStyle: const WaveStyle(
+                                            waveColor: Colors.black54,
+                                            extendWaveform: true,
+                                            showMiddleLine: false,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(28),
+                                            color: Palette.bgTextFeildColor,
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                          margin: EdgeInsets.zero,
+                                        ),
+                                      )
+                                    : Expanded(
+                                        child: Row(
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(
+                                                !emojiShowing
+                                                    ? Icons
+                                                        .emoji_emotions_outlined
+                                                    : Icons.keyboard,
+                                                color: Palette.primaryColor,
+                                                size: 24,
+                                              ),
+                                              onPressed: () {
+                                                // Get.to(const Home());
+                                                moveUpper();
+                                                setState(() {
+                                                  emojiShowing = !emojiShowing;
+                                                });
+                                                if (emojiShowing) {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                } else {
+                                                  FocusScope.of(context)
+                                                      .requestFocus();
+                                                }
+                                              },
+                                            ),
+                                            Expanded(
+                                              child: TextFormField(
+                                                focusNode: focusNode,
+                                                controller: _textController,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                textCapitalization:
+                                                    TextCapitalization
+                                                        .sentences,
+                                                minLines: 1,
+                                                maxLines: 3,
+                                                // onChanged: widget.onTextChanged,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  hintText:
+                                                      "Enter your message",
+                                                  hintMaxLines: 1,
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          // horizontal: 16,
+                                                          vertical: 14),
+                                                  hintStyle:
+                                                      TextStyles.bodyMedium,
+                                                  fillColor: Colors
+                                                      .transparent, // Palette.bgTextFeildColor,
+                                                  filled: true,
+                                                  border: InputBorder.none,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    InkWell(
+                                      onTap: controller.state.isRecording.value
+                                          ? () {
+                                              _refreshWave();
+                                            }
+                                          : () {},
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 4),
+                                        child: Icon(
+                                          controller.state.isRecording.value
+                                              ? Icons.refresh
+                                              : Icons.attach_file,
+                                          color: Palette.primaryColor,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: _startOrStopRecording,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 4, right: 10),
+                                        child: Icon(
+                                          controller.state.isRecording.value
+                                              ? Icons.stop
+                                              : Icons.keyboard_voice,
+                                          color: Palette.primaryColor,
+                                          size: 24,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        InkWell(
+                          child: const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Palette.primaryColor,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5),
+                              child: Icon(
+                                Icons.send_rounded,
+                                color: Colors.white,
+                                size: 20,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            if (_textController.text.trim() != '') {
+                              // if (widget.onSend != null) {
+                              //   widget.onSend!(_textController.text.trim());
+                              // }
+                              _textController.text = '';
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Offstage(
+                    offstage: !emojiShowing,
+                    child: SizedBox(
+                      height: 250.h,
+                      width: 1.sw,
+                      child: EmojiPicker(
+                        textEditingController: _textController,
+                        onBackspacePressed: _onBackspacePressed,
+                        config: Config(
+                          columns: 7,
+                          emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                          verticalSpacing: 0,
+                          horizontalSpacing: 0,
+                          gridPadding: EdgeInsets.zero,
+                          initCategory: Category.RECENT,
+                          bgColor: Palette.bgColor,
+                          indicatorColor: Colors.blue,
+                          iconColor: Palette.greyTextColor,
+                          iconColorSelected: Palette.primaryColor,
+                          backspaceColor: Palette.primaryColor,
+                          skinToneDialogBgColor: Palette.primaryColor,
+                          skinToneIndicatorColor: Palette.greyTextColor,
+                          enableSkinTones: true,
+                          recentTabBehavior: RecentTabBehavior.RECENT,
+                          recentsLimit: 28,
+                          replaceEmojiOnLimitExceed: false,
+                          noRecents: const Text(
+                            'No Recents',
+                            style:
+                                TextStyle(fontSize: 20, color: Colors.black26),
+                            textAlign: TextAlign.center,
+                          ),
+                          loadingIndicator: const SizedBox.shrink(),
+                          tabIndicatorAnimDuration: kTabScrollDuration,
+                          // categoryIcons: CategoryIcons(),
+                          buttonMode: ButtonMode.MATERIAL,
+                          // checkPlatformCompatibility: true,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),

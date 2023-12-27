@@ -115,6 +115,7 @@ class Languages extends Translations {
           'Description': 'Description',
           'Submit report': 'Submit report',
           'Address Book': 'Address Book',
+          'Clear all': 'Clear all',
           '': '',
         },
       };
