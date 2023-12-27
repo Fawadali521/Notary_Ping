@@ -54,6 +54,8 @@ const String imgMIcon = "$images/img_m.png";
 const String nameMIcon = "$images/name_m.png";
 const String startMakerIcon = "$images/startM.png";
 const String filterIcon = "$icons/filter.png";
+const String mapMarkerIcon = "$icons/map_loc.png";
+const String editAddressIcon = "$icons/edit_add.png";
 
 ///
 ///dynamic images

@@ -6,6 +6,7 @@ import 'package:audio_waveforms/audio_waveforms.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/AudioMessage.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/MessageBar.dart';
 import 'package:notary_ping/src/modules/dashboard/message/utility/TextMessage.dart';
+import 'package:notary_ping/src/modules/dashboard/notary_profile/NotaryProfile.dart';
 import 'package:notary_ping/src/states/message/MessageController.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -349,68 +350,71 @@ class _ChatState extends State<Chat> {
           ),
         ),
       ],
-      title: Row(
-        children: [
-          Align(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              height: 44,
-              width: 44,
-              child: Center(
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          user,
-                          fit: BoxFit.cover,
-                          height: 60,
-                          width: 60,
+      title: GestureDetector(
+        onTap: () => Get.to(() => const NotaryProfile()),
+        child: Row(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                height: 44,
+                width: 44,
+                child: Center(
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            user,
+                            fit: BoxFit.cover,
+                            height: 60,
+                            width: 60,
+                          ),
                         ),
                       ),
-                    ),
-                    const Positioned(
-                      right: 0,
-                      child: CircleAvatar(
-                        backgroundColor: Palette.whiteColor,
-                        radius: 6,
+                      const Positioned(
+                        right: 0,
                         child: CircleAvatar(
-                          backgroundColor: Palette.greenColor,
-                          radius: 5,
+                          backgroundColor: Palette.whiteColor,
+                          radius: 6,
+                          child: CircleAvatar(
+                            backgroundColor: Palette.greenColor,
+                            radius: 5,
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  "Fawad",
-                  style: TextStyles.titleSmall,
-                ),
-              ),
-              Opacity(
-                opacity: 0.5,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    "Active now", // isTyping ? "typing..." : "online",
-                    style: TextStyles.bodySmall,
+                      )
+                    ],
                   ),
                 ),
               ),
-            ],
-          ),
-        ],
+            ),
+            const Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    "Fawad",
+                    style: TextStyles.titleSmall,
+                  ),
+                ),
+                Opacity(
+                  opacity: 0.5,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      "Active now", // isTyping ? "typing..." : "online",
+                      style: TextStyles.bodySmall,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

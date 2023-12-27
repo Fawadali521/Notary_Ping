@@ -4,7 +4,8 @@ import '../../index.dart';
 
 PreferredSize CustomAppBar(
     {required String title, bool? isBack, bool? isNotification, Color? color}) {
-  return PreferredSize(
+  return 
+  PreferredSize(
     preferredSize: const Size.fromHeight(60),
     child: AppBar(
       backgroundColor: color ?? Palette.bgColor,

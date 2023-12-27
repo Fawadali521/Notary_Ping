@@ -50,7 +50,7 @@ class HomeState extends State<Home> {
     if (Platform.isAndroid) {
       checkLocationStatus();
     } else {
-      getCurrentLocation();
+      getStartPage();
     }
     super.initState();
     // print("calll one 4");
@@ -77,8 +77,7 @@ class HomeState extends State<Home> {
     }
   ];
   buildComplete() async {
-    Future.delayed(const Duration(seconds: 2), () {});
-    // print("clll");
+    await Future.delayed(const Duration(milliseconds: 500), () {});
     try {
       RenderRepaintBoundary boundary = markersData[0]['key']
           .currentContext!
@@ -87,20 +86,17 @@ class HomeState extends State<Home> {
       ByteData? byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       bytes = byteData!.buffer.asUint8List();
-      // print("byttttttt==$bytes");
+
       setState(() {});
     } catch (e) {
       log("Error in build ==>$e");
+      buildComplete();
     }
   }
 
   // add markers
   addMarker(List<LatLng> latLng) async {
     await buildComplete();
-    // Future.delayed(const Duration(seconds: 2), () {});
-    // print("list of latlong ==>${latlang.length}");
-    // bytes = await controller.capture();
-    // print("buuuuuu==$bytes");
     for (int i = 0; i < latLng.length; i++) {
       markers.add(
         Marker(
@@ -119,64 +115,12 @@ class HomeState extends State<Home> {
         ),
       );
     }
-    setState(() {});
-    if (markers.length > 1) {
-      getDirections(markers);
-    }
-  }
-
-  // Future<BitmapDescriptor> getCustomIcon() async {
-  //   return const MarkerImage(
-  //     borderColor: Colors.red,
-  //     imgUrl: user,
-  //   ).toBitmapDescriptor();
-  // }
-
-  // This functions gets real road polyline routes
-  getDirections(List<Marker> markers) async {
-    List<LatLng> polylineCoordinates = [];
-    List<PolylineWayPoint> polylineWayPoints = [];
-    for (var i = 0; i < markers.length; i++) {
-      polylineWayPoints.add(PolylineWayPoint(
-        location:
-            "${markers[i].position.latitude.toString()},${markers[i].position.longitude.toString()}",
-        stopOver: true,
-      ));
-    }
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-      Constants.googleMapsApiKey, //GoogleMap ApiKey
-      PointLatLng(markers.first.position.latitude,
-          markers.first.position.longitude), //first added marker
-      PointLatLng(markers.last.position.latitude,
-          markers.last.position.longitude), //last added marker
-      travelMode: TravelMode.driving,
-    );
-    if (result.points.isNotEmpty) {
-      for (var point in result.points) {
-        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      }
-    } else {
-      log("error in points ==> ${result.errorMessage}");
-    }
-    setState(() {});
-    addPolyLine(polylineCoordinates);
-  }
-
-  addPolyLine(List<LatLng> polylineCoordinates) {
-    PolylineId id = const PolylineId("poly");
-    Polyline polyline = Polyline(
-      polylineId: id,
-      color: Colors.blue,
-      points: polylineCoordinates,
-      width: 4,
-    );
-    polylines[id] = polyline;
     setState(() {
       isLoding = false;
     });
   }
 
-  Future<void> getCurrentLocation() async {
+  Future<void> getStartPage() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -184,10 +128,11 @@ class HomeState extends State<Home> {
     }
     // print("start geting location");
     try {
-      Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
-      );
-      log("location get ==> $position");
+      // Position position = await Geolocator.getCurrentPosition(
+      //   desiredAccuracy: LocationAccuracy.high,
+      // );
+      // log("location get ==> $position");
+      log("Start in set page");
       latlang.clear();
       latlang.add(endLocation);
       startLocation = const LatLng(34.611139, 72.4623079);
@@ -197,7 +142,7 @@ class HomeState extends State<Home> {
       log("location get ==> $startLocation");
       addMarker(latlang);
     } catch (e) {
-      // print("Error in location get ==> $e");
+      log("Error in set start  ==> $e");
       latlang.clear();
       latlang.add(endLocation);
       startLocation = const LatLng(34.611139, 72.4623079);
@@ -208,15 +153,28 @@ class HomeState extends State<Home> {
     }
   }
 
+  Future<void> getCurrentLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+      log("location get ==> $position");
+      startLocation = LatLng(position.latitude, position.longitude);
+      setState(() {});
+    } catch (e) {
+      log("error in current location get ==> $e");
+    }
+  }
+
   Future<void> checkLocationStatus() async {
     var status = await Permission.location.status;
     if (status.isGranted) {
-      getCurrentLocation();
+      getStartPage();
     } else {
       await Permission.location.request();
       var newStatus = await Permission.location.status;
       if (newStatus.isGranted) {
-        getCurrentLocation();
+        getStartPage();
       } else {
         SnackBarToast(
           message: "Please allow location permission from app setting",
@@ -335,7 +293,7 @@ class HomeState extends State<Home> {
                     child: DraggableScrollableSheet(
                       initialChildSize: 0.43, // Set the initial size to 0.4
                       maxChildSize: 0.87, // Maximum size when fully expanded
-                      minChildSize: 0.11,
+                      minChildSize: 0.13,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
                         return Container(

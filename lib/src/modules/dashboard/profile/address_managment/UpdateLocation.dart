@@ -8,10 +8,8 @@ import 'package:notary_ping/src/utility/CustomDropDown.dart';
 import '../../../../../index.dart';
 
 class UpdateLocation extends StatefulWidget {
-  final String location;
   const UpdateLocation({
     Key? key,
-    required this.location,
   }) : super(key: key);
 
   @override
@@ -21,9 +19,16 @@ class UpdateLocation extends StatefulWidget {
 class _UpdateLocationState extends State<UpdateLocation> {
   final ProfileController controller = Get.find<ProfileController>();
   TextEditingController addressController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController postCodeController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+
   @override
   void initState() {
-    addressController.text = widget.location;
+    addressController.text = "abc, Peshawar, Khyber Pakhtunkhwa, Pakistan";
+    nameController.text = "Fawad";
+    postCodeController.text = "3435";
+    phoneController.text = "3345233543";
     super.initState();
   }
 
@@ -49,7 +54,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
               SizedBox(height: 12.h),
               CustomTextField(
                 hintText: 'Enter your full name'.tr,
-                onChange: (value) {},
+                controller: nameController,
                 prefixIcon: userIcon,
               ),
               SizedBox(height: 16.h),
@@ -72,9 +77,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
                     flex: 5,
                     child: CustomTextField(
                       hintText: 'Phone number'.tr,
-                      onChange: (value) {
-                        // controller.state.confirmPassword = value;
-                      },
+                      controller: phoneController,
                       keyboardType: TextInputType.number,
                     ),
                   ),
@@ -83,8 +86,8 @@ class _UpdateLocationState extends State<UpdateLocation> {
               SizedBox(height: 16.h),
               TextFormField(
                 controller: addressController,
-                textAlignVertical: TextAlignVertical.center,
-                maxLines: 3,
+                textAlignVertical: TextAlignVertical.top,
+                maxLines: null,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 style: TextStyles.bodyMedium.copyWith(
                   color: Palette.blackColor,
@@ -94,9 +97,9 @@ class _UpdateLocationState extends State<UpdateLocation> {
                   contentPadding:
                       EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
                   alignLabelWithHint: true,
-                  prefixIcon: Padding(
+                  prefixIcon: Container(
                     padding: EdgeInsets.only(
-                        left: 16.w, right: 16.w, top: 16, bottom: 50),
+                        left: 16.w, right: 16.w, top: 16, bottom: 16),
                     child: Image.asset(
                       locationIcon,
                       height: 20,
@@ -126,7 +129,7 @@ class _UpdateLocationState extends State<UpdateLocation> {
               SizedBox(height: 16.h),
               CustomTextField(
                 hintText: 'Zip code'.tr,
-                onChange: (value) {},
+                controller: postCodeController,
                 prefixIcon: zipcodeIcon,
               ),
             ],

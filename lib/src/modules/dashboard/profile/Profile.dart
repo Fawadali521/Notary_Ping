@@ -7,7 +7,7 @@ import 'package:notary_ping/src/modules/dashboard/profile/CustomerSupport.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/EditProfile.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/PrivacyPolicy.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/TermAndCondition.dart';
-import 'package:notary_ping/src/modules/dashboard/profile/address_managment/SelectLocation.dart';
+import 'package:notary_ping/src/modules/dashboard/profile/address_managment/AddressBook.dart';
 import 'package:notary_ping/src/modules/dashboard/profile/utility/CustomProfileItem.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
 
@@ -83,7 +83,7 @@ class Profile extends StatelessWidget {
           CustomProfileItem(
             title: "Address book",
             icon: locationIcon,
-            onTap: () => Get.to(() => const SelectLocation()),
+            onTap: () => Get.to(() => AddressBook()),
           ),
           CustomProfileItem(
             title: "App setting",
@@ -115,6 +115,7 @@ class Profile extends StatelessWidget {
             icon: logoutIcon,
             onTap: () => Get.offAll(() => SignIn()),
           ),
+          SizedBox(height: 24.h),
         ],
       ),
     );

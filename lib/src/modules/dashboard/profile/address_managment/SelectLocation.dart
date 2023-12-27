@@ -23,28 +23,35 @@ class SelectLocation extends StatefulWidget {
 class SelectLocationState extends State<SelectLocation> {
   bool isLoding = false;
   GoogleMapController? mapController; //contrller for Google map
-  PolylinePoints polylinePoints = PolylinePoints();
   List<double> latitude = [];
   List<double> longitude = [];
   List<LatLng> latlang = [];
-  List<Marker> markers = []; //markers for google map
-  Map<PolylineId, Polyline> polylines = {}; //polylines to show direction
   late LatLng currentSelectLocation; //= const LatLng(34.611139, 72.4623079);
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  double paddingBottom = 0.04;
+  double paddingBottom = 0.21;
   String currentLocation = '';
   TextEditingController placesController = TextEditingController();
   var uuid = const Uuid();
   String sessionToken = DateTime.now().second.toString();
   List<dynamic> places = [];
   bool isListShow = false;
-  bool isLocationAddress = false;
+  bool isFocus = false;
+  final FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
+    focusNode.addListener(() {
+      if (focusNode.hasFocus) {
+        setState(() {
+          isFocus = true;
+        });
+      } else {
+        setState(() {
+          isFocus = false;
+        });
+      }
+    });
     setState(() {
       isLoding = true;
-      isLocationAddress = true;
     });
     // widgetToImage();
     if (Platform.isAndroid) {
@@ -114,17 +121,12 @@ class SelectLocationState extends State<SelectLocation> {
         currentLocation =
             ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}, ${placemarks.first.postalCode}");
         latlang.add(currentSelectLocation);
-        // addMarker(currentSelectLocation);
-        isLocationAddress = false;
         isLoding = false;
       });
       log("location get ==> $currentSelectLocation");
-      // addMarker(latlang);
     } catch (e) {
       log("Error in location get ==> $e");
       currentSelectLocation = const LatLng(34.611139, 72.4623079);
-      // addMarker(latlang);
-      // checkLocationStatus();
     }
   }
 
@@ -158,7 +160,6 @@ class SelectLocationState extends State<SelectLocation> {
 
   locationUpdate(LatLng latLng) async {
     currentSelectLocation = latLng;
-    // setState(() {});
     List<Placemark> placemarks = await placemarkFromCoordinates(
         currentSelectLocation.latitude, currentSelectLocation.longitude);
     // log(" address ==> ${placemarks.first.toString()}");
@@ -173,6 +174,7 @@ class SelectLocationState extends State<SelectLocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Palette.bgColor,
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           isLoding
@@ -189,49 +191,49 @@ class SelectLocationState extends State<SelectLocation> {
                 )
               : Padding(
                   padding: EdgeInsets.only(bottom: paddingBottom.sh),
-                  child: GoogleMap(
-                    padding: !isLoding
-                        ? EdgeInsets.zero
-                        : EdgeInsets.only(top: 0.04.sh, bottom: 0.03.sh),
-                    myLocationEnabled: true, //set your location enable
-                    myLocationButtonEnabled: false,
-                    // compassEnabled: true,
-                    zoomGesturesEnabled: true, //enable Zoom in, out on map
-                    initialCameraPosition: CameraPosition(
-                      target: currentSelectLocation, //initial position
-                      zoom: 14.0, //initial zoom level
-                    ),
-                    polylines: Set<Polyline>.of(
-                        polylines.values), //polylines to show directions
-                    // markers: markers.toSet(), //markers to show on map
-                    markers: <Marker>{
-                      Marker(
-                        draggable: true,
-                        markerId: const MarkerId("1"),
-                        position: currentSelectLocation,
-                        icon: BitmapDescriptor.defaultMarker,
-                        infoWindow: const InfoWindow(
-                          title: 'Usted está aquí',
+                  child: Stack(
+                    children: [
+                      GoogleMap(
+                        padding: !isLoding
+                            ? EdgeInsets.zero
+                            : EdgeInsets.only(top: 0.04.sh, bottom: 0.03.sh),
+                        myLocationEnabled: true, //set your location enable
+                        myLocationButtonEnabled: false,
+                        // compassEnabled: true,
+                        zoomGesturesEnabled: true, //enable Zoom in, out on map
+                        initialCameraPosition: CameraPosition(
+                          target: currentSelectLocation, //initial position
+                          zoom: 14.0, //initial zoom level
                         ),
-                      )
-                    },
-                    onCameraMove: ((position) {
-                      currentSelectLocation = position.target;
-                      setState(() {});
-
-                      locationUpdate(position.target);
-                    }),
-                    // mapType: MapType.normal, //map type
-                    onMapCreated: (controller) {
-                      //method called when map is created
-                      setState(() {
-                        mapController = controller;
-                      });
-                    },
-                    // onTap: (newLatLng) async {
-                    //   currentSelectLocation = newLatLng;
-                    //   setState(() {});
-                    // },
+                        onCameraMove: ((position) {
+                          currentSelectLocation = position.target;
+                          setState(() {});
+                          // locationUpdate(position.target);
+                        }),
+                        onCameraIdle: () {
+                          locationUpdate(currentSelectLocation);
+                        },
+                        // mapType: MapType.normal, //map type
+                        onMapCreated: (controller) {
+                          //method called when map is created
+                          setState(() {
+                            mapController = controller;
+                          });
+                        },
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 0.h),
+                          child: Image.asset(
+                            mapMarkerIcon,
+                            height: 40,
+                            width: 40,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
           !isLoding
@@ -317,122 +319,147 @@ class SelectLocationState extends State<SelectLocation> {
   Widget topBar() {
     return Positioned(
       top: 0,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SafeArea(bottom: false, child: SizedBox()),
-          Row(
+      child: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark, // or .dark
+        child: Container(
+          color:
+              isFocus || isListShow ? Palette.whiteColor : Colors.transparent,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Stack(
+              const SafeArea(bottom: false, child: SizedBox()),
+              Row(
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: InkWell(
-                      onTap: () => Get.back(),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.w, vertical: 16.h),
-                        child: const Icon(
-                          Icons.arrow_back_ios_new_outlined,
-                          color: Palette.blackColor,
-                          size: 16,
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () => Get.back(),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20.w, vertical: 16.h),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              color: Palette.blackColor,
+                              size: 16,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: .3.sw, vertical: 8.h),
-                      child: Text(
-                        "Select location".tr,
-                        style: TextStyles.headlineLarge,
-                        textAlign: TextAlign.center,
+                      Align(
+                        alignment: Alignment.center,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: .3.sw, vertical: 8.h),
+                          child: Text(
+                            "Select location".tr,
+                            style: TextStyles.headlineLarge,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ],
               ),
+              Container(
+                padding: EdgeInsets.only(left: 20.w, right: 20.w, top: 10.h),
+                width: Get.width,
+                // color: Palette.whiteColor,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextField(
+                        focusnode: focusNode,
+                        controller: placesController,
+                        hintText: "Search".tr,
+                        prefixIcon: searchIcon,
+                        prefixIconColor: Palette.greyTextColor,
+                        borderRadius: BorderStyles.searchTextField,
+                        fillColor: Palette.whiteColor,
+                        borderColor: Palette.greyTextColor.withOpacity(0.5),
+                      ),
+                    ),
+                    SizedBox(width: 16.w),
+                    GestureDetector(
+                      onTap: () async {
+                        // await getCurrentLocation();
+                        // animateToMyLocation();
+                        Position position = await Geolocator.getCurrentPosition(
+                          desiredAccuracy: LocationAccuracy.high,
+                        );
+                        LatLng curentPosition =
+                            LatLng(position.latitude, position.longitude);
+                        await locationUpdate(curentPosition);
+                        animateToMyLocation();
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Palette.whiteColor,
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Palette.greyTextColor.withOpacity(0.5),
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            mapsIcon,
+                            height: 24,
+                            width: 24,
+                            color: Palette.blackColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 1.sw,
+                color: isListShow ? Palette.whiteColor : Colors.transparent,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: places.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () async {
+                        List<Location> locations = await locationFromAddress(
+                            places[index]['description']);
+                        log("long ==>${locations.last.longitude} && lat ==> ${locations.last.latitude}");
+                        currentSelectLocation = LatLng(
+                            locations.last.latitude, locations.last.longitude);
+                        await locationUpdate(currentSelectLocation);
+                        animateToMyLocation();
+                        FocusManager.instance.primaryFocus?.unfocus();
+                        placesController.clear();
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: 20.w,
+                              right: 20.w,
+                              bottom: 18.h,
+                            ),
+                            child: Text(
+                              places[index]['description'],
+                              style: TextStyles.bodyLarge,
+                            ),
+                          ),
+                          // const CustomDivider(),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            width: Get.width,
-            // color: Palette.whiteColor,
-            child: Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    controller: placesController,
-                    hintText: "Search".tr,
-                    prefixIcon: searchIcon,
-                    prefixIconColor: Palette.greyTextColor,
-                    borderRadius: BorderStyles.searchTextField,
-                    fillColor: Palette.whiteColor,
-                    borderColor: Palette.greyTextColor.withOpacity(0.5),
-                  ),
-                ),
-                SizedBox(width: 16.w),
-                GestureDetector(
-                  onTap: () async {
-                    // await getCurrentLocation();
-                    // animateToMyLocation();
-                    Position position = await Geolocator.getCurrentPosition(
-                      desiredAccuracy: LocationAccuracy.high,
-                    );
-                    LatLng curentPosition =
-                        LatLng(position.latitude, position.longitude);
-                    await locationUpdate(curentPosition);
-                    animateToMyLocation();
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Palette.whiteColor,
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Palette.greyTextColor.withOpacity(0.5),
-                      ),
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        mapsIcon,
-                        height: 24,
-                        width: 24,
-                        color: Palette.blackColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            width: 1.sw,
-            color: isListShow ? Palette.whiteColor : Colors.transparent,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: places.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(places[index]['description']),
-                  onTap: () async {
-                    List<Location> locations =
-                        await locationFromAddress(places[index]['description']);
-                    log("long ==>${locations.last.longitude} && lat ==> ${locations.last.latitude}");
-                    currentSelectLocation = LatLng(
-                        locations.last.latitude, locations.last.longitude);
-                    await locationUpdate(currentSelectLocation);
-                    animateToMyLocation();
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    placesController.clear();
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

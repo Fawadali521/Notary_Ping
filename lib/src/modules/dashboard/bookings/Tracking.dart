@@ -35,7 +35,7 @@ class TrackingState extends State<Tracking> {
   late LatLng startLocation; //= const LatLng(34.611139, 72.4623079);
   LatLng endLocation = const LatLng(34.60205, 72.454015);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  double paddingBottom = 0.45;
+  double paddingBottom = 0.42;
   @override
   void initState() {
     latlang.add(endLocation);
@@ -223,14 +223,14 @@ class TrackingState extends State<Tracking> {
           SizedBox(
             child: NotificationListener<DraggableScrollableNotification>(
               onNotification: (DraggableScrollableNotification dSNotification) {
-                paddingBottom = dSNotification.extent - 0.03;
+                paddingBottom = dSNotification.extent - 0.04;
                 setState(() {});
                 return true; // Return true to indicate the notification is handled
               },
               child: DraggableScrollableSheet(
-                maxChildSize: .5,
-                initialChildSize: .5,
-                minChildSize: 0.07,
+                maxChildSize: .53,
+                initialChildSize: .53,
+                minChildSize: 0.09,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return Container(
