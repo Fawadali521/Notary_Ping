@@ -90,7 +90,7 @@ class Languages extends Translations {
           'Our 24x7 customer service': 'Our 24x7 customer service',
           'Report id': 'Report id',
           'Delete': 'Delete',
-          'Phone number': 'Phone number',
+          'Enter Phone number': 'Enter Phone number',
           'Only Push Notification will be disable!':
               'Only Push Notification will be disable!',
           'Notification': 'Notification',

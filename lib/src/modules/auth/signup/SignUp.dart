@@ -1,10 +1,10 @@
 // ignore_for_file: file_names
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:notary_ping/src/modules/auth/signin/SignIn.dart';
 import 'package:notary_ping/src/modules/dashboard/DashboardScreen.dart';
 import 'package:notary_ping/src/states/signup/SignUpController.dart';
-import 'package:notary_ping/src/utility/CustomDropDown.dart';
 import 'package:notary_ping/src/utility/SocialButton.dart';
 
 import '../../../../index.dart';
@@ -61,26 +61,46 @@ class SignUp extends StatelessWidget {
           SizedBox(height: 16.h),
           Row(
             children: [
-              Obx(
-                () => CustomDropDown(
+              // Obx(
+              //   () => CustomDropDown(
+              //     textStyle: TextStyles.bodyMedium.copyWith(
+              //       color: Palette.blackColor,
+              //     ),
+              //     items: controller.state.slectCountryCode,
+              //     selectedVal: controller.state.countryCodee.value,
+              //     onChanged: (val) {
+              //       controller.changeSelectGender(val!);
+              //     },
+              //   ),
+              // ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Palette.bgTextFeildColor,
+                  borderRadius: BorderStyles.normal,
+                  border: Border.all(
+                    color: Palette.bgTextFeildColor,
+                  ),
+                ),
+                child: CountryCodePicker(
                   textStyle: TextStyles.bodyMedium.copyWith(
                     color: Palette.blackColor,
                   ),
-                  items: controller.state.slectCountryCode,
-                  selectedVal: controller.state.countryCodee.value,
-                  onChanged: (val) {
-                    controller.changeSelectGender(val!);
-                  },
+                  dialogTextStyle: TextStyles.bodyMedium.copyWith(
+                    color: Palette.blackColor,
+                  ),
+                  dialogSize: Size(1.sw, 0.8.sh),
+                  padding: EdgeInsets.zero,
+                  // flagWidth: 24,
+                  onChanged: (element) => debugPrint(element.toLongString()),
+                  initialSelection: 'US',
                 ),
               ),
               SizedBox(width: 8.w),
               Expanded(
                 flex: 5,
                 child: CustomTextField(
-                  hintText: 'Phone number'.tr,
-                  onChange: (value) {
-                    // controller.state.confirmPassword = value;
-                  },
+                  hintText: 'Enter Phone number'.tr,
+                  onChange: (value) {},
                   keyboardType: TextInputType.number,
                 ),
               ),
@@ -101,7 +121,7 @@ class SignUp extends StatelessWidget {
             child: SubmitButton(
               backGroundColor: Palette.primaryColor,
               onTap: () {
-                Get.offAll(() => const Dashboard());
+                Get.to(() => const Dashboard());
               },
               title: "Sign Up".tr,
             ),

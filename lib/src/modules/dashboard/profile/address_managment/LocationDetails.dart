@@ -1,14 +1,22 @@
 // ignore_for_file: non_constant_identifier_names, file_names
 
-import 'package:notary_ping/src/states/profile/ProfileController.dart';
-import 'package:notary_ping/src/utility/CustomDropDown.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 
 import '../../../../../index.dart';
 
-LocationDetails(BuildContext context, String address) {
-  final ProfileController controller = Get.find<ProfileController>();
+LocationDetails(BuildContext context, String address, String city, String state,
+    String country) {
+  // final ProfileController controller = Get.find<ProfileController>();
   TextEditingController addressController = TextEditingController();
+  TextEditingController cityController = TextEditingController();
+  TextEditingController sateController = TextEditingController();
+  TextEditingController countyController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   addressController.text = address;
+  cityController.text = city;
+  sateController.text = state;
+  countyController.text = country;
+
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -73,81 +81,79 @@ LocationDetails(BuildContext context, String address) {
                     prefixIcon: userIcon,
                   ),
                   SizedBox(height: 16.h),
+                  SizedBox(height: 16.h),
                   Row(
                     children: [
-                      Obx(
-                        () => CustomDropDown(
+                      // Obx(
+                      //   () => CustomDropDown(
+                      //     textStyle: TextStyles.bodyMedium.copyWith(
+                      //       color: Palette.blackColor,
+                      //     ),
+                      //     items: controller.state.slectCountryCode,
+                      //     selectedVal: controller.state.countryCodee.value,
+                      //     onChanged: (val) {
+                      //       controller.changeSelectGender(val!);
+                      //     },
+                      //   ),
+                      // ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Palette.bgTextFeildColor,
+                          borderRadius: BorderStyles.normal,
+                          border: Border.all(
+                            color: Palette.bgTextFeildColor,
+                          ),
+                        ),
+                        child: CountryCodePicker(
                           textStyle: TextStyles.bodyMedium.copyWith(
                             color: Palette.blackColor,
                           ),
-                          items: controller.state.slectCountryCode,
-                          selectedVal: controller.state.countryCodee.value,
-                          onChanged: (val) {
-                            controller.changeSelectCountryCode(val!);
-                          },
+                          dialogTextStyle: TextStyles.bodyMedium.copyWith(
+                            color: Palette.blackColor,
+                          ),
+                          dialogSize: Size(1.sw, 0.8.sh),
+                          padding: EdgeInsets.zero,
+                          // flagWidth: 24,
+                          onChanged: (element) =>
+                              debugPrint(element.toLongString()),
+                          initialSelection: 'US',
                         ),
                       ),
                       SizedBox(width: 8.w),
                       Expanded(
                         flex: 5,
                         child: CustomTextField(
-                          hintText: 'Phone number'.tr,
-                          onChange: (value) {
-                            // controller.state.confirmPassword = value;
-                          },
+                          hintText: 'Enter Phone number'.tr,
+                          controller: phoneController,
                           keyboardType: TextInputType.number,
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 16.h),
-                  TextFormField(
+                  CustomTextField(
+                    hintText: 'Enter your address'.tr,
                     controller: addressController,
-                    textAlignVertical: TextAlignVertical.center,
-                    maxLines: 3,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    style: TextStyles.bodyMedium.copyWith(
-                      color: Palette.blackColor,
-                    ),
-                    cursorColor: Palette.blackColor,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
-                      alignLabelWithHint: true,
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(
-                            left: 16.w, right: 16.w, top: 16, bottom: 50),
-                        child: Image.asset(
-                          locationIcon,
-                          height: 20,
-                          width: 20,
-                          color: Palette.primaryColor,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      fillColor: Palette.bgTextFeildColor,
-                      filled: true,
-                      hintText: 'Enter your address'.tr,
-                      hintStyle: TextStyles.bodyMedium,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderStyles.normal,
-                        borderSide: const BorderSide(
-                          color: Palette.bgTextFeildColor,
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderStyles.normal,
-                        borderSide: const BorderSide(
-                          color: Palette.bgTextFeildColor,
-                        ),
-                      ),
-                    ),
+                    prefixIcon: locationIcon,
+                    maxline: 2,
                   ),
                   SizedBox(height: 16.h),
                   CustomTextField(
-                    hintText: 'Zip code'.tr,
-                    onChange: (value) {},
-                    prefixIcon: zipcodeIcon,
+                    hintText: 'Enter your city'.tr,
+                    controller: cityController,
+                    prefixIcon: cityIcon,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextField(
+                    hintText: 'Enter your state'.tr,
+                    controller: sateController,
+                    prefixIcon: stateIcon,
+                  ),
+                  SizedBox(height: 16.h),
+                  CustomTextField(
+                    hintText: 'Enter your country'.tr,
+                    controller: countyController,
+                    prefixIcon: cityIcon,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 24.h),

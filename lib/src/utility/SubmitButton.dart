@@ -7,6 +7,7 @@ class SubmitButton extends StatelessWidget {
   final String title;
   final Color? backGroundColor;
   final Color? titleColor;
+  final Color? borderColor;
   final bool? isLoading;
   const SubmitButton({
     super.key,
@@ -14,6 +15,7 @@ class SubmitButton extends StatelessWidget {
     required this.title,
     this.backGroundColor,
     this.titleColor,
+    this.borderColor,
     this.isLoading,
   });
 
@@ -25,7 +27,7 @@ class SubmitButton extends StatelessWidget {
       color: backGroundColor ?? Palette.primaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderStyles.normal,
-        side: BorderSide(color: titleColor ?? Palette.primaryColor),
+        side: BorderSide(color: borderColor ?? Palette.primaryColor),
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),

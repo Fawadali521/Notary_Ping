@@ -29,6 +29,10 @@ class SelectLocationState extends State<SelectLocation> {
   late LatLng currentSelectLocation; //= const LatLng(34.611139, 72.4623079);
   double paddingBottom = 0.21;
   String currentLocation = '';
+  String address = '';
+  String city = '';
+  String state = '';
+  String country = '';
   TextEditingController placesController = TextEditingController();
   var uuid = const Uuid();
   String sessionToken = DateTime.now().second.toString();
@@ -114,12 +118,19 @@ class SelectLocationState extends State<SelectLocation> {
         desiredAccuracy: LocationAccuracy.high,
       );
       log("location get ==> $position");
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(position.latitude, position.longitude);
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          position.latitude, position.longitude,
+          localeIdentifier: "en");
       setState(() {
         currentSelectLocation = LatLng(position.latitude, position.longitude);
         currentLocation =
-            ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}, ${placemarks.first.postalCode}");
+            ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}");
+        address =
+            ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}");
+        city = ("${placemarks.first.subAdministrativeArea}");
+        state = (" ${placemarks.first.administrativeArea}");
+        country = ("${placemarks.first.country}");
+
         latlang.add(currentSelectLocation);
         isLoding = false;
       });
@@ -166,6 +177,11 @@ class SelectLocationState extends State<SelectLocation> {
     // log("show address ==> ${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}, ${placemarks.first.postalCode},");
     currentLocation =
         ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}, ${placemarks.first.subAdministrativeArea}, ${placemarks.first.administrativeArea}, ${placemarks.first.country}, ${placemarks.first.postalCode}");
+    address =
+        ("${placemarks.first.name}, ${placemarks.first.thoroughfare}, ${placemarks.first.locality}");
+    city = ("${placemarks.first.subAdministrativeArea}");
+    state = (" ${placemarks.first.administrativeArea}");
+    country = ("${placemarks.first.country}");
     setState(() {});
     // animateToMyLocation();
   }
@@ -295,7 +311,8 @@ class SelectLocationState extends State<SelectLocation> {
                                     // Get.to(() => AddDetails(
                                     //       location: currentLocation,
                                     //     ));
-                                    LocationDetails(context, currentLocation);
+                                    LocationDetails(
+                                        context, address, city, state, country);
                                   }
                                 },
                                 title: "Enter Complete address".tr,

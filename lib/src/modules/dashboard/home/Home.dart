@@ -39,11 +39,17 @@ class HomeState extends State<Home> {
 // to save image bytes of widget
   Uint8List? bytes;
   double paddingBottom = 0.31;
-
+  double sizeDragble = 0.31;
+  final FocusNode _focusNode = FocusNode();
+  final DraggableScrollableController _scrollController =
+      DraggableScrollableController();
+  bool isLodingNotary = false;
   @override
   void initState() {
+    _focusNode.addListener(_handleFocusChange);
     setState(() {
       isLoding = true;
+      isLodingNotary = true;
     });
     // print("calll one 2");
     // WidgetsBinding.instance.addPostFrameCallback((_) => buildComplete());
@@ -53,8 +59,16 @@ class HomeState extends State<Home> {
     } else {
       getStartPage();
     }
+
     super.initState();
     // print("calll one 4");
+  }
+
+  void _handleFocusChange() {
+    if (_focusNode.hasFocus) {
+      _scrollController.animateTo(.87,
+          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+    }
   }
 
   List<Map<String, dynamic>> markersData = [
@@ -118,6 +132,7 @@ class HomeState extends State<Home> {
     }
     setState(() {
       isLoding = false;
+      isLodingNotary = false;
     });
   }
 
@@ -203,42 +218,42 @@ class HomeState extends State<Home> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      body: isLoding
-          ? Stack(
-              // shrinkWrap: true,
-              children: [
-                SizedBox(
-                  width: 200,
-                  height: 190,
-                  child: RepaintBoundary(
-                    key: markersData[0]['key'],
-                    child: markersData[0]['widget'],
-                  ),
-                ),
-                SizedBox(
-                  width: 200,
-                  height: 190,
-                  child: RepaintBoundary(
-                    key: markersData[1]['key'],
-                    child: markersData[1]['widget'],
-                  ),
-                ),
-                Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Container(
-                    height: 1.sh,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24.0),
+      body: Stack(
+        children: [
+          isLoding
+              ? Stack(
+                  // shrinkWrap: true,
+                  children: [
+                    SizedBox(
+                      width: 200,
+                      height: 190,
+                      child: RepaintBoundary(
+                        key: markersData[0]['key'],
+                        child: markersData[0]['widget'],
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            )
-          : Stack(
-              children: [
-                SafeArea(
+                    SizedBox(
+                      width: 200,
+                      height: 190,
+                      child: RepaintBoundary(
+                        key: markersData[1]['key'],
+                        child: markersData[1]['widget'],
+                      ),
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        height: 1.sh,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : SafeArea(
                   top: false,
                   left: false,
                   right: false,
@@ -269,101 +284,171 @@ class HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  child: NotificationListener<DraggableScrollableNotification>(
-                    onNotification:
-                        (DraggableScrollableNotification dSNotification) {
-                      // Check if the sheet is fully expanded
-                      if (dSNotification.extent >= 0.87) {
-                        setState(() {
-                          sheetCollapsed = true;
-                        });
-                      }
-                      // Check if the sheet is collapsed or not fully expanded
-                      else if (dSNotification.extent < .87) {
-                        if (dSNotification.extent < .6) {
-                          paddingBottom = dSNotification.extent - 0.10;
-                        }
-                        // Update the variable for not fully expanded state
-                        setState(() {
-                          sheetCollapsed = false;
-                        });
-                      }
+          SizedBox(
+            child: NotificationListener<DraggableScrollableNotification>(
+              onNotification: (DraggableScrollableNotification dSNotification) {
+                // Check if the sheet is fully expanded
+                if (dSNotification.extent >= 0.87) {
+                  setState(() {
+                    sheetCollapsed = true;
+                  });
+                }
+                // Check if the sheet is collapsed or not fully expanded
+                else if (dSNotification.extent < .87) {
+                  if (dSNotification.extent < .6) {
+                    paddingBottom = dSNotification.extent - 0.10;
+                  }
+                  // Update the variable for not fully expanded state
+                  setState(() {
+                    sheetCollapsed = false;
+                  });
+                }
 
-                      return true; // Return true to indicate the notification is handled
-                    },
-                    child: DraggableScrollableSheet(
-                      initialChildSize: 0.43, // Set the initial size to 0.4
-                      maxChildSize: 0.87, // Maximum size when fully expanded
-                      minChildSize: 0.13,
-                      builder: (BuildContext context,
-                          ScrollController scrollController) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Palette.whiteColor,
-                            borderRadius: (sheetCollapsed == true)
-                                ? null
-                                : const BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                  ),
-                          ),
-                          child: ListView.builder(
-                            controller: scrollController,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.w,
-                              vertical: 16.h,
+                return true; // Return true to indicate the notification is handled
+              },
+              child: DraggableScrollableSheet(
+                controller: _scrollController,
+
+                initialChildSize: 0.43, // Set the initial size to 0.4
+                maxChildSize: 0.87, // Maximum size when fully expanded
+                minChildSize: 0.13,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Palette.whiteColor,
+                      borderRadius: (sheetCollapsed == true)
+                          ? null
+                          : const BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
                             ),
-                            itemCount: 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
+                    ),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
+                        vertical: 16.h,
+                      ),
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            if (sheetCollapsed != true)
+                              Divider(
+                                height: 1,
+                                color: Palette.dotColor,
+                                thickness: 3,
+                                endIndent: .34.sw,
+                                indent: .34.sw,
+                              ),
+                            // const MarkerImageWithName(
+                            //   borderColor: Palette.greenColor,
+                            //   imgUrl: user1,
+                            //   name: "Mickle",
+                            // ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Row(
                                 children: [
-                                  if (sheetCollapsed != true)
-                                    Divider(
-                                      height: 1,
-                                      color: Palette.dotColor,
-                                      thickness: 3,
-                                      endIndent: .34.sw,
-                                      indent: .34.sw,
-                                    ),
-                                  // const MarkerImageWithName(
-                                  //   borderColor: Palette.greenColor,
-                                  //   imgUrl: user1,
-                                  //   name: "Mickle",
-                                  // ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 20),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Available notaries".tr,
-                                          style: TextStyles.titleLarge,
-                                        ),
-                                        const Spacer(),
-                                        // InkWell(
-                                        //   child: Row(
-                                        //     children: [
-                                        //       Padding(
-                                        //         padding: const EdgeInsets.symmetric(
-                                        //             horizontal: 5),
-                                        //         child: Text(
-                                        //           "See all".tr,
-                                        //           style: TextStyles.bodySmall,
-                                        //         ),
-                                        //       ),
-                                        //       const Icon(
-                                        //         Icons.arrow_forward_ios_rounded,
-                                        //         size: 14,
-                                        //         color: Palette.greyTextColor,
-                                        //       ),
-                                        //     ],
-                                        //   ),
-                                        // ),
-                                      ],
-                                    ),
+                                  Text(
+                                    "Available notaries".tr,
+                                    style: TextStyles.titleLarge,
                                   ),
-                                  GridView.builder(
+                                  const Spacer(),
+                                  // InkWell(
+                                  //   child: Row(
+                                  //     children: [
+                                  //       Padding(
+                                  //         padding: const EdgeInsets.symmetric(
+                                  //             horizontal: 5),
+                                  //         child: Text(
+                                  //           "See all".tr,
+                                  //           style: TextStyles.bodySmall,
+                                  //         ),
+                                  //       ),
+                                  //       const Icon(
+                                  //         Icons.arrow_forward_ios_rounded,
+                                  //         size: 14,
+                                  //         color: Palette.greyTextColor,
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                            isLodingNotary
+                                ? Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: GridView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 4,
+                                        childAspectRatio: width / (height / 2),
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      itemCount: userImages
+                                          .length, // total number of items
+                                      itemBuilder: (context, index) {
+                                        return Align(
+                                          alignment: Alignment.topCenter,
+                                          child: SizedBox(
+                                            height: .18.sw,
+                                            width: .18.sw,
+                                            child: Center(
+                                              child: Stack(
+                                                alignment:
+                                                    Alignment.bottomCenter,
+                                                children: [
+                                                  Center(
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                      child: Image.asset(
+                                                        userImages[index],
+                                                        fit: BoxFit.cover,
+                                                        height: .18.sw,
+                                                        width: .18.sw,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  isOnline == true
+                                                      ? const Positioned(
+                                                          right: 6,
+                                                          child: CircleAvatar(
+                                                            backgroundColor:
+                                                                Palette
+                                                                    .greenColor,
+                                                            radius: 6,
+                                                          ),
+                                                        )
+                                                      : isOnline == false
+                                                          ? const Positioned(
+                                                              right: 6,
+                                                              child:
+                                                                  CircleAvatar(
+                                                                backgroundColor:
+                                                                    Palette
+                                                                        .greyShadeTextColor,
+                                                                radius: 6,
+                                                              ),
+                                                            )
+                                                          : const SizedBox(),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+                                : GridView.builder(
                                     shrinkWrap: true,
                                     physics:
                                         const NeverScrollableScrollPhysics(),
@@ -389,19 +474,19 @@ class HomeState extends State<Home> {
                                       );
                                     },
                                   ),
-                                  SizedBox(height: 30.h),
-                                ],
-                              );
-                            },
-                          ),
+                            SizedBox(height: 30.h),
+                          ],
                         );
                       },
                     ),
-                  ),
-                ),
-                topBar(isSticky: sheetCollapsed),
-              ],
+                  );
+                },
+              ),
             ),
+          ),
+          topBar(isSticky: sheetCollapsed),
+        ],
+      ),
     );
   }
 
@@ -423,6 +508,7 @@ class HomeState extends State<Home> {
                     Expanded(
                       child: CustomTextField(
                         hintText: "Search".tr,
+                        focusnode: _focusNode,
                         prefixIcon: searchIcon,
                         prefixIconColor: Palette.greyTextColor,
                         borderRadius: BorderStyles.searchTextField,
@@ -432,7 +518,7 @@ class HomeState extends State<Home> {
                     ),
                     !isSticky
                         ? GestureDetector(
-                            onTap: () => Get.to(() => NotificationPage()),
+                            onTap: () => Get.to(() => const NotificationPage()),
                             child: Container(
                               margin: const EdgeInsets.only(left: 8, right: 8),
                               padding: const EdgeInsets.all(10),

@@ -745,8 +745,10 @@ class _ChatState extends State<Chat> {
                 title: "Cancel",
                 backGroundColor: Palette.whiteColor,
                 titleColor: Palette.primaryColor,
+                borderColor: Palette.whiteColor,
               ),
-            )
+            ),
+            const SafeArea(top: false, child: SizedBox()),
           ],
         );
       },

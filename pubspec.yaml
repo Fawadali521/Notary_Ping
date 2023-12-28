@@ -41,6 +41,7 @@ dependencies:
   percent_indicator: ^4.2.3
   geocoding: ^2.1.1
   emoji_picker_flutter: ^1.0.8
+  country_code_picker: ^3.0.0
 
 
 

@@ -16,7 +16,8 @@ class TermAndCondition extends StatelessWidget {
         title: 'Terms and conditions'.tr,
         isBack: true,
       ),
-      body: ListView(
+      body: 
+      ListView(
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 20.w),
         children: [

@@ -1,12 +1,29 @@
 // ignore_for_file: file_names
 
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
 
 import '../../../../index.dart';
 
-class EditProfile extends StatelessWidget {
-  EditProfile({super.key});
+class EditProfile extends StatefulWidget {
+  const EditProfile({super.key});
+
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
   final ProfileController controller = Get.find<ProfileController>();
+
+  TextEditingController nameController = TextEditingController();
+
+  @override
+  void initState() {
+    nameController.text = "Fawad";
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,9 +51,9 @@ class EditProfile extends StatelessWidget {
                         borderRadius: BorderRadius.circular(50),
                         child: Image.asset(
                           user,
-                          fit: BoxFit.fill,
-                          height: 70,
-                          width: 70,
+                          fit: BoxFit.cover,
+                          height: 80,
+                          width: 80,
                         ),
                       ),
                     ),
@@ -66,137 +83,212 @@ class EditProfile extends StatelessWidget {
           SizedBox(height: 12.h),
           CustomTextField(
             hintText: 'Enter your name'.tr,
-            onChange: (value) {
-              // controller.state.name = value;
-            },
+            controller: nameController,
             prefixIcon: userIcon,
           ),
           SizedBox(height: 16.h),
-          TextFormField(
-            textAlignVertical: TextAlignVertical.center,
-            maxLines: 3,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            style: TextStyles.bodyMedium.copyWith(
-              color: Palette.blackColor,
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Palette.bgTextFeildColor,
+                  borderRadius: BorderStyles.normal,
+                  border: Border.all(
+                    color: Palette.bgTextFeildColor,
+                  ),
+                ),
+                child: CountryCodePicker(
+                  enabled: false,
+                  textStyle: TextStyles.bodyMedium.copyWith(
+                    color: Palette.blackColor,
+                  ),
+                  dialogTextStyle: TextStyles.bodyMedium.copyWith(
+                    color: Palette.blackColor,
+                  ),
+                  dialogSize: Size(1.sw, 0.8.sh),
+                  padding: EdgeInsets.zero,
+                  // flagWidth: 24,
+                  onChanged: (element) => debugPrint(element.toLongString()),
+                  initialSelection: 'US',
+                ),
+              ),
+
+              // Obx(
+              //   () => CustomDropDown(
+              //     textStyle: TextStyles.bodyMedium.copyWith(
+              //       color: Palette.blackColor,
+              //     ),
+              //     items: controller.state.slectCountryCode,
+              //     selectedVal: controller.state.countryCodee.value,
+              //     onChanged: (val) {
+              //       controller.changeSelectCountryCode(val!);
+              //     },
+              //   ),
+              // ),
+              SizedBox(width: 8.w),
+              Expanded(
+                  flex: 5,
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderStyles.normal,
+                      color: Palette.bgTextFeildColor,
+                      border: Border.all(
+                        color: Palette.bgTextFeildColor,
+                      ),
+                    ),
+                    child: Text(
+                      "3468098665",
+                      style: TextStyles.bodyMedium.copyWith(
+                        color: Palette.blackColor,
+                      ),
+                    ),
+                  )
+
+                  // CustomTextField(
+                  //   hintText: 'Phone number'.tr,
+                  //   controller: phoneController,
+                  //   keyboardType: TextInputType.number,
+                  // ),
+                  ),
+            ],
+          ),
+          SizedBox(height: 16.h),
+          Container(
+            padding: EdgeInsets.only(
+                left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderStyles.normal,
+              color: Palette.bgTextFeildColor,
+              border: Border.all(
+                color: Palette.bgTextFeildColor,
+              ),
             ),
-            cursorColor: Palette.blackColor,
-            decoration: InputDecoration(
-              contentPadding:
-                  EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h),
-              alignLabelWithHint: true,
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(
-                    left: 16.w, right: 16.w, top: 16, bottom: 50),
-                child: Image.asset(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
                   locationIcon,
                   height: 20,
                   width: 20,
                   color: Palette.primaryColor,
                   fit: BoxFit.contain,
                 ),
-              ),
-              fillColor: Palette.bgTextFeildColor,
-              filled: true,
-              hintText: 'Enter your address'.tr,
-              hintStyle: TextStyles.bodyMedium,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderStyles.normal,
-                borderSide: const BorderSide(
-                  color: Palette.bgTextFeildColor,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderStyles.normal,
-                borderSide: const BorderSide(
-                  color: Palette.bgTextFeildColor,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 16.h),
-          LayoutBuilder(
-            builder: (context, constraints) => RawAutocomplete<String>(
-              optionsViewBuilder: (BuildContext context,
-                  AutocompleteOnSelected<String> onSelected,
-                  Iterable<String> options) {
-                return Align(
-                  alignment: Alignment.topLeft,
-                  child: Material(
-                    elevation: 4.0,
-                    child: SizedBox(
-                      // height: 200.0,
-                      width: constraints.biggest.width,
-                      child: ListView.builder(
-                        padding: const EdgeInsets.all(8.0),
-                        itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final String option = options.elementAt(index);
-                          return GestureDetector(
-                            onTap: () {
-                              onSelected(option);
-                            },
-                            child: ListTile(
-                              title: Text(option),
-                            ),
-                          );
-                        },
-                      ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Text(
+                    "15205 North Kierland Blvd. Suite 100", //address
+                    style: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
                     ),
+                    textAlign: TextAlign.start,
                   ),
-                );
-              },
-              initialValue: TextEditingValue(
-                text: controller.state.slectedCity.value,
-              ),
-              optionsBuilder: (textValue) {
-                if (textValue.text.isEmpty) {
-                  return List.empty();
-                } else {
-                  if (textValue.text.length == 1) {
-                    controller.state.slectedCity.value = "";
-                    return controller.state.selecteCity.where((element) =>
-                        element
-                            .toLowerCase()
-                            .contains(textValue.text.toLowerCase()));
-                  } else {
-                    controller.state.slectedCity.value = textValue.text;
-                    return controller.state.selecteCity.where((element) =>
-                        element
-                            .toLowerCase()
-                            .contains(textValue.text.toLowerCase()));
-                  }
-                }
-              },
-              fieldViewBuilder: (context, textEditingController, focusNode,
-                  onFieldSubmitted) {
-                return CustomTextField(
-                  focusnode: focusNode,
-                  onEditingComplete: onFieldSubmitted,
-                  controller: textEditingController,
-                  hintText: 'City'.tr,
-                  onChange: (value) {
-                    // controller.state.categoryName = value;
-                  },
-                  prefixIcon: cityIcon,
-                  suffixIcon: const Icon(
-                    Icons.keyboard_arrow_down_outlined,
-                    color: Palette.primaryColor,
-                  ),
-                );
-              },
+                ),
+              ],
             ),
           ),
           SizedBox(height: 16.h),
-          CustomTextField(
-            hintText: 'State'.tr,
-            onChange: (value) {},
-            prefixIcon: stateIcon,
+          Container(
+            padding: EdgeInsets.only(
+                left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderStyles.normal,
+              color: Palette.bgTextFeildColor,
+              border: Border.all(
+                color: Palette.bgTextFeildColor,
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
+                  cityIcon,
+                  height: 20,
+                  width: 20,
+                  color: Palette.primaryColor,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Text(
+                    "Cityville", //city
+                    style: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 16.h),
-          CustomTextField(
-            hintText: 'Zip code'.tr,
-            onChange: (value) {},
-            prefixIcon: zipcodeIcon,
+          Container(
+            padding: EdgeInsets.only(
+                left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderStyles.normal,
+              color: Palette.bgTextFeildColor,
+              border: Border.all(
+                color: Palette.bgTextFeildColor,
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
+                  stateIcon,
+                  height: 20,
+                  width: 20,
+                  color: Palette.primaryColor,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Text(
+                    "California", //state
+                    style: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Container(
+            padding: EdgeInsets.only(
+                left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
+            decoration: BoxDecoration(
+              borderRadius: BorderStyles.normal,
+              color: Palette.bgTextFeildColor,
+              border: Border.all(
+                color: Palette.bgTextFeildColor,
+              ),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(
+                  cityIcon,
+                  height: 20,
+                  width: 20,
+                  color: Palette.primaryColor,
+                  fit: BoxFit.contain,
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: Text(
+                    "United States", // cpuntry
+                    style: TextStyles.bodyMedium.copyWith(
+                      color: Palette.blackColor,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 80.h),
           SubmitButton(

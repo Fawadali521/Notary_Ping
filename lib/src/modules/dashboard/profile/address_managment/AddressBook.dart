@@ -86,22 +86,13 @@ class AddressBook extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 8.h),
                     child: const Text(
-                      "abc, Peshawar, Khyber Pakhtunkhwa, Pakistan",
+                      "15205 North Kierland Blvd. Suite 100, Cityville, California, United States",
                       style: TextStyles.bodyLarge,
                     ),
                   ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "(+33) 3489058521",
-                        style: TextStyles.bodyMedium,
-                      ),
-                      Text(
-                        "74381",
-                        style: TextStyles.bodyMedium,
-                      ),
-                    ],
+                  const Text(
+                    "(+33) 3489058521",
+                    style: TextStyles.bodyMedium,
                   ),
                 ],
               ),
