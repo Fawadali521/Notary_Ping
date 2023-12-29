@@ -16,6 +16,7 @@ import 'package:notary_ping/src/modules/dashboard/message/Chat.dart';
 import 'package:notary_ping/src/utility/maps_utility/MarkerImage.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+/// The tracking screen for displaying the location tracking of a booking.
 class Tracking extends StatefulWidget {
   const Tracking({super.key});
 
@@ -36,6 +37,7 @@ class TrackingState extends State<Tracking> {
   LatLng endLocation = const LatLng(34.60205, 72.454015);
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   double paddingBottom = 0.42;
+
   @override
   void initState() {
     latlang.add(endLocation);
@@ -52,6 +54,7 @@ class TrackingState extends State<Tracking> {
   }
 
   // add markers
+  /// Adds markers to the map based on the given list of [latLng].
   addMarker(List<LatLng> latLng) async {
     log("list of latlong ==>${latlang.length}");
     for (int i = 0; i < latLng.length; i++) {
@@ -81,14 +84,8 @@ class TrackingState extends State<Tracking> {
     }
   }
 
-  // Future<BitmapDescriptor> getCustomIcon() async {
-  //   return const MarkerImage(
-  //     borderColor: Colors.red,
-  //     imgUrl: user,
-  //   ).toBitmapDescriptor();
-  // }
-
   // This functions gets real road polyline routes
+  /// Retrieves the directions between the markers using the Google Maps API.
   getDirections(List<Marker> markers) async {
     List<LatLng> polylineCoordinates = [];
     List<PolylineWayPoint> polylineWayPoints = [];
@@ -119,6 +116,7 @@ class TrackingState extends State<Tracking> {
     addPolyLine(polylineCoordinates);
   }
 
+  /// Adds a polyline to the map based on the given [polylineCoordinates].
   addPolyLine(List<LatLng> polylineCoordinates) {
     PolylineId id = const PolylineId("poly");
     Polyline polyline = Polyline(
@@ -134,6 +132,7 @@ class TrackingState extends State<Tracking> {
     setState(() {});
   }
 
+  /// Retrieves the current location of the user.
   Future<void> getCurrentLocation() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
@@ -162,6 +161,7 @@ class TrackingState extends State<Tracking> {
   }
 
   //check location permission status
+  /// Checks the location permission status and requests permission if necessary.
   Future<void> checkLocationStatus() async {
     var status = await Permission.location.status;
     if (status.isGranted) {

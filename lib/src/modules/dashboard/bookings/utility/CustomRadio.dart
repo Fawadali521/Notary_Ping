@@ -4,6 +4,8 @@ import '../../../../../index.dart';
 
 class CustomRadio extends StatelessWidget {
   final Color color;
+
+  // Constructor for CustomRadio widget
   const CustomRadio({
     super.key,
     required this.color,
@@ -11,6 +13,7 @@ class CustomRadio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Return a CircleAvatar widget with nested CircleAvatar widgets
     return CircleAvatar(
       radius: 10,
       backgroundColor: color,

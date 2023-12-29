@@ -7,9 +7,11 @@ import 'package:notary_ping/src/states/forgot/ForgotController.dart';
 
 import '../../../../index.dart';
 
+/// A screen widget for the "Forgot Password" feature.
 class ForgotPassword extends StatelessWidget {
   ForgotPassword({Key? key}) : super(key: key);
   final ForgotController controller = Get.put(ForgotController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

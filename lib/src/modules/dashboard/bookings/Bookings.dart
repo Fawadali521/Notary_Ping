@@ -115,6 +115,7 @@ class _BookingsState extends State<Bookings> {
   }
 }
 
+// Show the history view alert dialog
 showHistoryViewAlert(BuildContext context) {
   showDialog(
     context: context,

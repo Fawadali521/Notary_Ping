@@ -43,6 +43,7 @@ class SignUp extends StatelessWidget {
           //   style: TextStyles.bodyMedium,
           // ),
 
+          // CustomTextField for name
           CustomTextField(
             hintText: 'Enter your name'.tr,
             onChange: (value) {
@@ -51,6 +52,7 @@ class SignUp extends StatelessWidget {
             prefixIcon: userIcon,
           ),
           SizedBox(height: 16.h),
+          // CustomTextField for email
           CustomTextField(
             hintText: 'Enter your email'.tr,
             onChange: (value) {
@@ -73,6 +75,7 @@ class SignUp extends StatelessWidget {
               //     },
               //   ),
               // ),
+              // Country code picker
               Container(
                 decoration: BoxDecoration(
                   color: Palette.bgTextFeildColor,
@@ -96,6 +99,7 @@ class SignUp extends StatelessWidget {
                 ),
               ),
               SizedBox(width: 8.w),
+              // CustomTextField for phone number
               Expanded(
                 flex: 5,
                 child: CustomTextField(
@@ -107,6 +111,7 @@ class SignUp extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
+          // CustomTextField for password
           CustomTextField(
             hintText: 'Enter your password'.tr,
             onChange: (value) {
@@ -169,6 +174,7 @@ class SignUp extends StatelessWidget {
             ],
           ),
           SizedBox(height: 24.h),
+          // Social buttons
           SocialButton(
             onTap: () {},
             status: "GO",

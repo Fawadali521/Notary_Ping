@@ -23,7 +23,7 @@ class PrivacyPolicy extends StatelessWidget {
           Row(
             children: [
               Image.asset(
-                conditionIcon,
+                privacyPolicyIcon,
                 fit: BoxFit.contain,
                 height: 60,
                 width: 60,

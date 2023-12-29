@@ -1,4 +1,7 @@
+// This file contains the definition of the CustomNotaryItem class, which is a widget used to display a custom notary item in the dashboard home screen.
+
 // ignore_for_file: file_names
+// This directive is used to ignore linting warnings related to file names.
 
 import '../../../../../index.dart';
 
@@ -10,12 +13,14 @@ class CustomNotaryItem extends StatelessWidget {
     required this.name,
   });
 
+  // Properties
   final bool? isOnline;
   final String imgUrl;
   final String name;
 
   @override
   Widget build(BuildContext context) {
+    // Widget build method
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [

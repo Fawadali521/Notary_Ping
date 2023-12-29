@@ -18,7 +18,9 @@ class Onboarding extends StatelessWidget {
         backgroundColor: Palette.bgOnboardingColor,
         body: Column(
           children: [
+            // Safe area at the top
             const SafeArea(bottom: false, child: SizedBox()),
+            // Skip button
             Align(
               alignment: Alignment.topRight,
               child: GestureDetector(
@@ -43,6 +45,7 @@ class Onboarding extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Onboarding image
                           controller.state.currentPageIndex.value != 1
                               ? Expanded(
                                   child: Padding(
@@ -61,6 +64,7 @@ class Onboarding extends StatelessWidget {
                                 )
                               : const SizedBox(),
                           SizedBox(height: 8.h),
+                          // Onboarding title
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: RichText(
@@ -114,6 +118,7 @@ class Onboarding extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 20.h),
+                          // Onboarding description
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.w),
                             child: Text(
@@ -126,6 +131,7 @@ class Onboarding extends StatelessWidget {
                               style: TextStyles.bodyMedium,
                             ),
                           ),
+                          // Onboarding image (only for index 1)
                           controller.state.currentPageIndex.value == 1
                               ? Expanded(
                                   child: Padding(
@@ -163,6 +169,7 @@ class Onboarding extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Dots indicator
                   Padding(
                     padding: EdgeInsets.only(left: 20.w, top: 20),
                     child: DotsIndicator(
@@ -183,6 +190,7 @@ class Onboarding extends StatelessWidget {
                       ),
                     ),
                   ),
+                  // Next button
                   GestureDetector(
                     onTap: () => controller.nextPage(),
                     child: Container(

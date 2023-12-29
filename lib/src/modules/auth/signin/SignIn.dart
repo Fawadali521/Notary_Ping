@@ -11,7 +11,9 @@ import '../../../../index.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({super.key});
+
   final LoginController controller = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,12 +23,17 @@ class SignIn extends StatelessWidget {
         physics: const ClampingScrollPhysics(),
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 14.h),
         children: [
+          // Safe area
           const SafeArea(bottom: false, child: SizedBox()),
+
+          // Logo
           Image.asset(
             logo,
             fit: BoxFit.contain,
             height: 60.h,
           ),
+
+          // Title
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: 24.h,
@@ -36,6 +43,8 @@ class SignIn extends StatelessWidget {
               style: TextStyles.headlineMedium,
             ),
           ),
+
+          // Email or number input field
           CustomTextField(
             hintText: 'Enter your email or number'.tr,
             onChange: (value) {
@@ -43,7 +52,10 @@ class SignIn extends StatelessWidget {
             },
             prefixIcon: emailIcon,
           ),
+
           SizedBox(height: 16.h),
+
+          // Password input field
           CustomTextField(
             hintText: 'Enter your password'.tr,
             onChange: (value) {
@@ -52,7 +64,10 @@ class SignIn extends StatelessWidget {
             prefixIcon: passwordIcon,
             isuffixIconPassword: true,
           ),
+
           SizedBox(height: 12.h),
+
+          // Forgot password text
           InkWell(
             onTap: () {
               Get.to(() => ForgotPassword());
@@ -65,6 +80,8 @@ class SignIn extends StatelessWidget {
               ),
             ),
           ),
+
+          // Sign In button
           Padding(
             padding: EdgeInsets.only(top: 24.h),
             child: SubmitButton(
@@ -75,6 +92,8 @@ class SignIn extends StatelessWidget {
               title: "Sign In",
             ),
           ),
+
+          // Sign Up text
           Row(
             children: [
               Padding(
@@ -99,6 +118,8 @@ class SignIn extends StatelessWidget {
               ),
             ],
           ),
+
+          // Divider
           Row(
             children: [
               const Expanded(
@@ -116,11 +137,15 @@ class SignIn extends StatelessWidget {
               ),
             ],
           ),
+
           SizedBox(height: 24.h),
+
+          // Social buttons
           SocialButton(
             onTap: () {},
             status: "GO",
           ),
+
           Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h),
             child: SocialButton(
@@ -128,7 +153,10 @@ class SignIn extends StatelessWidget {
               status: "AP",
             ),
           ),
+
           SizedBox(height: 16.h),
+
+          // Terms of Service and Privacy Policy
           RichText(
             textAlign: TextAlign.center,
             text: TextSpan(

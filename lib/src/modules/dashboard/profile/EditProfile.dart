@@ -1,6 +1,9 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:notary_ping/src/services/FilePickerService.dart';
 import 'package:notary_ping/src/states/profile/ProfileController.dart';
 
 import '../../../../index.dart';
@@ -16,6 +19,13 @@ class _EditProfileState extends State<EditProfile> {
   final ProfileController controller = Get.find<ProfileController>();
 
   TextEditingController nameController = TextEditingController();
+  final FilePickerService _imagePickerServic = FilePickerService();
+  File? image;
+  pickImage() async {
+    image = await _imagePickerServic.pickImage();
+    print("image ==> $image");
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -43,33 +53,51 @@ class _EditProfileState extends State<EditProfile> {
               height: 70,
               width: 70,
               child: Center(
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Center(
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: Image.asset(
-                          user,
-                          fit: BoxFit.cover,
-                          height: 80,
-                          width: 80,
+                child: InkWell(
+                  onTap: () => pickImage(),
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Center(
+                            child: image == null
+                                ? Image.asset(
+                                    user,
+                                    fit: BoxFit.cover,
+                                    height: 80,
+                                    width: 80,
+                                  )
+                                // : Image.network(
+                                //     imgUrl!,
+                                //     fit: BoxFit.fill,
+                                //     height: 60.h,
+                                //     width: double.infinity,
+                                //   )
+                                : Image.file(
+                                    image!,
+                                    fit: BoxFit.cover,
+                                    height: 80,
+                                    width: 80,
+                                  ),
+                          ),
                         ),
                       ),
-                    ),
-                    const Positioned(
-                      right: 0,
-                      child: CircleAvatar(
-                        backgroundColor: Palette.primaryColor,
-                        radius: 10,
-                        child: Icon(
-                          Icons.camera_alt_outlined,
-                          color: Palette.whiteColor,
-                          size: 12,
+                      const Positioned(
+                        right: 0,
+                        child: CircleAvatar(
+                          backgroundColor: Palette.primaryColor,
+                          radius: 10,
+                          child: Icon(
+                            Icons.camera_alt_outlined,
+                            color: Palette.whiteColor,
+                            size: 12,
+                          ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

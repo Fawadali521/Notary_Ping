@@ -3,8 +3,8 @@
 import '../../../../../index.dart';
 
 class TrackingItem extends StatelessWidget {
-  final String time;
-  final String title;
+  final String time; // The time of the tracking item
+  final String title; // The title of the tracking item
 
   const TrackingItem({
     super.key,
@@ -20,12 +20,12 @@ class TrackingItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
+            title, // Display the title of the tracking item
             style: TextStyles.titleMedium,
           ),
           const SizedBox(height: 4),
           Text(
-            time,
+            time, // Display the time of the tracking item
             style: TextStyles.bodySmall,
           ),
         ],
